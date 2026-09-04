@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[NAMA LENGKAP] — Portfolio | SMK RPL Developer</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#030712',
+                        cardBg: '#0b0f19',
+                        neonBlue: '#00f2fe',
+                        neonPurple: '#7f00ff',
+                        neonCyan: '#00ffff',
+                    },
+                    boxShadow: {
+                        'neon': '0 0 20px rgba(0, 242, 254, 0.4)',
+                        'neon-purple': '0 0 20px rgba(127, 0, 255, 0.4)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #030712; }
+        ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00f2fe; }
+
+        /* Custom Cursor */
+        .custom-cursor {
+            pointer-events: none;
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            border: 2px solid #00f2fe;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+            z-index: 9999;
+            box-shadow: 0 0 10px #00f2fe;
+        }
+
+        /* Glassmorphism Effect */
+        .glass {
+            background: rgba(11, 15, 25, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* Background Grid Animation */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(135deg, #00f2fe 0%, #7f00ff 50%, #00ffff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-darkBg text-gray-100 font-sans overflow-x-hidden relative bg-grid">
+
+    <div class="custom-cursor hidden lg:block" id="cursor"></div>
+
+    <script>
+        // Ubah data di sini untuk memperbarui seluruh isi website secara otomatis
+        const PORTFOLIO_DATA = {
+            profile: {
+                name: "[NAMA LENGKAP]",
+                nickname: "[NAMA PANGGILAN]",
+                school: "[NAMA SMK]",
+                major: "Rekayasa Perangkat Lunak (RPL)",
+                class: "[KELAS]",
+                city: "[KOTA]",
+                age: "[UMUR]",
+                role: "SMK Student • RPL • Junior Developer",
+                tagline: "I Build Digital Experiences & Modern Web Apps.",
+                bio: "Siswa SMK Jurusan Rekayasa Perangkat Lunak yang memiliki passion tinggi dalam pengembangan web, aplikasi mobile, dan teknologi masa depan.",
+                email: "[EMAIL]",
+                instagram: "[INSTAGRAM]",
+                github: "[GITHUB]",
+                whatsapp: "[NOMOR WHATSAPP]",
+                photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=500&auto=format&fit=crop"
+            },
+            stats: [
+                { label: "Projects Completed", value: 10, suffix: "+" },
+                { label: "Certificates Earned", value: 5, suffix: "+" },
+                { label: "Programming Languages", value: 4, suffix: "" },
+                { label: "Years Learning", value: 2, suffix: "+" }
+            ],
+            skills: [
+                { name: "HTML5 & CSS3", level: 90, icon: "file-code" },
+                { name: "JavaScript", level: 85, icon: "code" },
+                { name: "PHP & Laravel", level: 80, icon: "server" },
+                { name: "MySQL Database", level: 85, icon: "database" },
+                { name: "Git & GitHub", level: 75, icon: "git-branch" },
+                { name: "UI/UX & Figma", level: 80, icon: "figma" },
+                { name: "Python", level: 70, icon: "terminal" }
+            ],
+            projects: [
+                {
+                    title: "Website Portfolio Modern",
+                    category: "Web",
+                    desc: "Portfolio pribadi dengan tema futuristik, animasi interaktif, dan responsive design.",
+                    tech: ["HTML5", "Tailwind CSS", "JavaScript"],
+                    live: "#",
+                    github: "#",
+                    image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=600&auto=format&fit=crop"
+                },
+                {
+                    title: "Sistem Informasi Sekolah",
+                    category: "Web",
+                    desc: "Platform manajemen data siswa, guru, dan nilai berbasis web menggunakan Laravel.",
+                    tech: ["PHP", "Laravel", "MySQL", "Tailwind"],
+                    live: "#",
+                    github: "#",
+                    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=600&auto=format&fit=crop"
+                },
+                {
+                    title: "Aplikasi Kasir (POS)",
+                    category: "App",
+                    desc: "Aplikasi Point of Sales untuk UMKM lokal guna mencatat transaksi dan stok barang.",
+                    tech: ["JavaScript", "PHP", "MySQL"],
+                    live: "#",
+                    github: "#",
+                    image: "https://images.unsplash.com/photo-1556742049-0a67d553c2a5?q=80&w=600&auto=format&fit=crop"
+                },
+                {
+                    title: "To-Do List Interactive",
+                    category: "App",
+                    desc: "Aplikasi manajemen tugas harian dengan fitur local storage dan drag-and-drop.",
+                    tech: ["HTML", "CSS", "JavaScript"],
+                    live: "#",
+                    github: "#",
+                    image: "https://images.unsplash.com/photo-1540350394557-8d14678e7f91?q=80&w=600&auto=format&fit=crop"
+                },
+                {
+                    title: "E-Commerce Store UI",
+                    category: "UI/UX",
+                    desc: "Desain antarmuka toko online pakaian modern dengan pengalaman pengguna yang intuitif.",
+                    tech: ["Figma", "UI/UX Design"],
+                    live: "#",
+                    github: "#",
+                    image: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=600&auto=format&fit=crop"
+                },
+                {
+                    title: "Manajemen Data Siswa RPL",
+                    category: "Web",
+                    desc: "CRUD sederhana untuk pendataan nilai dan presensi siswa jurusan Rekayasa Perangkat Lunak.",
+                    tech: ["PHP Native", "MySQL", "Bootstrap"],
+                    live: "#",
+                    github: "#",
+                    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=600&auto=format&fit=crop"
+                }
+            ],
+            experiences: [
+                { year: "2024", title: "Masuk SMK", desc: "Memulai perjalanan akademik di [NAMA SMK] memilih jurusan Rekayasa Perangkat Lunak (RPL)." },
+                { year: "2025", title: "Mulai Belajar Web Development", desc: "Mempelajari dasar-dasar HTML, CSS, JavaScript, dan logika pemrograman dasar." },
+                { year: "2025", title: "Project Pertama", desc: "Berhasil membuat website landing page pertama dan sistem sederhana berbasis PHP." },
+                { year: "2026", title: "Mengikuti PKL / Kegiatan IT", desc: "Mendapatkan pengalaman dunia industri kerja nyata serta memperdalam framework modern." },
+                { year: "2026", title: "Pengembangan Portfolio", desc: "Aktif membangun berbagai project aplikasi web dan mempersiapkan diri menjadi profesional developer." }
+            ],
+            certificates: [
+                { title: "Sertifikat Dasar Pemrograman Web", issuer: "Dicoding Indonesia", image: "https://images.unsplash.com/photo-1618401471353-b98aedd04e11?q=80&w=500&auto=format&fit=crop" },
+                { title: "Sertifikat Belajar JavaScript Dasar", issuer: "Codepolitan", image: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=500&auto=format&fit=crop" },
+                { title: "Sertifikat UI/UX Design Fundamentals", issuer: "Skill Academy", image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=500&auto=format&fit=crop" },
+                { title: "Sertifikat Peserta Terbaik PKL IT", issuer: "Perusahaan Mitra", image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=500&auto=format&fit=crop" }
+            ]
+        };
+    </script>
+
+    <header class="fixed top-0 left-0 w-full z-50 glass border-b border-gray-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#home" class="text-xl font-bold tracking-wider text-gradient flex items-center gap-2">
+                <i data-lucide="terminal" class="w-6 h-6 text-neonBlue"></i>
+                <span id="nav-logo-name">[NAMA PANGGILAN]</span><span class="text-neonBlue">.rpl</span>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+                <a href="#home" class="hover:text-neonBlue transition">Home</a>
+                <a href="#about" class="hover:text-neonBlue transition">About</a>
+                <a href="#skills" class="hover:text-neonBlue transition">Skills</a>
+                <a href="#projects" class="hover:text-neonBlue transition">Projects</a>
+                <a href="#experience" class="hover:text-neonBlue transition">Experience</a>
+                <a href="#certificates" class="hover:text-neonBlue transition">Certificates</a>
+                <a href="#contact" class="hover:text-neonBlue transition">Contact</a>
+            </nav>
+
+            <div class="hidden md:flex items-center gap-4">
+                <a href="#contact" class="px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-darkBg bg-gradient-to-r from-neonBlue to-neonCyan shadow-neon hover:scale-105 transition transform">
+                    Contact Me
+                </a>
+            </div>
+
+            <button id="menu-btn" class="md:hidden text-gray-300 focus:outline-none">
+                <i data-lucide="menu" class="w-7 h-7"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden glass border-b border-gray-800 px-6 py-6 space-y-4">
+            <a href="#home" class="block text-gray-300 hover:text-neonBlue transition">Home</a>
+            <a href="#about" class="block text-gray-300 hover:text-neonBlue transition">About</a>
+            <a href="#skills" class="block text-gray-300 hover:text-neonBlue transition">Skills</a>
+            <a href="#projects" class="block text-gray-300 hover:text-neonBlue transition">Projects</a>
+            <a href="#experience" class="block text-gray-300 hover:text-neonBlue transition">Experience</a>
+            <a href="#certificates" class="block text-gray-300 hover:text-neonBlue transition">Certificates</a>
+            <a href="#contact" class="block text-gray-300 hover:text-neonBlue transition">Contact</a>
+        </div>
+    </header>
+
+    <section id="home" class="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden">
+        <div class="absolute top-1/4 left-10 text-neonBlue/20 font-mono text-2xl animate-pulse">{ }</div>
+        <div class="absolute bottom-1/4 right-12 text-neonPurple/20 font-mono text-3xl animate-bounce">&lt;/&gt;</div>
+        <div class="absolute top-1/3 right-1/4 text-neonCyan/20 font-mono text-xl">const dev = true;</div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
+            <div data-aos="fade-right" data-aos-duration="1000">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full glass border border-neonBlue/30 text-neonBlue text-xs font-semibold uppercase tracking-wider mb-6">
+                    <span class="w-2 h-2 rounded-full bg-neonBlue animate-ping"></span>
+                    <span id="hero-subtitle">SMK Student • RPL • Junior Developer</span>
+                </div>
+                <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
+                    Hi, I'm <span id="hero-name" class="text-gradient">[NAMA]</span>.<br>
+                    I Build <span class="text-gradient">Digital Experiences.</span>
+                </h1>
+                <p id="hero-desc" class="text-gray-400 text-lg mb-8 max-w-xl">
+                    Siswa SMK Jurusan Rekayasa Perangkat Lunak yang antusias mengubah ide kreatif menjadi kode aplikasi yang bersih dan fungsional.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#projects" class="px-6 py-3 rounded-xl font-bold text-darkBg bg-gradient-to-r from-neonBlue to-neonCyan shadow-neon hover:scale-105 transition transform flex items-center gap-2">
+                        <span>View My Projects</span>
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#contact" class="px-6 py-3 rounded-xl font-bold glass text-gray-200 border border-gray-700 hover:border-neonBlue hover:text-neonBlue transition transform hover:scale-105">
+                        Let's Talk
+                    </a>
+                </div>
+            </div>
+
+            <div class="flex justify-center" data-aos="fade-left" data-aos-duration="1000">
+                <div class="relative w-72 h-72 sm:w-96 sm:h-96">
+                    <div class="absolute inset-0 rounded-3xl bg-gradient-to-tr from-neonBlue via-neonPurple to-neonCyan blur-xl opacity-50 animate-pulse"></div>
+                    <div class="relative w-full h-full rounded-3xl p-2 glass border border-neonBlue/40 overflow-hidden shadow-neon">
+                        <img id="hero-img" src="" alt="Profile Photo" class="w-full h-full object-cover rounded-2xl grayscale hover:grayscale-0 transition duration-500">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 border-y border-gray-800/80 glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div data-aos="fade-up" data-aos-delay="100">
+                <h3 class="text-4xl sm:text-5xl font-black text-gradient mb-2"><span class="counter" data-target="10">0</span>+</h3>
+                <p class="text-gray-400 text-sm font-medium">Projects Completed</p>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="200">
+                <h3 class="text-4xl sm:text-5xl font-black text-gradient mb-2"><span class="counter" data-target="5">0</span>+</h3>
+                <p class="text-gray-400 text-sm font-medium">Certificates Earned</p>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="300">
+                <h3 class="text-4xl sm:text-5xl font-black text-gradient mb-2"><span class="counter" data-target="4">0</span></h3>
+                <p class="text-gray-400 text-sm font-medium">Programming Languages</p>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="400">
+                <h3 class="text-4xl sm:text-5xl font-black text-gradient mb-2"><span class="counter" data-target="2">0</span>+</h3>
+                <p class="text-gray-400 text-sm font-medium">Years Learning</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl sm:text-4xl font-extrabold mb-4">About <span class="text-gradient">Me</span></h2>
+                <div class="w-20 h-1 bg-neonBlue mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass p-6 rounded-2xl border border-gray-800 hover:border-neonBlue transition duration-300 hover:scale-105 shadow-lg group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-12 h-12 rounded-xl bg-neonBlue/10 flex items-center justify-center text-neonBlue mb-4 group-hover:shadow-neon">
+                        <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">🎓 Education</h3>
+                    <p class="text-gray-400 text-sm">Saat ini menempuh pendidikan di <span id="about-school">[NAMA SMK]</span> mengambil jurusan Rekayasa Perangkat Lunak (RPL).</p>
+                </div>
+
+                <div class="glass p-6 rounded-2xl border border-gray-800 hover:border-neonPurple transition duration-300 hover:scale-105 shadow-lg group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-12 h-12 rounded-xl bg-neonPurple/10 flex items-center justify-center text-neonPurple mb-4 group-hover:shadow-neon-purple">
+                        <i data-lucide="code-2" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">💻 Programming</h3>
+                    <p class="text-gray-400 text-sm">Fokus mendalami pengembangan web full-stack, logika algoritma, dan pemrograman berorientasi objek.</p>
+                </div>
+
+                <div class="glass p-6 rounded-2xl border border-gray-800 hover:border-neonCyan transition duration-300 hover:scale-105 shadow-lg group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-12 h-12 rounded-xl bg-neonCyan/10 flex items-center justify-center text-neonCyan mb-4">
+                        <i data-lucide="rocket" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">🚀 Projects</h3>
+                    <p class="text-gray-400 text-sm">Telah merancang berbagai macam aplikasi berbasis web, sistem informasi sekolah, hingga desain antarmuka UI/UX.</p>
+                </div>
+
+                <div class="glass p-6 rounded-2xl border border-gray-800 hover:border-neonBlue transition duration-300 hover:scale-105 shadow-lg group" data-aos="fade-up" data-aos-delay="400">
+                    <div class="w-12 h-12 rounded-xl bg-neonBlue/10 flex items-center justify-center text-neonBlue mb-4">
+                        <i data-lucide="target" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">🎯 Goals</h3>
+                    <p class="text-gray-400 text-sm">Berkomitmen menjadi Software Engineer profesional yang andal serta mampu menciptakan solusi teknologi berdampak luas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="py-24 bg-cardBg/50 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl sm:text-4xl font-extrabold mb-4">My <span class="text-gradient">Skills</span></h2>
+                <div class="w-20 h-1 bg-neonBlue mx-auto rounded-full"></div>
+            </div>
+
+            <div id="skills-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" data-aos="fade-up">
+                </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl sm:text-4xl font-extrabold mb-4">Featured <span class="text-gradient">Projects</span></h2>
+                <div class="w-20 h-1 bg-neonBlue mx-auto rounded-full"></div>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-3 mb-12" data-aos="fade-up">
+                <button class="project-filter px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider bg-neonBlue text-darkBg shadow-neon transition" data-filter="All">All</button>
+                <button class="project-filter px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider glass text-gray-300 hover:text-neonBlue border border-gray-700 transition" data-filter="Web">Web</button>
+                <button class="project-filter px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider glass text-gray-300 hover:text-neonBlue border border-gray-700 transition" data-filter="App">App</button>
+                <button class="project-filter px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider glass text-gray-300 hover:text-neonBlue border border-gray-700 transition" data-filter="UI/UX">UI/UX</button>
+            </div>
+
+            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" data-aos="fade-up">
+                </div>
+        </div>
+    </section>
+
+    <section id="experience" class="py-24 bg-cardBg/50 relative">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl sm:text-4xl font-extrabold mb-4">Learning <span class="text-gradient">Experience</span></h2>
+                <div class="w-20 h-1 bg-neonBlue mx-auto rounded-full"></div>
+            </div>
+
+            <div class="relative border-l-2 border-neonBlue/30 ml-4 sm:ml-32 space-y-12" id="timeline-container">
+                </div>
+        </div>
+    </section>
+
+    <section id="certificates" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl sm:text-4xl font-extrabold mb-4">Certificates & <span class="text-gradient">Achievements</span></h2>
+                <div class="w-20 h-1 bg-neonBlue mx-auto rounded-full"></div>
+            </div>
+
+            <div id="certificates-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" data-aos="fade-up">
+                </div>
+        </div>
+    </section>
+
+    <div id="cert-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="relative max-w-3xl w-full glass p-4 rounded-2xl border border-neonBlue/40">
+            <button id="close-modal" class="absolute top-4 right-4 text-gray-400 hover:text-neonBlue z-10 p-2">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <img id="modal-img" src="" alt="Certificate Preview" class="w-full h-auto rounded-xl object-contain max-h-[80vh]">
+            <h3 id="modal-title" class="text-xl font-bold mt-4 text-center text-neonBlue"></h3>
+        </div>
+    </div>
+
+    <section id="contact" class="py-24 bg-cardBg/50 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl sm:text-4xl font-extrabold mb-4">Let's Work <span class="text-gradient">Together</span></h2>
+                <div class="w-20 h-1 bg-neonBlue mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div class="space-y-6" data-aos="fade-right">
+                    <h3 class="text-2xl font-bold mb-4">Get In Touch</h3>
+                    <p class="text-gray-400">Tertarik berkolaborasi dalam project web, diskusi teknologi, atau sekadar menyapa? Jangan ragu untuk menghubungi saya melalui kontak di bawah ini.</p>
+                    
+                    <div class="space-y-4 pt-4">
+                        <div class="flex items-center gap-4 glass p-4 rounded-xl border border-gray-800">
+                            <div class="w-10 h-10 rounded-lg bg-neonBlue/10 flex items-center justify-center text-neonBlue">
+                                <i data-lucide="mail" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-400">Email</p>
+                                <p id="contact-email" class="font-medium text-gray-200">[EMAIL]</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 glass p-4 rounded-xl border border-gray-800">
+                            <div class="w-10 h-10 rounded-lg bg-neonCyan/10 flex items-center justify-center text-neonCyan">
+                                <i data-lucide="phone" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-400">WhatsApp</p>
+                                <p id="contact-wa" class="font-medium text-gray-200">[NOMOR WHATSAPP]</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 glass p-4 rounded-xl border border-gray-800">
+                            <div class="w-10 h-10 rounded-lg bg-neonPurple/10 flex items-center justify-center text-neonPurple">
+                                <i data-lucide="instagram" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-400">Instagram</p>
+                                <p id="contact-ig" class="font-medium text-gray-200">[INSTAGRAM]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass p-8 rounded-2xl border border-gray-800" data-aos="fade-left">
+                    <form id="contact-form" class="space-y-6">
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-gray-400 mb-2 font-semibold">Your Name</label>
+                            <input type="text" required class="w-full bg-darkBg/80 border border-gray-700 rounded-xl px-4 py-3 text-gray-200 focus:outline-none focus:border-neonBlue transition" placeholder="John Doe">
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-gray-400 mb-2 font-semibold">Your Email</label>
+                            <input type="email" required class="w-full bg-darkBg/80 border border-gray-700 rounded-xl px-4 py-3 text-gray-200 focus:outline-none focus:border-neonBlue transition" placeholder="john@example.com">
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-gray-400 mb-2 font-semibold">Your Message</label>
+                            <textarea rows="4" required class="w-full bg-darkBg/80 border border-gray-700 rounded-xl px-4 py-3 text-gray-200 focus:outline-none focus:border-neonBlue transition" placeholder="Halo, saya ingin mendiskusikan project..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-3 rounded-xl font-bold text-darkBg bg-gradient-to-r from-neonBlue to-neonCyan shadow-neon hover:scale-[1.02] transition transform">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-8 border-t border-gray-800 glass text-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p id="footer-text" class="text-sm text-gray-400">Designed & Built by [NAMA] — RPL Student</p>
+            <div class="flex items-center gap-4 text-gray-400">
+                <a href="#" class="hover:text-neonBlue transition"><i data-lucide="github" class="w-5 h-5"></i></a>
+                <a href="#" class="hover:text-neonBlue transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                <a href="#" class="hover:text-neonBlue transition"><i data-lucide="mail" class="w-5 h-5"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS animation library
+        AOS.init({
+            duration: 800,
+            once: true,
+        });
+
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Populate Dynamic Data from PORTFOLIO_DATA configuration
+        document.addEventListener("DOMContentLoaded", () => {
+            const p = PORTFOLIO_DATA.profile;
+
+            // Nav & Hero
+            document.getElementById("nav-logo-name").innerText = p.nickname;
+            document.getElementById("hero-name").innerText = p.name;
+            document.getElementById("hero-subtitle").innerText = p.role;
+            document.getElementById("hero-desc").innerText = p.bio;
+            document.getElementById("hero-img").src = p.photo;
+
+            // About
+            document.getElementById("about-school").innerText = p.school;
+
+            // Contact info
+            document.getElementById("contact-email").innerText = p.email;
+            document.getElementById("contact-wa").innerText = p.whatsapp;
+            document.getElementById("contact-ig").innerText = p.instagram;
+
+            // Footer
+            document.getElementById("footer-text").innerText = `Designed & Built by ${p.name} — RPL Student`;
+
+            // Render Skills
+            const skillsContainer = document.getElementById("skills-container");
+            PORTFOLIO_DATA.skills.forEach(skill => {
+                skillsContainer.innerHTML += `
+                    <div class="glass p-6 rounded-2xl border border-gray-800 hover:border-neonBlue transition duration-300">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-neonBlue/10 flex items-center justify-center text-neonBlue">
+                                    <i data-lucide="${skill.icon}" class="w-5 h-5"></i>
+                                </div>
+                                <span class="font-bold text-gray-200">${skill.name}</span>
+                            </div>
+                            <span class="text-neonBlue text-sm font-semibold">${skill.level}%</span>
+                        </div>
+                        <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden">
+                            <div class="bg-gradient-to-r from-neonBlue to-neonCyan h-full rounded-full transition-all duration-1000" style="width: ${skill.level}%"></div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Render Projects
+            renderProjects("All");
+
+            // Render Experiences
+            const timelineContainer = document.getElementById("timeline-container");
+            PORTFOLIO_DATA.experiences.forEach(exp => {
+                timelineContainer.innerHTML += `
+                    <div class="relative pl-8 sm:pl-12" data-aos="fade-up">
+                        <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-neonBlue border-4 border-darkBg shadow-neon"></div>
+                        <span class="text-xs font-bold text-neonBlue px-3 py-1 rounded-full glass border border-neonBlue/30 inline-block mb-2">${exp.year}</span>
+                        <h3 class="text-xl font-bold text-gray-100">${exp.title}</h3>
+                        <p class="text-gray-400 text-sm mt-1">${exp.desc}</p>
+                    </div>
+                `;
+            });
+
+            // Render Certificates
+            const certGrid = document.getElementById("certificates-grid");
+            PORTFOLIO_DATA.certificates.forEach(cert => {
+                certGrid.innerHTML += `
+                    <div class="glass p-4 rounded-2xl border border-gray-800 hover:border-neonPurple transition duration-300 cursor-pointer group cert-card" data-img="${cert.image}" data-title="${cert.title}" data-aos="fade-up">
+                        <div class="overflow-hidden rounded-xl mb-4 h-40">
+                            <img src="${cert.image}" alt="${cert.title}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        </div>
+                        <h4 class="font-bold text-gray-200 group-hover:text-neonBlue transition">${cert.title}</h4>
+                        <p class="text-xs text-gray-400 mt-1">${cert.issuer}</p>
+                    </div>
+                `;
+            });
+
+            // Re-initialize Lucide for dynamic elements
+            lucide.createIcons();
+            initModalListeners();
+        });
+
+        // Function to render projects based on category filter
+        function renderProjects(filter) {
+            const projectsGrid = document.getElementById("projects-grid");
+            projectsGrid.innerHTML = "";
+            
+            const filtered = filter === "All" ? PORTFOLIO_DATA.projects : PORTFOLIO_DATA.projects.filter(p => p.category === filter);
+
+            filtered.forEach(proj => {
+                let techBadges = proj.tech.map(t => `<span class="text-[10px] font-semibold px-2.5 py-1 rounded-md glass text-neonCyan border border-neonCyan/20">${t}</span>`).join("");
+                
+                projectsGrid.innerHTML += `
+                    <div class="glass rounded-2xl border border-gray-800 overflow-hidden hover:border-neonBlue transition duration-300 group" data-aos="fade-up">
+                        <div class="relative overflow-hidden h-48">
+                            <img src="${proj.image}" alt="${proj.title}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-transparent opacity-60"></div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex flex-wrap gap-2 mb-3">${techBadges}</div>
+                            <h3 class="text-xl font-bold mb-2 group-hover:text-neonBlue transition">${proj.title}</h3>
+                            <p class="text-gray-400 text-sm mb-6">${proj.desc}</p>
+                            <div class="flex items-center gap-4">
+                                <a href="${proj.live}" class="flex items-center gap-1.5 text-xs font-bold text-darkBg bg-neonBlue px-4 py-2 rounded-xl shadow-neon hover:scale-105 transition"><i data-lucide="external-link" class="w-4 h-4"></i> Live Demo</a>
+                                <a href="${proj.github}" class="flex items-center gap-1.5 text-xs font-bold glass text-gray-200 border border-gray-700 px-4 py-2 rounded-xl hover:border-neonBlue hover:text-neonBlue transition"><i data-lucide="github" class="w-4 h-4"></i> GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            lucide.createIcons();
+        }
+
+        // Filter button event listeners
+        document.querySelectorAll(".project-filter").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                document.querySelectorAll(".project-filter").forEach(b => {
+                    b.classList.remove("bg-neonBlue", "text-darkBg", "shadow-neon");
+                    b.classList.add("glass", "text-gray-300", "border", "border-gray-700");
+                });
+                e.target.classList.remove("glass", "text-gray-300", "border", "border-gray-700");
+                e.target.classList.add("bg-neonBlue", "text-darkBg", "shadow-neon");
+                
+                renderProjects(e.target.getAttribute("data-filter"));
+            });
+        });
+
+        // Modal Certificate Preview Setup
+        function initModalListeners() {
+            const modal = document.getElementById("cert-modal");
+            const modalImg = document.getElementById("modal-img");
+            const modalTitle = document.getElementById("modal-title");
+            const closeModal = document.getElementById("close-modal");
+
+            document.querySelectorAll(".cert-card").forEach(card => {
+                card.addEventListener("click", () => {
+                    modalImg.src = card.getAttribute("data-img");
+                    modalTitle.innerText = card.getAttribute("data-title");
+                    modal.classList.remove("hidden");
+                });
+            });
+
+            closeModal.addEventListener("click", () => modal.classList.add("hidden"));
+            modal.addEventListener("click", (e) => {
+                if (e.target === modal) modal.classList.add("hidden");
+            });
+        }
+
+        // Custom Cursor Movement
+        const cursor = document.getElementById("cursor");
+        window.addEventListener("mousemove", (e) => {
+            cursor.style.left = e.clientX + "px";
+            cursor.style.top = e.clientY + "px";
+        });
+
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById("menu-btn");
+        const mobileMenu = document.getElementById("mobile-menu");
+        menuBtn.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll("#mobile-menu a").forEach(link => {
+            link.addEventListener("click", () => mobileMenu.classList.add("hidden"));
+        });
+    </script>
+</body>
+</html>
