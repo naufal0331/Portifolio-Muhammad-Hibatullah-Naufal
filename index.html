@@ -3,63 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MUHAMMAD HIBATULLAH NAUFAL — Portfolio | SMK RPL Developer</title>
+    <title>MUHAMMAD HIBATULLAH NAUFAL - Portfolio | Junior RPL Developer</title>
     
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Custom Configuration -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        darkBg: '#030712',
-                        cardBg: '#0b0f19',
-                        neonBlue: '#00f2fe',
-                        neonPurple: '#7f00ff',
-                        neonCyan: '#00ffff',
+                        darkBg: '#05050A',
+                        cardBg: '#0A0A12',
+                        neonBlue: '#00F0FF',
+                        neonPurple: '#9D00FF',
+                        neonCyan: '#00FFCC',
                     },
-                    boxShadow: {
-                        'neon': '0 0 20px rgba(0, 242, 254, 0.4)',
-                        'neon-purple': '0 0 20px rgba(127, 0, 255, 0.4)',
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        code: ['Fira Code', 'monospace']
                     }
                 }
             }
         }
     </script>
 
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
+    <!-- Custom CSS untuk Efek Futuristik & Custom Cursor -->
     <style>
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #030712; }
-        ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #00f2fe; }
+        body {
+            background-color: #05050A;
+            color: #F3F4F6;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            cursor: none; /* Sembunyikan kursor default untuk custom cursor */
+        }
 
         /* Custom Cursor */
         .custom-cursor {
             pointer-events: none;
             position: fixed;
-            width: 30px;
-            height: 30px;
-            border: 2px solid #00f2fe;
+            top: 0;
+            left: 0;
             border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.2s, height 0.2s, background-color 0.2s;
+            transition: transform 0.15s ease-out, width 0.2s, height 0.2s, background-color 0.2s;
             z-index: 9999;
-            box-shadow: 0 0 10px #00f2fe;
+        }
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #00F0FF;
+            box-shadow: 0 0 10px #00F0FF;
+        }
+        .cursor-outline {
+            width: 36px;
+            height: 36px;
+            border: 1px solid rgba(0, 240, 255, 0.5);
+            margin-top: -14px;
+            margin-left: -14px;
         }
 
-        /* Glassmorphism Effect */
-        .glass {
-            background: rgba(11, 15, 25, 0.7);
+        /* Glassmorphism & Neon Glow */
+        .glass-card {
+            background: rgba(10, 10, 18, 0.7);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .glass-card:hover {
+            border-color: rgba(0, 240, 255, 0.4);
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.2);
         }
 
-        /* Background Grid Animation */
+        .neon-glow-blue {
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5), 0 0 20px rgba(0, 240, 255, 0.3);
+        }
+        .neon-box-glow:hover {
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+        }
+
+        /* Background Grid Bergerak */
         .bg-grid {
             background-size: 40px 40px;
             background-image: 
@@ -67,584 +100,796 @@
                 linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
         }
 
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+        .animate-float {
+            animation: float 5s ease-in-out infinite;
+        }
+
         /* Gradient Text */
-        .text-gradient {
-            background: linear-gradient(135deg, #00f2fe 0%, #7f00ff 50%, #00ffff 100%);
+        .gradient-text {
+            background: linear-gradient(135deg, #00F0FF 0%, #9D00FF 50%, #00FFCC 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #05050A;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1F1F2E;
+            border-radius: 4px;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00F0FF;
+        }
     </style>
 </head>
-<body class="bg-darkBg text-gray-100 font-sans overflow-x-hidden relative bg-grid">
+<body class="bg-darkBg text-gray-100 relative selection:bg-neonBlue selection:text-darkBg">
 
-    <div class="custom-cursor hidden lg:block" id="cursor"></div>
+    <!-- Custom Cursor Elements -->
+    <div class="custom-cursor cursor-dot hidden md:block"></div>
+    <div class="custom-cursor cursor-outline hidden md:block"></div>
 
-    <script>
-        // Ubah data di sini untuk memperbarui seluruh isi website secara otomatis
-        const PORTFOLIO_DATA = {
-            profile: {
-                name: "MUHAMMAD HIBATULLAH NAUFAL",
-                nickname: "NAUFAL",
-                school: "SMK NEGERI 3 SEKAYU",
-                major: "Rekayasa Perangkat Lunak (RPL)",
-                class: "XI RPL 2",
-                city: "SEKAYU",
-                age: "16",
-                role: "SMK Student • RPL • Junior Developer",
-                tagline: "I Build Digital Experiences & Modern Web Apps.",
-                bio: "Siswa SMK Jurusan Rekayasa Perangkat Lunak yang memiliki passion tinggi dalam pengembangan web, aplikasi mobile, dan teknologi masa depan.",
-                email: "oo936083@gmail.com",
-                instagram: "@vwall2009",
-                github: "naufal0331",
-                whatsapp: "+6285709051828",
-                photo: "foto1.jpeg"
-            },
-            stats: [
-                { label: "Projects Completed", value: 10, suffix: "+" },
-                { label: "Certificates Earned", value: 5, suffix: "+" },
-                { label: "Programming Languages", value: 4, suffix: "" },
-                { label: "Years Learning", value: 2, suffix: "+" }
-            ],
-            skills: [
-                { name: "HTML5 & CSS3", level: 90, icon: "file-code" },
-                { name: "JavaScript", level: 85, icon: "code" },
-                { name: "PHP & Laravel", level: 80, icon: "server" },
-                { name: "MySQL Database", level: 85, icon: "database" },
-                { name: "Git & GitHub", level: 75, icon: "git-branch" },
-                { name: "UI/UX & Figma", level: 80, icon: "figma" },
-                { name: "Python", level: 70, icon: "terminal" }
-            ],
-            projects: [
-                {
-                    title: "Website Portfolio Modern",
-                    category: "Web",
-                    desc: "Portfolio pribadi dengan tema futuristik, animasi interaktif, dan responsive design.",
-                    tech: ["HTML5", "Tailwind CSS", "JavaScript"],
-                    live: "#",
-                    github: "#",
-                    image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=600&auto=format&fit=crop"
-                },
-                {
-                    title: "Sistem Informasi Sekolah",
-                    category: "Web",
-                    desc: "Platform manajemen data siswa, guru, dan nilai berbasis web menggunakan Laravel.",
-                    tech: ["PHP", "Laravel", "MySQL", "Tailwind"],
-                    live: "#",
-                    github: "#",
-                    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=600&auto=format&fit=crop"
-                },
-                {
-                    title: "Aplikasi Kasir (POS)",
-                    category: "App",
-                    desc: "Aplikasi Point of Sales untuk UMKM lokal guna mencatat transaksi dan stok barang.",
-                    tech: ["JavaScript", "PHP", "MySQL"],
-                    live: "#",
-                    github: "#",
-                    image: "https://images.unsplash.com/photo-1556742049-0a67d553c2a5?q=80&w=600&auto=format&fit=crop"
-                },
-                {
-                    title: "To-Do List Interactive",
-                    category: "App",
-                    desc: "Aplikasi manajemen tugas harian dengan fitur local storage dan drag-and-drop.",
-                    tech: ["HTML", "CSS", "JavaScript"],
-                    live: "#",
-                    github: "#",
-                    image: "https://images.unsplash.com/photo-1540350394557-8d14678e7f91?q=80&w=600&auto=format&fit=crop"
-                },
-                {
-                    title: "E-Commerce Store UI",
-                    category: "UI/UX",
-                    desc: "Desain antarmuka toko online pakaian modern dengan pengalaman pengguna yang intuitif.",
-                    tech: ["Figma", "UI/UX Design"],
-                    live: "#",
-                    github: "#",
-                    image: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?q=80&w=600&auto=format&fit=crop"
-                },
-                {
-                    title: "Manajemen Data Siswa RPL",
-                    category: "Web",
-                    desc: "CRUD sederhana untuk pendataan nilai dan presensi siswa jurusan Rekayasa Perangkat Lunak.",
-                    tech: ["PHP Native", "MySQL", "Bootstrap"],
-                    live: "#",
-                    github: "#",
-                    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=600&auto=format&fit=crop"
-                }
-            ],
-            experiences: [
-                { year: "2025", title: "Masuk SMK", desc: "Memulai perjalanan akademik di [SMK NEGERI 3 SEKAYU] memilih jurusan Rekayasa Perangkat Lunak (RPL)." },
-                { year: "2025", title: "Mulai Belajar Web Development", desc: "Mempelajari dasar-dasar HTML, CSS, JavaScript, dan logika pemrograman dasar." },
-                { year: "2026", title: "Project Pertama", desc: "Berhasil membuat website landing page pertama dan sistem sederhana berbasis PHP." },
-                { year: "2027", title: "Harapan Mengikuti PKL Nanti/ Kegiatan IT", desc: "Mendapatkan pengalaman dunia industri kerja nyata serta memperdalam framework modern." },
-                { year: "2027", title: "Ingin Mengembangankan Portfolio", desc: "Aktif membangun berbagai project aplikasi web dan mempersiapkan diri menjadi profesional developer." }
-            ],
-            certificates: [
-                { title: "Sertifikat Dasar Pemrograman Web", issuer: "Dicoding Indonesia", image: "https://images.unsplash.com/photo-1618401471353-b98aedd04e11?q=80&w=500&auto=format&fit=crop" },
-                { title: "Sertifikat Belajar JavaScript Dasar", issuer: "Codepolitan", image: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=500&auto=format&fit=crop" },
-                { title: "Sertifikat UI/UX Design Fundamentals", issuer: "Skill Academy", image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=500&auto=format&fit=crop" },
-                { title: "Sertifikat Peserta Terbaik PKL IT", issuer: "Perusahaan Mitra", image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=500&auto=format&fit=crop" }
-            ]
-        };
-    </script>
+    <!-- Background Grid & Glow Elements -->
+    <div class="fixed inset-0 bg-grid pointer-events-none z-0"></div>
+    <div class="fixed top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-neonBlue/10 blur-[120px] pointer-events-none z-0"></div>
+    <div class="fixed bottom-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-neonPurple/10 blur-[120px] pointer-events-none z-0"></div>
 
-    <header class="fixed top-0 left-0 w-full z-50 glass border-b border-gray-800/50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <a href="#home" class="text-xl font-bold tracking-wider text-gradient flex items-center gap-2">
-                <i data-lucide="terminal" class="w-6 h-6 text-neonBlue"></i>
-                <span id="nav-logo-name">NAUFAL</span><span class="text-neonBlue">XI 2.rpl</span>
+    <!-- NAVBAR STICKY -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-card border-b border-white/5 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#home" class="font-bold text-xl tracking-wider flex items-center gap-2 group">
+                <span class="text-neonBlue font-code group-hover:scale-110 transition-transform">&lt;/&gt;</span>
+                <span id="nav-logo-text" class="gradient-text">[NAMA PANGGILAN]</span>
             </a>
 
-            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
-                <a href="#home" class="hover:text-neonBlue transition">Home</a>
-                <a href="#about" class="hover:text-neonBlue transition">About</a>
-                <a href="#skills" class="hover:text-neonBlue transition">Skills</a>
-                <a href="#projects" class="hover:text-neonBlue transition">Projects</a>
-                <a href="#experience" class="hover:text-neonBlue transition">Experience</a>
-                <a href="#certificates" class="hover:text-neonBlue transition">Certificates</a>
-                <a href="#contact" class="hover:text-neonBlue transition">Contact</a>
+            <!-- Desktop Menu -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="#home" class="hover:text-neonBlue transition-colors">Home</a>
+                <a href="#about" class="hover:text-neonBlue transition-colors">About</a>
+                <a href="#skills" class="hover:text-neonBlue transition-colors">Skills</a>
+                <a href="#projects" class="hover:text-neonBlue transition-colors">Projects</a>
+                <a href="#experience" class="hover:text-neonBlue transition-colors">Experience</a>
+                <a href="#certificates" class="hover:text-neonBlue transition-colors">Certificates</a>
+                <a href="#contact" class="hover:text-neonBlue transition-colors">Contact</a>
             </nav>
 
-            <div class="hidden md:flex items-center gap-4">
-                <a href="#contact" class="px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-darkBg bg-gradient-to-r from-neonBlue to-neonCyan shadow-neon hover:scale-105 transition transform">
+            <!-- Action Buttons -->
+            <div class="hidden lg:flex items-center gap-4">
+                <a href="#" id="download-cv-btn" class="px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-lg border border-neonBlue/50 text-neonBlue hover:bg-neonBlue/10 transition-all flex items-center gap-2">
+                    <i data-lucide="file-text" class="w-4 h-4"></i> Download CV
+                </a>
+                <a href="#contact" class="px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-lg bg-gradient-to-r from-neonBlue to-neonPurple text-darkBg hover:opacity-90 transition-all shadow-lg shadow-neonBlue/20">
                     Contact Me
                 </a>
             </div>
 
-            <button id="menu-btn" class="md:hidden text-gray-300 focus:outline-none">
+            <!-- Mobile Hamburger Button -->
+            <button id="menu-btn" class="md:hidden text-gray-300 hover:text-neonBlue focus:outline-none">
                 <i data-lucide="menu" class="w-7 h-7"></i>
             </button>
         </div>
 
-        <div id="mobile-menu" class="hidden md:hidden glass border-b border-gray-800 px-6 py-6 space-y-4">
-            <a href="#home" class="block text-gray-300 hover:text-neonBlue transition">Home</a>
-            <a href="#about" class="block text-gray-300 hover:text-neonBlue transition">About</a>
-            <a href="#skills" class="block text-gray-300 hover:text-neonBlue transition">Skills</a>
-            <a href="#projects" class="block text-gray-300 hover:text-neonBlue transition">Projects</a>
-            <a href="#experience" class="block text-gray-300 hover:text-neonBlue transition">Experience</a>
-            <a href="#certificates" class="block text-gray-300 hover:text-neonBlue transition">Certificates</a>
-            <a href="#contact" class="block text-gray-300 hover:text-neonBlue transition">Contact</a>
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden glass-card border-t border-white/5 px-6 py-6 space-y-4">
+            <a href="#home" class="block hover:text-neonBlue transition-colors mobile-link">Home</a>
+            <a href="#about" class="block hover:text-neonBlue transition-colors mobile-link">About</a>
+            <a href="#skills" class="block hover:text-neonBlue transition-colors mobile-link">Skills</a>
+            <a href="#projects" class="block hover:text-neonBlue transition-colors mobile-link">Projects</a>
+            <a href="#experience" class="block hover:text-neonBlue transition-colors mobile-link">Experience</a>
+            <a href="#certificates" class="block hover:text-neonBlue transition-colors mobile-link">Certificates</a>
+            <a href="#contact" class="block hover:text-neonBlue transition-colors mobile-link">Contact</a>
+            <div class="pt-4 flex flex-col gap-3">
+                <a href="#" class="w-full py-2 text-center text-xs font-semibold uppercase rounded-lg border border-neonBlue/50 text-neonBlue">Download CV</a>
+                <a href="#contact" class="w-full py-2 text-center text-xs font-semibold uppercase rounded-lg bg-neonBlue text-darkBg">Contact Me</a>
+            </div>
         </div>
     </header>
 
-    <section id="home" class="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden">
-        <div class="absolute top-1/4 left-10 text-neonBlue/20 font-mono text-2xl animate-pulse">{ }</div>
-        <div class="absolute bottom-1/4 right-12 text-neonPurple/20 font-mono text-3xl animate-bounce">&lt;/&gt;</div>
-        <div class="absolute top-1/3 right-1/4 text-neonCyan/20 font-mono text-xl">const dev = true;</div>
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="relative z-10 pt-20">
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
-            <div data-aos="fade-right" data-aos-duration="1000">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full glass border border-neonBlue/30 text-neonBlue text-xs font-semibold uppercase tracking-wider mb-6">
-                    <span class="w-2 h-2 rounded-full bg-neonBlue animate-ping"></span>
-                    <span id="hero-subtitle">SMK Student • RPL • Junior Developer</span>
-                </div>
-                <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
-                    Hi, I'm <span id="hero-name" class="text-gradient">[NAMA]</span>.<br>
-                    I Build <span class="text-gradient">Digital Experiences.</span>
-                </h1>
-                <p id="hero-desc" class="text-gray-400 text-lg mb-8 max-w-xl">
-                    Siswa SMK Jurusan Rekayasa Perangkat Lunak yang antusias mengubah ide kreatif menjadi kode aplikasi yang bersih dan fungsional.
-                </p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="#projects" class="px-6 py-3 rounded-xl font-bold text-darkBg bg-gradient-to-r from-neonBlue to-neonCyan shadow-neon hover:scale-105 transition transform flex items-center gap-2">
-                        <span>View My Projects</span>
-                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                    </a>
-                    <a href="#contact" class="px-6 py-3 rounded-xl font-bold glass text-gray-200 border border-gray-700 hover:border-neonBlue hover:text-neonBlue transition transform hover:scale-105">
-                        Let's Talk
-                    </a>
-                </div>
+        <!-- 1. HERO SECTION -->
+        <section id="home" class="min-h-[90vh] flex items-center justify-center relative px-6 py-20">
+            <!-- Floating Code Symbols Background -->
+            <div class="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
+                <span class="absolute top-1/4 left-10 font-code text-neonBlue text-xl animate-float" style="animation-delay: 0s;">{ }</span>
+                <span class="absolute top-1/3 right-16 font-code text-neonPurple text-2xl animate-float" style="animation-delay: 1.5s;">&lt;/&gt;</span>
+                <span class="absolute bottom-1/4 left-1/4 font-code text-neonCyan text-lg animate-float" style="animation-delay: 3s;">const dev = true;</span>
+                <span class="absolute top-1/2 right-1/3 font-code text-neonBlue text-xl animate-float" style="animation-delay: 2s;">HTML/CSS</span>
             </div>
 
-            <div class="flex justify-center" data-aos="fade-left" data-aos-duration="1000">
-                <div class="relative w-72 h-72 sm:w-96 sm:h-96">
-                    <div class="absolute inset-0 rounded-3xl bg-gradient-to-tr from-neonBlue via-neonPurple to-neonCyan blur-xl opacity-50 animate-pulse"></div>
-                    <div class="relative w-full h-full rounded-3xl p-2 glass border border-neonBlue/40 overflow-hidden shadow-neon">
-                        <img id="hero-img" src="" alt="Profile Photo" class="w-full h-full object-cover rounded-2xl grayscale hover:grayscale-0 transition duration-500">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Left Text Info -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left" data-aos="fade-right">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-card border border-neonBlue/30 text-neonBlue text-xs font-code tracking-wide">
+                        <span class="w-2 h-2 rounded-full bg-neonBlue animate-pulse"></span>
+                        <span id="hero-badge">SMK NEGERI 3 SEKAYU • RPL • Junior Developer</span>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section class="py-12 border-y border-gray-800/80 glass">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div data-aos="fade-up" data-aos-delay="100">
-                <h3 class="text-4xl sm:text-5xl font-black text-gradient mb-2"><span class="counter" data-target="10">0</span>+</h3>
-                <p class="text-gray-400 text-sm font-medium">Projects Completed</p>
-            </div>
-            <div data-aos="fade-up" data-aos-delay="200">
-                <h3 class="text-4xl sm:text-5xl font-black text-gradient mb-2"><span class="counter" data-target="5">0</span>+</h3>
-                <p class="text-gray-400 text-sm font-medium">Certificates Earned</p>
-            </div>
-            <div data-aos="fade-up" data-aos-delay="300">
-                <h3 class="text-4xl sm:text-5xl font-black text-gradient mb-2"><span class="counter" data-target="4">0</span></h3>
-                <p class="text-gray-400 text-sm font-medium">Programming Languages</p>
-            </div>
-            <div data-aos="fade-up" data-aos-delay="400">
-                <h3 class="text-4xl sm:text-5xl font-black text-gradient mb-2"><span class="counter" data-target="2">0</span>+</h3>
-                <p class="text-gray-400 text-sm font-medium">Years Learning</p>
-            </div>
-        </div>
-    </section>
+                    <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight">
+                        Hi, I'm <span id="hero-name" class="gradient-text">MUHAMMAD HIBATULLAH NAUFAL</span>.<br>
+                        I Build <span class="text-neonBlue">Digital Experiences</span>.
+                    </h1>
 
-    <section id="about" class="py-24 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-3xl sm:text-4xl font-extrabold mb-4">About <span class="text-gradient">Me</span></h2>
-                <div class="w-20 h-1 bg-neonBlue mx-auto rounded-full"></div>
-            </div>
+                    <p id="hero-desc" class="text-gray-400 text-base sm:text-lg max-w-xl mx-auto lg:mx-0 font-light">
+                        Siswa SMK Jurusan Rekayasa Perangkat Lunak yang antusias dalam mengembangkan aplikasi web modern, sistem fungsional, dan desain antarmuka interaktif.
+                    </p>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="glass p-6 rounded-2xl border border-gray-800 hover:border-neonBlue transition duration-300 hover:scale-105 shadow-lg group" data-aos="fade-up" data-aos-delay="100">
-                    <div class="w-12 h-12 rounded-xl bg-neonBlue/10 flex items-center justify-center text-neonBlue mb-4 group-hover:shadow-neon">
-                        <i data-lucide="graduation-cap" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">🎓 Education</h3>
-                    <p class="text-gray-400 text-sm">Saat ini menempuh pendidikan di <span id="about-school">[NAMA SMK]</span> mengambil jurusan Rekayasa Perangkat Lunak (RPL).</p>
-                </div>
-
-                <div class="glass p-6 rounded-2xl border border-gray-800 hover:border-neonPurple transition duration-300 hover:scale-105 shadow-lg group" data-aos="fade-up" data-aos-delay="200">
-                    <div class="w-12 h-12 rounded-xl bg-neonPurple/10 flex items-center justify-center text-neonPurple mb-4 group-hover:shadow-neon-purple">
-                        <i data-lucide="code-2" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">💻 Programming</h3>
-                    <p class="text-gray-400 text-sm">Fokus mendalami pengembangan web full-stack, logika algoritma, dan pemrograman berorientasi objek.</p>
-                </div>
-
-                <div class="glass p-6 rounded-2xl border border-gray-800 hover:border-neonCyan transition duration-300 hover:scale-105 shadow-lg group" data-aos="fade-up" data-aos-delay="300">
-                    <div class="w-12 h-12 rounded-xl bg-neonCyan/10 flex items-center justify-center text-neonCyan mb-4">
-                        <i data-lucide="rocket" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">🚀 Projects</h3>
-                    <p class="text-gray-400 text-sm">Telah merancang berbagai macam aplikasi berbasis web, sistem informasi sekolah, hingga desain antarmuka UI/UX.</p>
-                </div>
-
-                <div class="glass p-6 rounded-2xl border border-gray-800 hover:border-neonBlue transition duration-300 hover:scale-105 shadow-lg group" data-aos="fade-up" data-aos-delay="400">
-                    <div class="w-12 h-12 rounded-xl bg-neonBlue/10 flex items-center justify-center text-neonBlue mb-4">
-                        <i data-lucide="target" class="w-6 h-6"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2">🎯 Goals</h3>
-                    <p class="text-gray-400 text-sm">Berkomitmen menjadi Software Engineer profesional yang andal serta mampu menciptakan solusi teknologi berdampak luas.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="skills" class="py-24 bg-cardBg/50 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-3xl sm:text-4xl font-extrabold mb-4">My <span class="text-gradient">Skills</span></h2>
-                <div class="w-20 h-1 bg-neonBlue mx-auto rounded-full"></div>
-            </div>
-
-            <div id="skills-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" data-aos="fade-up">
-                </div>
-        </div>
-    </section>
-
-    <section id="projects" class="py-24 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-3xl sm:text-4xl font-extrabold mb-4">Featured <span class="text-gradient">Projects</span></h2>
-                <div class="w-20 h-1 bg-neonBlue mx-auto rounded-full"></div>
-            </div>
-
-            <div class="flex flex-wrap justify-center gap-3 mb-12" data-aos="fade-up">
-                <button class="project-filter px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider bg-neonBlue text-darkBg shadow-neon transition" data-filter="All">All</button>
-                <button class="project-filter px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider glass text-gray-300 hover:text-neonBlue border border-gray-700 transition" data-filter="Web">Web</button>
-                <button class="project-filter px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider glass text-gray-300 hover:text-neonBlue border border-gray-700 transition" data-filter="App">App</button>
-                <button class="project-filter px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider glass text-gray-300 hover:text-neonBlue border border-gray-700 transition" data-filter="UI/UX">UI/UX</button>
-            </div>
-
-            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" data-aos="fade-up">
-                </div>
-        </div>
-    </section>
-
-    <section id="experience" class="py-24 bg-cardBg/50 relative">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-3xl sm:text-4xl font-extrabold mb-4">Learning <span class="text-gradient">Experience</span></h2>
-                <div class="w-20 h-1 bg-neonBlue mx-auto rounded-full"></div>
-            </div>
-
-            <div class="relative border-l-2 border-neonBlue/30 ml-4 sm:ml-32 space-y-12" id="timeline-container">
-                </div>
-        </div>
-    </section>
-
-    <section id="certificates" class="py-24 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-3xl sm:text-4xl font-extrabold mb-4">Certificates & <span class="text-gradient">Achievements</span></h2>
-                <div class="w-20 h-1 bg-neonBlue mx-auto rounded-full"></div>
-            </div>
-
-            <div id="certificates-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" data-aos="fade-up">
-                </div>
-        </div>
-    </section>
-
-    <div id="cert-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-        <div class="relative max-w-3xl w-full glass p-4 rounded-2xl border border-neonBlue/40">
-            <button id="close-modal" class="absolute top-4 right-4 text-gray-400 hover:text-neonBlue z-10 p-2">
-                <i data-lucide="x" class="w-6 h-6"></i>
-            </button>
-            <img id="modal-img" src="" alt="Certificate Preview" class="w-full h-auto rounded-xl object-contain max-h-[80vh]">
-            <h3 id="modal-title" class="text-xl font-bold mt-4 text-center text-neonBlue"></h3>
-        </div>
-    </div>
-
-    <section id="contact" class="py-24 bg-cardBg/50 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-3xl sm:text-4xl font-extrabold mb-4">Let's Work <span class="text-gradient">Together</span></h2>
-                <div class="w-20 h-1 bg-neonBlue mx-auto rounded-full"></div>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <div class="space-y-6" data-aos="fade-right">
-                    <h3 class="text-2xl font-bold mb-4">Get In Touch</h3>
-                    <p class="text-gray-400">Tertarik berkolaborasi dalam project web, diskusi teknologi, atau sekadar menyapa? Jangan ragu untuk menghubungi saya melalui kontak di bawah ini.</p>
-                    
-                    <div class="space-y-4 pt-4">
-                        <div class="flex items-center gap-4 glass p-4 rounded-xl border border-gray-800">
-                            <div class="w-10 h-10 rounded-lg bg-neonBlue/10 flex items-center justify-center text-neonBlue">
-                                <i data-lucide="mail" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <p class="text-xs text-gray-400">Email</p>
-                                <p id="contact-email" class="font-medium text-gray-200">[EMAIL]</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-4 glass p-4 rounded-xl border border-gray-800">
-                            <div class="w-10 h-10 rounded-lg bg-neonCyan/10 flex items-center justify-center text-neonCyan">
-                                <i data-lucide="phone" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <p class="text-xs text-gray-400">WhatsApp</p>
-                                <p id="contact-wa" class="font-medium text-gray-200">[NOMOR WHATSAPP]</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-4 glass p-4 rounded-xl border border-gray-800">
-                            <div class="w-10 h-10 rounded-lg bg-neonPurple/10 flex items-center justify-center text-neonPurple">
-                                <i data-lucide="instagram" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <p class="text-xs text-gray-400">Instagram</p>
-                                <p id="contact-ig" class="font-medium text-gray-200">[INSTAGRAM]</p>
-                            </div>
-                        </div>
+                    <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
+                        <a href="#projects" class="px-6 py-3 rounded-xl bg-neonBlue text-darkBg font-bold text-sm tracking-wide hover:bg-neonCyan transition-all shadow-lg shadow-neonBlue/25 flex items-center gap-2">
+                            View My Projects <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#contact" class="px-6 py-3 rounded-xl glass-card border border-white/10 text-white font-semibold text-sm tracking-wide hover:border-neonBlue transition-all">
+                            Let's Talk
+                        </a>
                     </div>
                 </div>
 
-                <div class="glass p-8 rounded-2xl border border-gray-800" data-aos="fade-left">
-                    <form id="contact-form" class="space-y-6">
-                        <div>
-                            <label class="block text-xs uppercase tracking-wider text-gray-400 mb-2 font-semibold">Your Name</label>
-                            <input type="text" required class="w-full bg-darkBg/80 border border-gray-700 rounded-xl px-4 py-3 text-gray-200 focus:outline-none focus:border-neonBlue transition" placeholder="John Doe">
+                <!-- Right Profile Image with Animated Border -->
+                <div class="lg:col-span-5 flex justify-center" data-aos="fade-left">
+                    <div class="relative w-64 h-64 sm:w-80 sm:h-80">
+                        <!-- Animated Glowing Border Ring -->
+                        <div class="absolute inset-0 rounded-3xl bg-gradient-to-tr from-neonBlue via-neonPurple to-neonCyan animate-spin-slow blur-md opacity-70"></div>
+                        <div class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-neonBlue to-neonPurple opacity-30 blur-lg"></div>
+                        
+                        <!-- Image Container -->
+                        <div class="relative w-full h-full rounded-3xl overflow-hidden glass-card border-2 border-neonBlue/50 p-2">
+                            <img id="profile-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" alt="Profile" class="w-full h-full object-cover rounded-2xl grayscale hover:grayscale-0 transition-all duration-500">
                         </div>
-                        <div>
-                            <label class="block text-xs uppercase tracking-wider text-gray-400 mb-2 font-semibold">Your Email</label>
-                            <input type="email" required class="w-full bg-darkBg/80 border border-gray-700 rounded-xl px-4 py-3 text-gray-200 focus:outline-none focus:border-neonBlue transition" placeholder="john@example.com">
-                        </div>
-                        <div>
-                            <label class="block text-xs uppercase tracking-wider text-gray-400 mb-2 font-semibold">Your Message</label>
-                            <textarea rows="4" required class="w-full bg-darkBg/80 border border-gray-700 rounded-xl px-4 py-3 text-gray-200 focus:outline-none focus:border-neonBlue transition" placeholder="Halo, saya ingin mendiskusikan project..."></textarea>
-                        </div>
-                        <button type="submit" class="w-full py-3 rounded-xl font-bold text-darkBg bg-gradient-to-r from-neonBlue to-neonCyan shadow-neon hover:scale-[1.02] transition transform">
-                            Send Message
-                        </button>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <footer class="py-8 border-t border-gray-800 glass text-center">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p id="footer-text" class="text-sm text-gray-400">Designed & Built by [NAMA] — RPL Student</p>
-            <div class="flex items-center gap-4 text-gray-400">
-                <a href="#" class="hover:text-neonBlue transition"><i data-lucide="github" class="w-5 h-5"></i></a>
-                <a href="#" class="hover:text-neonBlue transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>
-                <a href="#" class="hover:text-neonBlue transition"><i data-lucide="mail" class="w-5 h-5"></i></a>
+        <!-- 2. ABOUT ME SECTION -->
+        <section id="about" class="py-24 px-6 relative">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">About <span class="gradient-text">Me</span></h2>
+                    <p class="text-gray-400 text-sm sm:text-base">Mengenal lebih dekat latar belakang dan semangat saya di dunia teknologi.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <div class="lg:col-span-6 space-y-6" data-aos="fade-right">
+                        <div class="glass-card p-8 rounded-2xl relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-neonBlue/5 rounded-full blur-2xl pointer-events-none"></div>
+                            <h3 class="text-xl font-bold text-neonBlue mb-4 flex items-center gap-2">
+                                <i data-lucide="code-2" class="w-5 h-5"></span> Semangat & Dedikasi
+                            </h3>
+                            <p class="text-gray-300 leading-relaxed text-sm sm:text-base">
+                                Saya adalah seorang siswa SMK di <span id="about-school" class="text-neonCyan font-semibold">SMK NEGERI 3 SEKAYU</span> mengambil jurusan Rekayasa Perangkat Lunak (RPL). Ketertarikan saya pada dunia pemrograman dimulai dari rasa penasaran bagaimana sebuah website dan aplikasi dapat bekerja secara interaktif. Saat ini, saya fokus mendalami pengembangan web frontend & backend serta desain UI/UX.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Cards Info (Education, Programming, Projects, Goals) -->
+                    <div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-6" data-aos="fade-left">
+                        <div class="glass-card p-6 rounded-2xl transition-all duration-300 hover:scale-105 neon-box-glow">
+                            <div class="w-12 h-12 rounded-xl bg-neonBlue/10 flex items-center justify-center text-neonBlue mb-4">
+                                <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+                            </div>
+                            <h4 class="font-bold text-lg mb-2">🎓 Education</h4>
+                            <p class="text-gray-400 text-sm">Siswa aktif RPL di <span id="about-school-card">SMK NEGERI 3 SEKYAU</span>, aktif mempelajari algoritma dan struktur data.</p>
+                        </div>
+
+                        <div class="glass-card p-6 rounded-2xl transition-all duration-300 hover:scale-105 neon-box-glow">
+                            <div class="w-12 h-12 rounded-xl bg-neonPurple/10 flex items-center justify-center text-neonPurple mb-4">
+                                <i data-lucide="cpu" class="w-6 h-6"></i>
+                            </div>
+                            <h4 class="font-bold text-lg mb-2">💻 Programming</h4>
+                            <p class="text-gray-400 text-sm">Menguasai HTML, CSS, JavaScript, PHP, dan framework seperti Laravel.</p>
+                        </div>
+
+                        <div class="glass-card p-6 rounded-2xl transition-all duration-300 hover:scale-105 neon-box-glow">
+                            <div class="w-12 h-12 rounded-xl bg-neonCyan/10 flex items-center justify-center text-neonCyan mb-4">
+                                <i data-lucide="rocket" class="w-6 h-6"></i>
+                            </div>
+                            <h4 class="font-bold text-lg mb-2">🚀 Projects</h4>
+                            <p class="text-gray-400 text-sm">Telah merancang berbagai aplikasi web mulai dari sistem sekolah hingga toko online.</p>
+                        </div>
+
+                        <div class="glass-card p-6 rounded-2xl transition-all duration-300 hover:scale-105 neon-box-glow">
+                            <div class="w-12 h-12 rounded-xl bg-neonBlue/10 flex items-center justify-center text-neonBlue mb-4">
+                                <i data-lucide="target" class="w-6 h-6"></i>
+                            </div>
+                            <h4 class="font-bold text-lg mb-2">🎯 Goals</h4>
+                            <p class="text-gray-400 text-sm">Menjadi Software Engineer profesional yang mampu menciptakan solusi teknologi berdampak luas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. SKILLS SECTION -->
+        <section id="skills" class="py-24 px-6 relative bg-cardBg/40">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">My <span class="gradient-text">Skills</span></h2>
+                    <p class="text-gray-400 text-sm sm:text-base">Teknologi dan tools yang saya gunakan sehari-hari dalam membangun project.</p>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6" id="skills-container" data-aos="fade-up">
+                    <!-- Skills will be dynamically rendered via JS configuration for clean management -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. PROJECTS SECTION -->
+        <section id="projects" class="py-24 px-6 relative">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-12" data-aos="fade-up">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">Featured <span class="gradient-text">Projects</span></h2>
+                    <p class="text-gray-400 text-sm sm:text-base">Beberapa hasil karya terbaik yang telah saya kembangkan.</p>
+                </div>
+
+                <!-- Category Filters -->
+                <div class="flex flex-wrap items-center justify-center gap-3 mb-12" data-aos="fade-up">
+                    <button class="project-filter px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider bg-neonBlue text-darkBg transition-all" data-filter="all">All</button>
+                    <button class="project-filter px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider glass-card text-gray-300 hover:text-neonBlue transition-all" data-filter="Web">Web</button>
+                    <button class="project-filter px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider glass-card text-gray-300 hover:text-neonBlue transition-all" data-filter="App">App</button>
+                    <button class="project-filter px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider glass-card text-gray-300 hover:text-neonBlue transition-all" data-filter="UI/UX">UI/UX</button>
+                </div>
+
+                <!-- Project Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid" data-aos="fade-up">
+                    <!-- Rendered via JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. EXPERIENCE SECTION -->
+        <section id="experience" class="py-24 px-6 relative bg-cardBg/40">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">My <span class="gradient-text">Experience</span></h2>
+                    <p class="text-gray-400 text-sm sm:text-base">Jejak perjalanan belajar dan perkembangan skill di dunia IT.</p>
+                </div>
+
+                <div class="relative border-l border-neonBlue/30 ml-4 sm:ml-8 space-y-12" id="timeline-container" data-aos="fade-up">
+                    <!-- Rendered via JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. CERTIFICATES & ACHIEVEMENTS SECTION -->
+        <section id="certificates" class="py-24 px-6 relative">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">Certificates & <span class="gradient-text">Achievements</span></h2>
+                    <p class="text-gray-400 text-sm sm:text-base">Sertifikat pelatihan dan penghargaan kompetensi programming.</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="certificates-grid" data-aos="fade-up">
+                    <!-- Rendered via JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. STATISTICS SECTION -->
+        <section class="py-20 px-6 relative bg-gradient-to-b from-transparent via-neonBlue/5 to-transparent">
+            <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center" data-aos="fade-up">
+                <div class="glass-card p-6 rounded-2xl">
+                    <div class="text-4xl sm:text-5xl font-extrabold text-neonBlue mb-2"><span class="counter" data-target="10">0</span>+</div>
+                    <div class="text-gray-400 text-xs sm:text-sm uppercase tracking-wider font-medium">Projects Completed</div>
+                </div>
+                <div class="glass-card p-6 rounded-2xl">
+                    <div class="text-4xl sm:text-5xl font-extrabold text-neonPurple mb-2"><span class="counter" data-target="5">0</span>+</div>
+                    <div class="text-gray-400 text-xs sm:text-sm uppercase tracking-wider font-medium">Certificates Earned</div>
+                </div>
+                <div class="glass-card p-6 rounded-2xl">
+                    <div class="text-4xl sm:text-5xl font-extrabold text-neonCyan mb-2"><span class="counter" data-target="3">0</span>+</div>
+                    <div class="text-gray-400 text-xs sm:text-sm uppercase tracking-wider font-medium">Programming Languages</div>
+                </div>
+                <div class="glass-card p-6 rounded-2xl">
+                    <div class="text-4xl sm:text-5xl font-extrabold text-neonBlue mb-2"><span class="counter" data-target="2">0</span>+</div>
+                    <div class="text-gray-400 text-xs sm:text-sm uppercase tracking-wider font-medium">Years Learning</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. CONTACT SECTION -->
+        <section id="contact" class="py-24 px-6 relative">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">Let's Work <span class="gradient-text">Together</span></h2>
+                    <p class="text-gray-400 text-sm sm:text-base">Punya pertanyaan, tawaran project, atau ingin berdiskusi seputar coding? Hubungi saya!</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                    <!-- Left: Contact Details -->
+                    <div class="lg:col-span-5 space-y-6" data-aos="fade-right">
+                        <div class="glass-card p-8 rounded-2xl space-y-6">
+                            <h3 class="text-xl font-bold text-neonBlue">Informasi Kontak</h3>
+                            <p class="text-gray-400 text-sm">Jangan ragu untuk menghubungi saya melalui platform di bawah ini.</p>
+                            
+                            <div class="space-y-4">
+                                <a href="#" id="contact-email-link" class="flex items-center gap-4 p-3 rounded-xl glass-card hover:border-neonBlue transition-all">
+                                    <div class="w-10 h-10 rounded-lg bg-neonBlue/10 flex items-center justify-center text-neonBlue">
+                                        <i data-lucide="mail" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-gray-400">Email</div>
+                                        <div id="contact-email" class="text-sm font-medium">email@domain.com</div>
+                                    </div>
+                                </a>
+
+                                <a href="#" id="contact-wa-link" target="_blank" class="flex items-center gap-4 p-3 rounded-xl glass-card hover:border-neonBlue transition-all">
+                                    <div class="w-10 h-10 rounded-lg bg-neonPurple/10 flex items-center justify-center text-neonPurple">
+                                        <i data-lucide="phone" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-gray-400">WhatsApp</div>
+                                        <div id="contact-whatsapp" class="text-sm font-medium">+62 812-3456-7890</div>
+                                    </div>
+                                </a>
+
+                                <a href="#" id="contact-ig-link" target="_blank" class="flex items-center gap-4 p-3 rounded-xl glass-card hover:border-neonBlue transition-all">
+                                    <div class="w-10 h-10 rounded-lg bg-neonCyan/10 flex items-center justify-center text-neonCyan">
+                                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-gray-400">Instagram</div>
+                                        <div id="contact-instagram" class="text-sm font-medium">@username</div>
+                                    </div>
+                                </a>
+
+                                <a href="#" id="contact-github-link" target="_blank" class="flex items-center gap-4 p-3 rounded-xl glass-card hover:border-neonBlue transition-all">
+                                    <div class="w-10 h-10 rounded-lg bg-neonBlue/10 flex items-center justify-center text-neonBlue">
+                                        <i data-lucide="github" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-gray-400">GitHub</div>
+                                        <div id="contact-github" class="text-sm font-medium">github.com/username</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Contact Form -->
+                    <div class="lg:col-span-7" data-aos="fade-left">
+                        <form id="contact-form" class="glass-card p-8 rounded-2xl space-y-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div class="space-y-2">
+                                    <label class="text-xs font-semibold uppercase tracking-wider text-gray-300">Your Name</label>
+                                    <input type="text" required class="w-full px-4 py-3 rounded-xl bg-darkBg border border-white/10 text-white focus:border-neonBlue focus:outline-none transition-all text-sm" placeholder="John Doe">
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-xs font-semibold uppercase tracking-wider text-gray-300">Your Email</label>
+                                    <input type="email" required class="w-full px-4 py-3 rounded-xl bg-darkBg border border-white/10 text-white focus:border-neonBlue focus:outline-none transition-all text-sm" placeholder="john@example.com">
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-semibold uppercase tracking-wider text-gray-300">Message</label>
+                                <textarea rows="5" required class="w-full px-4 py-3 rounded-xl bg-darkBg border border-white/10 text-white focus:border-neonBlue focus:outline-none transition-all text-sm" placeholder="Tuliskan pesan atau penawaran Anda..."></textarea>
+                            </div>
+                            <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-neonBlue to-neonPurple text-darkBg font-bold text-sm tracking-wide uppercase hover:opacity-90 transition-all shadow-lg shadow-neonBlue/20 flex items-center justify-center gap-2">
+                                Send Message <i data-lucide="send" class="w-4 h-4"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-white/5 py-8 px-6 text-center text-sm text-gray-400 relative z-10 glass-card">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div id="footer-text">
+                Designed & Built by <span class="text-neonBlue font-semibold">[NAMA LENGKAP]</span> — RPL Student
+            </div>
+            <div class="flex items-center gap-4 text-gray-400" id="footer-socials">
+                <!-- Social Icons Rendered via JS -->
             </div>
         </div>
     </footer>
 
+    <!-- MODAL PREVIEW CERTIFICATE -->
+    <div id="cert-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-md p-4">
+        <div class="relative max-w-3xl w-full glass-card p-4 rounded-2xl border border-neonBlue/50">
+            <button id="close-modal" class="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-neonBlue text-darkBg flex items-center justify-center font-bold hover:scale-110 transition-transform">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <img id="modal-img" src="" alt="Certificate Preview" class="w-full h-auto rounded-xl object-contain max-h-[75vh]">
+            <h3 id="modal-title" class="text-lg font-bold text-neonBlue mt-4 text-center"></h3>
+        </div>
+    </div>
+
+    <!-- Script JavaScript & Konfigurasi Data -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Initialize AOS animation library
-        AOS.init({
-            duration: 800,
-            once: true,
-        });
+        // ==========================================
+        // CONFIGURATION DATA (MUDAH DIGANTI)
+        // ==========================================
+        const PORTFOLIO_DATA = {
+            name: "MUHAMMAD HIBATULLAH NAUFAL",
+            nickname: "NAUFAL",
+            school: "SMK Negeri 3 Sekayu",
+            major: "Rekayasa Perangkat Lunak",
+            class: "XI RPL 2",
+            city: "Sekayu",
+            age: 17,
+            email: "muhammadhibatullahnaufal09@gmail.com",
+            instagram: "@vwall2009",
+            github: "github.com/naufal0331",
+            whatsapp: "+6285709051828",
+            profilePhoto: "foto1.jpeg",
+            cvUrl: "#",
 
-        // Initialize Lucide Icons
-        lucide.createIcons();
+            skills: [
+                { name: "HTML5", level: 95, icon: "code" },
+                { name: "CSS3", level: 90, icon: "layout" },
+                { name: "JavaScript", level: 85, icon: "file-code" },
+                { name: "PHP", level: 80, icon: "server" },
+                { name: "Laravel", level: 75, icon: "layers" },
+                { name: "MySQL", level: 85, icon: "database" },
+                { name: "Git & GitHub", level: 80, icon: "git-branch" },
+                { name: "UI/UX Design", level: 70, icon: "pen-tool" },
+                { name: "Figma", level: 75, icon: "figma" },
+                { name: "Python", level: 65, icon: "terminal" }
+            ],
 
-        // Populate Dynamic Data from PORTFOLIO_DATA configuration
-        document.addEventListener("DOMContentLoaded", () => {
-            const p = PORTFOLIO_DATA.profile;
+            projects: [
+                {
+                    title: "Website Portfolio Modern",
+                    category: "Web",
+                    desc: "Website portofolio pribadi dengan tema dark futuristic, animasi interaktif, dan glassmorphism.",
+                    image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=600&q=80",
+                    tech: ["HTML5", "Tailwind CSS", "JavaScript"],
+                    liveUrl: "#",
+                    githubUrl: "#"
+                },
+                {
+                    title: "Sistem Informasi Sekolah",
+                    category: "Web",
+                    desc: "Platform manajemen data siswa, absensi, dan nilai berbasis web menggunakan Laravel & MySQL.",
+                    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80",
+                    tech: ["PHP", "Laravel", "MySQL", "Tailwind"],
+                    liveUrl: "#",
+                    githubUrl: "#"
+                },
+                {
+                    title: "Website Kasir (POS)",
+                    category: "Web",
+                    desc: "Aplikasi Point of Sale untuk toko retail kecil dengan fitur cetak struk dan laporan penjualan.",
+                    image: "https://images.unsplash.com/photo-1556742049-0a67d5536252?auto=format&fit=crop&w=600&q=80",
+                    tech: ["JavaScript", "PHP", "MySQL"],
+                    liveUrl: "#",
+                    githubUrl: "#"
+                },
+                {
+                    title: "Aplikasi To-Do List Interaktif",
+                    category: "App",
+                    desc: "Aplikasi manajemen tugas harian dengan fitur local storage, kategori, dan animasi halus.",
+                    image: "https://images.unsplash.com/photo-1540350394557-8d14678e7f91?auto=format&fit=crop&w=600&q=80",
+                    tech: ["JavaScript", "DOM API", "CSS3"],
+                    liveUrl: "#",
+                    githubUrl: "#"
+                },
+                {
+                    title: "Website Toko Online (E-Commerce)",
+                    category: "Web",
+                    desc: "Platform e-commerce mini dengan keranjang belanja, integrasi API pembayaran, dan panel admin.",
+                    image: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=600&q=80",
+                    tech: ["PHP", "Bootstrap", "MySQL"],
+                    liveUrl: "#",
+                    githubUrl: "#"
+                },
+                {
+                    title: "Redesign UI/UX Aplikasi Absensi",
+                    category: "UI/UX",
+                    desc: "Desain antarmuka aplikasi mobile absensi siswa SMK dengan pendekatan user-centered design.",
+                    image: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&w=600&q=80",
+                    tech: ["Figma", "UI/UX", "Prototyping"],
+                    liveUrl: "#",
+                    githubUrl: "#"
+                }
+            ],
 
-            // Nav & Hero
-            document.getElementById("nav-logo-name").innerText = p.nickname;
-            document.getElementById("hero-name").innerText = p.name;
-            document.getElementById("hero-subtitle").innerText = p.role;
-            document.getElementById("hero-desc").innerText = p.bio;
-            document.getElementById("hero-img").src = p.photo;
+            experiences: [
+                {
+                    year: "2024",
+                    title: "Masuk SMK Jurusan RPL",
+                    desc: "Memulai perjalanan di dunia IT, mempelajari dasar-dasar algoritma, logika pemrograman, dan struktur komputer."
+                },
+                {
+                    year: "2025",
+                    title: "Mulai Belajar Web Development",
+                    desc: "Menguasai dasar HTML, CSS, dan JavaScript secara otodidak maupun dari materi sekolah, serta membuat website statis pertama."
+                },
+                {
+                    year: "2025",
+                    title: "Membuat Project Pertama",
+                    desc: "Berhasil merancang Sistem Informasi Sekolah sederhana menggunakan PHP native dan database MySQL."
+                },
+                {
+                    year: "2026",
+                    title: "Mengikuti PKL / Kegiatan IT",
+                    desc: "Terlibat langsung dalam lingkungan kerja profesional, memperdalam framework Laravel dan kolaborasi tim via Git."
+                },
+                {
+                    year: "2026",
+                    title: "Mengembangkan Portfolio Professional",
+                    desc: "Terus mengeksplorasi teknologi modern untuk membangun portofolio digital yang siap menghadapi industri."
+                }
+            ],
 
-            // About
-            document.getElementById("about-school").innerText = p.school;
+            certificates: [
+                {
+                    title: "Sertifikat Kompetensi Keahlian RPL",
+                    issuer: "LSP SMK Negeri 1 Cyber",
+                    date: "2025",
+                    image: "https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                    title: "Junior Web Developer Training",
+                    issuer: "Digital Talent Scholarship Kominfo",
+                    date: "2025",
+                    image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                    title: "Mastering Modern JavaScript",
+                    issuer: "Codepolitan Academy",
+                    date: "2026",
+                    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=600&q=80"
+                }
+            ]
+        };
 
-            // Contact info
-            document.getElementById("contact-email").innerText = p.email;
-            document.getElementById("contact-wa").innerText = p.whatsapp;
-            document.getElementById("contact-ig").innerText = p.instagram;
+        // ==========================================
+        // INJECT DATA KE DOM
+        // ==========================================
+        function initData() {
+            document.getElementById('nav-logo-text').textContent = `[${PORTFOLIO_DATA.nickname}]`;
+            document.getElementById('hero-badge').textContent = `SMK Student • RPL • Junior Developer`;
+            document.getElementById('hero-name').textContent = PORTFOLIO_DATA.name;
+            document.getElementById('hero-desc').textContent = `Siswa SMK Jurusan Rekayasa Perangkat Lunak di ${PORTFOLIO_DATA.school} yang antusias dalam mengembangkan aplikasi web modern dan interaktif.`;
+            document.getElementById('profile-img').src = PORTFOLIO_DATA.profilePhoto;
+            document.getElementById('download-cv-btn').href = PORTFOLIO_DATA.cvUrl;
 
-            // Footer
-            document.getElementById("footer-text").innerText = `Designed & Built by ${p.name} — RPL Student`;
+            document.getElementById('about-school').textContent = PORTFOLIO_DATA.school;
+            document.getElementById('about-school-card').textContent = PORTFOLIO_DATA.school;
+
+            document.getElementById('contact-email').textContent = PORTFOLIO_DATA.email;
+            document.getElementById('contact-email-link').href = `mailto:${PORTFOLIO_DATA.email}`;
+            document.getElementById('contact-whatsapp').textContent = PORTFOLIO_DATA.whatsapp;
+            document.getElementById('contact-wa-link').href = `https://wa.me/${PORTFOLIO_DATA.whatsapp.replace(/[^0-9]/g, '')}`;
+            document.getElementById('contact-instagram').textContent = PORTFOLIO_DATA.instagram;
+            document.getElementById('contact-ig-link').href = `https://instagram.com/${PORTFOLIO_DATA.instagram.replace('@', '')}`;
+            document.getElementById('contact-github').textContent = PORTFOLIO_DATA.github;
+            document.getElementById('contact-github-link').href = `https://${PORTFOLIO_DATA.github}`;
+
+            document.getElementById('footer-text').innerHTML = `Designed & Built by <span class="text-neonBlue font-semibold">${PORTFOLIO_DATA.name}</span> — RPL Student`;
 
             // Render Skills
-            const skillsContainer = document.getElementById("skills-container");
-            PORTFOLIO_DATA.skills.forEach(skill => {
-                skillsContainer.innerHTML += `
-                    <div class="glass p-6 rounded-2xl border border-gray-800 hover:border-neonBlue transition duration-300">
-                        <div class="flex items-center justify-between mb-3">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-lg bg-neonBlue/10 flex items-center justify-center text-neonBlue">
-                                    <i data-lucide="${skill.icon}" class="w-5 h-5"></i>
-                                </div>
-                                <span class="font-bold text-gray-200">${skill.name}</span>
-                            </div>
-                            <span class="text-neonBlue text-sm font-semibold">${skill.level}%</span>
-                        </div>
-                        <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden">
-                            <div class="bg-gradient-to-r from-neonBlue to-neonCyan h-full rounded-full transition-all duration-1000" style="width: ${skill.level}%"></div>
-                        </div>
+            const skillsContainer = document.getElementById('skills-container');
+            skillsContainer.innerHTML = PORTFOLIO_DATA.skills.map(skill => `
+                <div class="glass-card p-6 rounded-2xl flex flex-col items-center justify-center text-center gap-3 transition-all duration-300 hover:scale-105 neon-box-glow group">
+                    <div class="w-12 h-12 rounded-xl bg-neonBlue/10 flex items-center justify-center text-neonBlue group-hover:bg-neonBlue group-hover:text-darkBg transition-all">
+                        <i data-lucide="${skill.icon}" class="w-6 h-6"></i>
                     </div>
-                `;
-            });
+                    <div class="font-bold text-sm">${skill.name}</div>
+                    <div class="w-full bg-darkBg rounded-full h-2 overflow-hidden border border-white/10">
+                        <div class="bg-gradient-to-r from-neonBlue to-neonPurple h-full rounded-full transition-all duration-1000" style="width: ${skill.level}%"></div>
+                    </div>
+                    <div class="text-xs text-gray-400">${skill.level}% Proficiency</div>
+                </div>
+            `).join('');
 
             // Render Projects
-            renderProjects("All");
+            renderProjects('all');
 
-            // Render Experiences
-            const timelineContainer = document.getElementById("timeline-container");
-            PORTFOLIO_DATA.experiences.forEach(exp => {
-                timelineContainer.innerHTML += `
-                    <div class="relative pl-8 sm:pl-12" data-aos="fade-up">
-                        <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-neonBlue border-4 border-darkBg shadow-neon"></div>
-                        <span class="text-xs font-bold text-neonBlue px-3 py-1 rounded-full glass border border-neonBlue/30 inline-block mb-2">${exp.year}</span>
-                        <h3 class="text-xl font-bold text-gray-100">${exp.title}</h3>
-                        <p class="text-gray-400 text-sm mt-1">${exp.desc}</p>
+            // Render Timeline Experience
+            const timelineContainer = document.getElementById('timeline-container');
+            timelineContainer.innerHTML = PORTFOLIO_DATA.experiences.map(exp => `
+                <div class="relative pl-8 sm:pl-10 group">
+                    <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-darkBg border-2 border-neonBlue group-hover:bg-neonBlue transition-all shadow-[0_0_10px_#00F0FF]"></div>
+                    <div class="glass-card p-6 rounded-2xl transition-all duration-300 hover:border-neonBlue">
+                        <span class="inline-block px-3 py-1 rounded-full bg-neonBlue/10 text-neonBlue font-code text-xs mb-2">${exp.year}</span>
+                        <h4 class="text-lg font-bold mb-1">${exp.title}</h4>
+                        <p class="text-gray-400 text-sm">${exp.desc}</p>
                     </div>
-                `;
-            });
+                </div>
+            `).join('');
 
             // Render Certificates
-            const certGrid = document.getElementById("certificates-grid");
-            PORTFOLIO_DATA.certificates.forEach(cert => {
-                certGrid.innerHTML += `
-                    <div class="glass p-4 rounded-2xl border border-gray-800 hover:border-neonPurple transition duration-300 cursor-pointer group cert-card" data-img="${cert.image}" data-title="${cert.title}" data-aos="fade-up">
-                        <div class="overflow-hidden rounded-xl mb-4 h-40">
-                            <img src="${cert.image}" alt="${cert.title}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+            const certGrid = document.getElementById('certificates-grid');
+            certGrid.innerHTML = PORTFOLIO_DATA.certificates.map(cert => `
+                <div class="glass-card rounded-2xl overflow-hidden group cursor-pointer cert-card" data-img="${cert.image}" data-title="${cert.title}">
+                    <div class="overflow-hidden h-48 relative">
+                        <div class="absolute inset-0 bg-neonBlue/20 opacity-0 group-hover:opacity-100 transition-all z-10 flex items-center justify-center">
+                            <span class="px-4 py-2 rounded-lg bg-darkBg/80 text-neonBlue text-xs font-bold uppercase tracking-wider backdrop-blur-sm">View Certificate</span>
                         </div>
-                        <h4 class="font-bold text-gray-200 group-hover:text-neonBlue transition">${cert.title}</h4>
-                        <p class="text-xs text-gray-400 mt-1">${cert.issuer}</p>
+                        <img src="${cert.image}" alt="${cert.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                     </div>
-                `;
-            });
+                    <div class="p-6">
+                        <span class="text-xs text-neonCyan font-code">${cert.issuer} • ${cert.date}</span>
+                        <h4 class="font-bold text-base mt-1 group-hover:text-neonBlue transition-colors">${cert.title}</h4>
+                    </div>
+                </div>
+            `).join('');
 
-            // Re-initialize Lucide for dynamic elements
+            // Render Footer Socials
+            const footerSocials = document.getElementById('footer-socials');
+            footerSocials.innerHTML = `
+                <a href="https://${PORTFOLIO_DATA.github}" target="_blank" class="hover:text-neonBlue transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
+                <a href="https://instagram.com/${PORTFOLIO_DATA.instagram.replace('@', '')}" target="_blank" class="hover:text-neonBlue transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                <a href="mailto:${PORTFOLIO_DATA.email}" class="hover:text-neonBlue transition-colors"><i data-lucide="mail" class="w-5 h-5"></i></a>
+            `;
+
+            // Refresh Lucide Icons after dynamic rendering
             lucide.createIcons();
-            initModalListeners();
-        });
+        }
 
-        // Function to render projects based on category filter
+        // Render Projects Function with Filter
         function renderProjects(filter) {
-            const projectsGrid = document.getElementById("projects-grid");
-            projectsGrid.innerHTML = "";
+            const grid = document.getElementById('projects-grid');
+            const filtered = filter === 'all' ? PORTFOLIO_DATA.projects : PORTFOLIO_DATA.projects.filter(p => p.category === filter);
             
-            const filtered = filter === "All" ? PORTFOLIO_DATA.projects : PORTFOLIO_DATA.projects.filter(p => p.category === filter);
-
-            filtered.forEach(proj => {
-                let techBadges = proj.tech.map(t => `<span class="text-[10px] font-semibold px-2.5 py-1 rounded-md glass text-neonCyan border border-neonCyan/20">${t}</span>`).join("");
-                
-                projectsGrid.innerHTML += `
-                    <div class="glass rounded-2xl border border-gray-800 overflow-hidden hover:border-neonBlue transition duration-300 group" data-aos="fade-up">
-                        <div class="relative overflow-hidden h-48">
-                            <img src="${proj.image}" alt="${proj.title}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                            <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-transparent opacity-60"></div>
+            grid.innerHTML = filtered.map(proj => `
+                <div class="glass-card rounded-2xl overflow-hidden group transition-all duration-300 hover:-translate-y-2 hover:border-neonBlue flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-48 overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-transparent to-transparent z-10 opacity-60"></div>
+                            <img src="${proj.image}" alt="${proj.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <span class="absolute top-4 right-4 z-20 px-3 py-1 rounded-full bg-darkBg/80 backdrop-blur-md text-neonBlue text-xs font-semibold uppercase tracking-wider border border-neonBlue/30">${proj.category}</span>
                         </div>
                         <div class="p-6">
-                            <div class="flex flex-wrap gap-2 mb-3">${techBadges}</div>
-                            <h3 class="text-xl font-bold mb-2 group-hover:text-neonBlue transition">${proj.title}</h3>
-                            <p class="text-gray-400 text-sm mb-6">${proj.desc}</p>
-                            <div class="flex items-center gap-4">
-                                <a href="${proj.live}" class="flex items-center gap-1.5 text-xs font-bold text-darkBg bg-neonBlue px-4 py-2 rounded-xl shadow-neon hover:scale-105 transition"><i data-lucide="external-link" class="w-4 h-4"></i> Live Demo</a>
-                                <a href="${proj.github}" class="flex items-center gap-1.5 text-xs font-bold glass text-gray-200 border border-gray-700 px-4 py-2 rounded-xl hover:border-neonBlue hover:text-neonBlue transition"><i data-lucide="github" class="w-4 h-4"></i> GitHub</a>
+                            <h4 class="text-lg font-bold mb-2 group-hover:text-neonBlue transition-colors">${proj.title}</h4>
+                            <p class="text-gray-400 text-sm mb-4 leading-relaxed">${proj.desc}</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                ${proj.tech.map(t => `<span class="px-2.5 py-1 rounded-md bg-neonBlue/10 text-neonBlue text-xs font-code">${t}</span>`).join('')}
                             </div>
                         </div>
                     </div>
-                `;
-            });
+                    <div class="px-6 pb-6 pt-0 flex items-center gap-4">
+                        <a href="${proj.liveUrl}" target="_blank" class="flex-1 py-2.5 rounded-xl bg-neonBlue text-darkBg font-bold text-xs uppercase tracking-wider text-center hover:bg-neonCyan transition-all flex items-center justify-center gap-2">
+                            <i data-lucide="external-link" class="w-4 h-4"></i> Live Demo
+                        </a>
+                        <a href="${proj.githubUrl}" target="_blank" class="flex-1 py-2.5 rounded-xl glass-card border border-white/10 text-white font-semibold text-xs uppercase tracking-wider text-center hover:border-neonBlue transition-all flex items-center justify-center gap-2">
+                            <i data-lucide="github" class="w-4 h-4"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+            `).join('');
             lucide.createIcons();
         }
 
-        // Filter button event listeners
-        document.querySelectorAll(".project-filter").forEach(btn => {
-            btn.addEventListener("click", (e) => {
-                document.querySelectorAll(".project-filter").forEach(b => {
-                    b.classList.remove("bg-neonBlue", "text-darkBg", "shadow-neon");
-                    b.classList.add("glass", "text-gray-300", "border", "border-gray-700");
-                });
-                e.target.classList.remove("glass", "text-gray-300", "border", "border-gray-700");
-                e.target.classList.add("bg-neonBlue", "text-darkBg", "shadow-neon");
+        // ==========================================
+        // INTERACTIVITY & ANIMATIONS SCRIPT
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', () => {
+            initData();
+            AOS.init({ duration: 1000, once: true });
+
+            // Custom Cursor Movement
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorOutline = document.querySelector('.cursor-outline');
+            
+            window.addEventListener('mousemove', (e) => {
+                const posX = e.clientX;
+                const posY = e.clientY;
                 
-                renderProjects(e.target.getAttribute("data-filter"));
+                cursorDot.style.transform = `translate(${posX}px, ${posY}px)`;
+                cursorOutline.style.transform = `translate(${posX}px, ${posY}px)`;
             });
-        });
 
-        // Modal Certificate Preview Setup
-        function initModalListeners() {
-            const modal = document.getElementById("cert-modal");
-            const modalImg = document.getElementById("modal-img");
-            const modalTitle = document.getElementById("modal-title");
-            const closeModal = document.getElementById("close-modal");
-
-            document.querySelectorAll(".cert-card").forEach(card => {
-                card.addEventListener("click", () => {
-                    modalImg.src = card.getAttribute("data-img");
-                    modalTitle.innerText = card.getAttribute("data-title");
-                    modal.classList.remove("hidden");
+            // Interactive Cursor Hover Effect on links/buttons
+            document.querySelectorAll('a, button, input, textarea').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursorOutline.style.transform += ' scale(1.5)';
+                    cursorOutline.style.backgroundColor = 'rgba(0, 240, 255, 0.1)';
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursorOutline.style.transform = cursorOutline.style.transform.replace(' scale(1.5)', '');
+                    cursorOutline.style.backgroundColor = 'transparent';
                 });
             });
 
-            closeModal.addEventListener("click", () => modal.classList.add("hidden"));
-            modal.addEventListener("click", (e) => {
-                if (e.target === modal) modal.classList.add("hidden");
+            // Mobile Menu Toggle
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
             });
-        }
+            document.querySelectorAll('.mobile-link').forEach(link => {
+                link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+            });
 
-        // Custom Cursor Movement
-        const cursor = document.getElementById("cursor");
-        window.addEventListener("mousemove", (e) => {
-            cursor.style.left = e.clientX + "px";
-            cursor.style.top = e.clientY + "px";
-        });
+            // Project Category Filters
+            const filterButtons = document.querySelectorAll('.project-filter');
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    filterButtons.forEach(b => {
+                        b.classList.remove('bg-neonBlue', 'text-darkBg');
+                        b.classList.add('glass-card', 'text-gray-300');
+                    });
+                    e.target.classList.remove('glass-card', 'text-gray-300');
+                    e.target.classList.add('bg-neonBlue', 'text-darkBg');
+                    
+                    renderProjects(e.target.getAttribute('data-filter'));
+                });
+            });
 
-        // Mobile Menu Toggle
-        const menuBtn = document.getElementById("menu-btn");
-        const mobileMenu = document.getElementById("mobile-menu");
-        menuBtn.addEventListener("click", () => {
-            mobileMenu.classList.toggle("hidden");
-        });
+            // Statistics Counter Animation
+            const counters = document.querySelectorAll('.counter');
+            let animated = false;
 
-        // Close mobile menu on link click
-        document.querySelectorAll("#mobile-menu a").forEach(link => {
-            link.addEventListener("click", () => mobileMenu.classList.add("hidden"));
+            function runCounters() {
+                counters.forEach(counter => {
+                    const target = +counter.getAttribute('data-target');
+                    let count = 0;
+                    const speed = target / 30;
+                    const updateCount = () => {
+                        count += speed;
+                        if (count < target) {
+                            counter.textContent = Math.ceil(count);
+                            setTimeout(updateCount, 50);
+                        } else {
+                            counter.textContent = target;
+                        }
+                    };
+                    updateCount();
+                });
+            }
+
+            window.addEventListener('scroll', () => {
+                const statsSection = document.querySelector('.bg-gradient-to-b');
+                const sectionPos = statsSection.getBoundingClientRect().top;
+                const screenHeight = window.innerHeight;
+                if (sectionPos < screenHeight && !animated) {
+                    runCounters();
+                    animated = true;
+                }
+            });
+
+            // Certificate Modal Preview
+            const modal = document.getElementById('cert-modal');
+            const modalImg = document.getElementById('modal-img');
+            const modalTitle = document.getElementById('modal-title');
+            const closeModal = document.getElementById('close-modal');
+
+            document.addEventListener('click', (e) => {
+                const card = e.target.closest('.cert-card');
+                if (card) {
+                    modalImg.src = card.getAttribute('data-img');
+                    modalTitle.textContent = card.getAttribute('data-title');
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                }
+            });
+
+            closeModal.addEventListener('click', () => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            });
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }
+            });
+
+            // Contact Form Submit Feedback
+            const contactForm = document.getElementById('contact-form');
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Pesan berhasil dikirim! Terima kasih telah menghubungi.');
+                contactForm.reset();
+            });
         });
     </script>
 </body>
