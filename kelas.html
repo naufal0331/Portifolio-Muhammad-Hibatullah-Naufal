@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XI RPL 2 - Rekayasa Perangkat Lunak | SMK Negeri 3 Sekayu</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Custom Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#05050A',
+                        cardBg: '#0A0A12',
+                        neonCyan: '#00F0FF',
+                        neonGreen: '#00FFCC',
+                        neonPink: '#FF007F',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        code: ['Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #05050A;
+            color: #F3F4F6;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(10, 10, 18, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 240, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .glass-card:hover {
+            border-color: rgba(0, 240, 255, 0.4);
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.2);
+        }
+
+        .neon-box-glow:hover {
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
+        }
+
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(1deg); }
+        }
+        .animate-float {
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #00F0FF 0%, #00FFCC 50%, #FF007F 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #05050A;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1F1F2E;
+            border-radius: 4px;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00F0FF;
+        }
+    </style>
+</head>
+<body class="bg-darkBg text-gray-100 relative selection:bg-neonCyan selection:text-darkBg" x-data="classApp()">
+
+    <!-- Background Grid & Glow Elements -->
+    <div class="fixed inset-0 bg-grid pointer-events-none z-0"></div>
+    <div class="fixed top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-neonCyan/10 blur-[120px] pointer-events-none z-0"></div>
+    <div class="fixed bottom-[-10%] right-[-10%] w-[500px] h-[500px] rounded-full bg-neonPink/10 blur-[120px] pointer-events-none z-0"></div>
+
+    <!-- NAVBAR -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-card border-b border-white/5 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#home" class="font-bold text-xl tracking-wider flex items-center gap-2 group">
+                <span class="text-neonCyan font-code group-hover:scale-110 transition-transform">&lt;/&gt;</span>
+                <span class="gradient-text">[XI RPL 2]</span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+                <a href="#home" class="hover:text-neonCyan transition-colors">Home</a>
+                <a href="#info" class="hover:text-neonCyan transition-colors">Info</a>
+                <a href="#struktur" class="hover:text-neonCyan transition-colors">Struktur</a>
+                <a href="#anggota" class="hover:text-neonCyan transition-colors">Anggota</a>
+                <a href="#jadwal" class="hover:text-neonCyan transition-colors">Jadwal</a>
+                <a href="#pengumuman" class="hover:text-neonCyan transition-colors">Pengumuman</a>
+                <a href="#galeri" class="hover:text-neonCyan transition-colors">Galeri</a>
+                <a href="#projek" class="hover:text-neonCyan transition-colors">Project</a>
+            </nav>
+
+            <!-- Mobile Button -->
+            <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-gray-300 hover:text-neonCyan focus:outline-none">
+                <i data-lucide="menu" class="w-7 h-7"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div x-show="mobileMenuOpen" x-transition class="md:hidden glass-card border-t border-white/5 px-6 py-6 space-y-4">
+            <a href="#home" @click="mobileMenuOpen = false" class="block hover:text-neonCyan transition-colors">Home</a>
+            <a href="#info" @click="mobileMenuOpen = false" class="block hover:text-neonCyan transition-colors">Info</a>
+            <a href="#struktur" @click="mobileMenuOpen = false" class="block hover:text-neonCyan transition-colors">Struktur</a>
+            <a href="#anggota" @click="mobileMenuOpen = false" class="block hover:text-neonCyan transition-colors">Anggota</a>
+            <a href="#jadwal" @click="mobileMenuOpen = false" class="block hover:text-neonCyan transition-colors">Jadwal</a>
+            <a href="#pengumuman" @click="mobileMenuOpen = false" class="block hover:text-neonCyan transition-colors">Pengumuman</a>
+            <a href="#galeri" @click="mobileMenuOpen = false" class="block hover:text-neonCyan transition-colors">Galeri</a>
+            <a href="#projek" @click="mobileMenuOpen = false" class="block hover:text-neonCyan transition-colors">Project</a>
+        </div>
+    </header>
+
+    <main class="relative z-10 pt-20">
+
+        <!-- 1. HEADER KELAS -->
+        <section id="home" class="min-h-[85vh] flex items-center justify-center relative px-6 py-20 text-center">
+            <!-- Floating Code Symbols -->
+            <div class="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
+                <span class="absolute top-1/4 left-10 font-code text-neonCyan text-2xl animate-float">{ }</span>
+                <span class="absolute top-1/3 right-16 font-code text-neonGreen text-3xl animate-float" style="animation-delay: 1.5s;">&lt;/&gt;</span>
+                <span class="absolute bottom-1/4 left-1/4 font-code text-neonPink text-xl animate-float" style="animation-delay: 3s;">database.connect()</span>
+                <span class="absolute top-1/2 right-1/3 font-code text-neonCyan text-xl animate-float" style="animation-delay: 2s;">[RPL_2026]</span>
+            </div>
+
+            <div class="max-w-4xl mx-auto space-y-6" data-aos="fade-up">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-card border border-neonCyan/30 text-neonCyan text-xs font-code tracking-wide">
+                    <span class="w-2 h-2 rounded-full bg-neonGreen animate-pulse"></span>
+                    <span>SMK NEGERI 3 SEKAYU • OFFICIAL CLASS PAGE</span>
+                </div>
+
+                <h1 class="text-5xl sm:text-7xl font-extrabold tracking-tight leading-tight">
+                    Xl RPL 2
+                </h1>
+                
+                <h2 class="text-2xl sm:text-3xl font-bold text-neonGreen font-code">
+                    REKAYASA PERANGKAT LUNAK
+                </h2>
+
+                <p class="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto font-light">
+                    Website resmi kelas kolaboratif para calon Software Engineer masa depan yang solid, kreatif, dan inovatif di SMK Negeri 3 Sekayu.
+                </p>
+
+                <div class="flex flex-wrap items-center justify-center gap-4 pt-4">
+                    <a href="#projek" class="px-6 py-3 rounded-xl bg-neonCyan text-darkBg font-bold text-sm tracking-wide hover:bg-neonGreen transition-all shadow-lg shadow-neonCyan/25 flex items-center gap-2">
+                        Explore Projects <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                    <a href="#anggota" class="px-6 py-3 rounded-xl glass-card border border-white/10 text-white font-semibold text-sm tracking-wide hover:border-neonCyan transition-all">
+                        Daftar Anggota
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. INFORMASI KELAS -->
+        <section id="info" class="py-20 px-6 relative bg-cardBg/40">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">Informasi <span class="gradient-text">Kelas</span></h2>
+                    <p class="text-gray-400 text-sm sm:text-base">Detail data akademik dan kepengurusan kelas.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" data-aos="fade-up">
+                    <div class="glass-card p-6 rounded-2xl neon-box-glow">
+                        <div class="w-12 h-12 rounded-xl bg-neonCyan/10 flex items-center justify-center text-neonCyan mb-4">
+                            <i data-lucide="users" class="w-6 h-6"></i>
+                        </div>
+                        <div class="text-xs text-gray-400 uppercase tracking-wider font-code mb-1">Nama Kelas</div>
+                        <div class="text-lg font-bold text-white">Xl RPL 2</div>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl neon-box-glow">
+                        <div class="w-12 h-12 rounded-xl bg-neonGreen/10 flex items-center justify-center text-neonGreen mb-4">
+                            <i data-lucide="code" class="w-6 h-6"></i>
+                        </div>
+                        <div class="text-xs text-gray-400 uppercase tracking-wider font-code mb-1">Jurusan</div>
+                        <div class="text-lg font-bold text-white">Rekayasa Perangkat Lunak</div>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl neon-box-glow">
+                        <div class="w-12 h-12 rounded-xl bg-neonPink/10 flex items-center justify-center text-neonPink mb-4">
+                            <i data-lucide="school" class="w-6 h-6"></i>
+                        </div>
+                        <div class="text-xs text-gray-400 uppercase tracking-wider font-code mb-1">Sekolah</div>
+                        <div class="text-lg font-bold text-white">SMK Negeri 3 Sekayu</div>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl neon-box-glow">
+                        <div class="w-12 h-12 rounded-xl bg-neonCyan/10 flex items-center justify-center text-neonCyan mb-4">
+                            <i data-lucide="calendar" class="w-6 h-6"></i>
+                        </div>
+                        <div class="text-xs text-gray-400 uppercase tracking-wider font-code mb-1">Tahun Ajaran</div>
+                        <div class="text-lg font-bold text-white">2026/2027</div>
+                    </div>
+                </div>
+
+                <!-- Detail Pengurus Inti -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6" data-aos="fade-up">
+                    <div class="glass-card p-6 rounded-2xl flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-xl bg-neonGreen/10 flex items-center justify-center text-neonGreen shrink-0">
+                            <i data-lucide="user-check" class="w-7 h-7"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs text-gray-400">Wali Kelas</div>
+                            <div class="text-base font-bold text-white" x-text="classData.waliKelas"></div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-xl bg-neonCyan/10 flex items-center justify-center text-neonCyan shrink-0">
+                            <i data-lucide="award" class="w-7 h-7"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs text-gray-400">Ketua Kelas</div>
+                            <div class="text-base font-bold text-white" x-text="classData.ketuaKelas"></div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-xl bg-neonPink/10 flex items-center justify-center text-neonPink shrink-0">
+                            <i data-lucide="user-plus" class="w-7 h-7"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs text-gray-400">Wakil Ketua</div>
+                            <div class="text-base font-bold text-white" x-text="classData.wakilKetua"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. STRUKTUR KELAS -->
+        <section id="struktur" class="py-20 px-6 relative">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">Struktur <span class="gradient-text">Kelas</span></h2>
+                    <p class="text-gray-400 text-sm sm:text-base">Hierarki kepengurusan organisasi kelas XI RPL 2.</p>
+                </div>
+
+                <div class="space-y-4 max-w-xl mx-auto" data-aos="fade-up">
+                    <div class="glass-card p-4 rounded-xl border border-neonCyan/40 text-center">
+                        <span class="text-xs text-neonCyan font-code uppercase block">Wali Kelas</span>
+                        <span class="text-lg font-bold" x-text="classData.waliKelas"></span>
+                    </div>
+                    <div class="text-neonCyan font-bold">↓</div>
+                    <div class="glass-card p-4 rounded-xl border border-neonGreen/40 text-center">
+                        <span class="text-xs text-neonGreen font-code uppercase block">Ketua Kelas 1</span>
+                        <span class="text-lg font-bold" x-text="classData.ketuaKelas"></span>
+                    </div>
+                    <div class="text-neonCyan font-bold">↓</div>
+                    <div class="glass-card p-4 rounded-xl border border-neonPink/40 text-center">
+                        <span class="text-xs text-neonPink font-code uppercase block">Wakil Ketua 1</span>
+                        <span class="text-lg font-bold" x-text="classData.wakilKetua"></span>
+                    </div>
+                    <div class="text-neonCyan font-bold">↓</div>
+                    <div class="glass-card p-4 rounded-xl border border-neonCyan/40 text-center">
+                        <span class="text-xs text-neonCyan font-code uppercase block">Sekretaris 2</span>
+                        <span class="text-sm font-bold">Rina Melati & Dimas Anggara</span>
+                    </div>
+                    <div class="text-neonCyan font-bold">↓</div>
+                    <div class="glass-card p-4 rounded-xl border border-neonGreen/40 text-center">
+                        <span class="text-xs text-neonGreen font-code uppercase block">Bendahara 2</span>
+                        <span class="text-sm font-bold">Siti Aminah & Aulia Rahma</span>
+                    </div>
+                    <div class="text-neonCyan font-bold">↓</div>
+                    <div class="glass-card p-4 rounded-xl border border-white/20 text-center">
+                        <span class="text-xs text-gray-400 font-code uppercase block">Anggota Kelas</span>
+                        <span class="text-sm font-bold text-gray-300">33 Siswa Aktif XI RPL 2</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. ANGGOTA KELAS -->
+        <section id="anggota" class="py-20 px-6 relative bg-cardBg/40">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">Anggota <span class="gradient-text">Kelas</span></h2>
+                    <p class="text-gray-400 text-sm sm:text-base">Daftar seluruh siswa dan pengurus kelas XI RPL 2.</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" data-aos="fade-up">
+                    <template x-for="student in students">
+                        <div class="glass-card p-5 rounded-2xl flex items-center gap-4 transition-all duration-300 hover:scale-105 neon-box-glow">
+                            <img :src="student.photo" :alt="student.name" class="w-14 h-14 rounded-xl object-cover border border-neonCyan/30">
+                            <div>
+                                <span class="inline-block px-2 py-0.5 rounded text-[10px] font-code uppercase font-bold mb-1"
+                                      :class="student.role === 'Ketua Kelas' ? 'bg-neonGreen/20 text-neonGreen' : (student.role === 'Wakil Ketua' ? 'bg-neonPink/20 text-neonPink' : 'bg-neonCyan/10 text-neonCyan')"
+                                      x-text="student.role"></span>
+                                <h4 class="font-bold text-sm text-white" x-text="student.name"></h4>
+                                <div class="text-xs text-gray-400 font-code" x-text="`NIS: ${student.nis}`"></div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </section>
+
+      <!-- JADWAL PELAJARAN (BERBENTUK GAMBAR) -->
+        <section id="jadwal" class="py-20 px-6 relative">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-12" data-aos="fade-up">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">Jadwal <span class="gradient-text">Pelajaran</span></h2>
+                    <p class="text-gray-400 text-sm sm:text-base">Jadwal blok I kegiatan belajar mengajar kelas XI RPL 2.</p>
+                </div>
+
+                <!-- Card Gambar Jadwal -->
+                <div class="glass-card p-4 sm:p-6 rounded-3xl border border-neonCyan/30 neon-box-glow overflow-hidden" data-aos="fade-up">
+                    <div class="relative rounded-2xl overflow-hidden group">
+                        <!-- Ganti URL pada 'src' dengan nama file gambar jadwal Anda jika sudah diunggah ke folder lokal, contoh: src="img/jadwal-blok.jpg" -->
+                        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=80" 
+                             alt="Jadwal Blok Pelajaran" 
+                             class="w-full h-auto object-cover rounded-xl group-hover:scale-[1.02] transition-transform duration-500">
+                        
+                        <div class="absolute inset-0 bg-gradient-to-t from-darkBg/80 via-transparent to-transparent opacity-60 pointer-events-none"></div>
+                        <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-code text-neonCyan">
+                            <span class="px-3 py-1 rounded-full glass-card border border-neonCyan/30">📅 Sesi Blok Aktif</span>
+                            <span class="px-3 py-1 rounded-full glass-card border border-neonGreen/30 text-neonGreen">SMK Negeri 3 Sekayu</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <section id="jadwal" class="py-20 px-6 relative">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-12" data-aos="fade-up">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">Jadwal <span class="gradient-text">Pelajaran</span></h2>
+                    <p class="text-gray-400 text-sm sm:text-base">Jadwal blok II kegiatan belajar mengajar kelas XI RPL 2.</p>
+                </div>
+
+                <!-- Card Gambar Jadwal -->
+                <div class="glass-card p-4 sm:p-6 rounded-3xl border border-neonCyan/30 neon-box-glow overflow-hidden" data-aos="fade-up">
+                    <div class="relative rounded-2xl overflow-hidden group">
+                        <!-- Ganti URL pada 'src' dengan nama file gambar jadwal Anda jika sudah diunggah ke folder lokal, contoh: src="img/jadwal-blok.jpg" -->
+                        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=80" 
+                             alt="Jadwal Blok Pelajaran" 
+                             class="w-full h-auto object-cover rounded-xl group-hover:scale-[1.02] transition-transform duration-500">
+                        
+                        <div class="absolute inset-0 bg-gradient-to-t from-darkBg/80 via-transparent to-transparent opacity-60 pointer-events-none"></div>
+                        <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-code text-neonCyan">
+                            <span class="px-3 py-1 rounded-full glass-card border border-neonCyan/30">📅 Sesi Blok Aktif</span>
+                            <span class="px-3 py-1 rounded-full glass-card border border-neonGreen/30 text-neonGreen">SMK Negeri 3 Sekayu</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. PENGUMUMAN KELAS -->
+        <section id="pengumuman" class="py-20 px-6 relative bg-cardBg/40">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">Pengumuman & <span class="gradient-text">Kegiatan</span></h2>
+                    <p class="text-gray-400 text-sm sm:text-base">Informasi penting dan agenda terbaru kelas.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8" data-aos="fade-up">
+                    <div class="glass-card p-8 rounded-2xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-neonCyan/5 rounded-full blur-2xl"></div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-neonCyan/10 flex items-center justify-center text-neonCyan">
+                                <i data-lucide="megaphone" class="w-5 h-5"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">📢 Pengumuman</h3>
+                        </div>
+                        <p class="text-gray-300 text-base leading-relaxed">
+                            "Besok seluruh siswa XI RPL 2 diharapkan membawa laptop masing-masing untuk sesi praktik pemrograman lanjut di lab."
+                        </p>
+                    </div>
+
+                    <div class="glass-card p-8 rounded-2xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-neonGreen/5 rounded-full blur-2xl"></div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-neonGreen/10 flex items-center justify-center text-neonGreen">
+                                <i data-lucide="calendar-days" class="w-5 h-5"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">📅 Jadwal Kegiatan</h3>
+                        </div>
+                        <p class="text-gray-300 text-base leading-relaxed">
+                            "Praktik RPL intensif bersama pembimbing industri dijadwalkan bertempat di Lab Komputer 2 mulai pukul 08.00 WIB."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. GALERI KELAS -->
+        <section id="galeri" class="py-20 px-6 relative">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-12" data-aos="fade-up">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">Galeri <span class="gradient-text">Kelas</span></h2>
+                    <p class="text-gray-400 text-sm sm:text-base">Momen kebersamaan, kegiatan sekolah, dan dokumentasi praktik XI RPL 2.</p>
+                </div>
+
+                <!-- Gallery Filters -->
+                <div class="flex flex-wrap items-center justify-center gap-3 mb-12" data-aos="fade-up">
+                    <template x-for="cat in ['all', 'Foto Kelas', 'Kegiatan Sekolah', 'Praktik RPL', 'Projek', 'Lomba', 'Kegiatan Bersama']">
+                        <button @click="galleryFilter = cat" 
+                            class="px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all"
+                            :class="galleryFilter === cat ? 'bg-neonCyan text-darkBg shadow-lg shadow-neonCyan/30 font-bold' : 'glass-card text-gray-300 hover:text-neonCyan'"
+                            x-text="cat">
+                        </button>
+                    </template>
+                </div>
+
+                <!-- Gallery Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" data-aos="fade-up">
+                    <template x-for="item in filteredGallery">
+                        <div class="glass-card rounded-2xl overflow-hidden group relative h-64">
+                            <img :src="item.image" :alt="item.title" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-darkBg/40 to-transparent opacity-85 flex flex-col justify-end p-6">
+                                <span class="text-xs text-neonCyan font-code uppercase mb-1" x-text="item.category"></span>
+                                <h4 class="text-lg font-bold text-white" x-text="item.title"></h4>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. PROJEK KELAS -->
+        <section id="projek" class="py-20 px-6 relative bg-cardBg/40">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">PROJECT <span class="gradient-text">XI RPL 2</span></h2>
+                    <p class="text-gray-400 text-sm sm:text-base">Kumpulan aplikasi, sistem, dan karya digital buatan siswa-siswi XI RPL 2.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" data-aos="fade-up">
+                    <template x-for="proj in projects">
+                        <div class="glass-card rounded-2xl overflow-hidden group transition-all duration-300 hover:-translate-y-2 hover:border-neonCyan flex flex-col justify-between">
+                            <div>
+                                <div class="relative h-48 overflow-hidden">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-transparent to-transparent z-10 opacity-60"></div>
+                                    <img :src="proj.image" :alt="proj.title" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                </div>
+                                <div class="p-6">
+                                    <h4 class="text-lg font-bold mb-1 group-hover:text-neonCyan transition-colors" x-text="proj.title"></h4>
+                                    <div class="text-xs text-neonGreen font-code mb-3" x-text="`By: ${proj.author}`"></div>
+                                    <p class="text-gray-400 text-sm mb-4 leading-relaxed" x-text="proj.desc"></p>
+                                    <div class="flex flex-wrap gap-2 mb-4">
+                                        <template x-for="t in proj.tech">
+                                            <span class="px-2.5 py-1 rounded-md bg-neonCyan/10 text-neonCyan text-xs font-code" x-text="t"></span>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="px-6 pb-6 pt-0 flex items-center gap-4">
+                                <a :href="proj.liveUrl" target="_blank" class="flex-1 py-2.5 rounded-xl bg-neonCyan text-darkBg font-bold text-xs uppercase tracking-wider text-center hover:bg-neonGreen transition-all flex items-center justify-center gap-2">
+                                    <i data-lucide="external-link" class="w-4 h-4"></i> Live Demo
+                                </a>
+                                <a :href="proj.githubUrl" target="_blank" class="flex-1 py-2.5 rounded-xl glass-card border border-white/10 text-white font-semibold text-xs uppercase tracking-wider text-center hover:border-neonCyan transition-all flex items-center justify-center gap-2">
+                                    <i data-lucide="github" class="w-4 h-4"></i> GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-white/5 py-8 px-6 text-center text-sm text-gray-400 relative z-10 glass-card">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+                Website Resmi Kelas <span class="text-neonCyan font-semibold">XI RPL 2</span> — SMK Negeri 3 Sekayu
+            </div>
+            <div class="text-xs text-gray-500 font-code">
+                Built with Passion by Rekayasa Perangkat Lunak Students
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script Utama -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        function classApp() {
+            return {
+                mobileMenuOpen: false,
+                galleryFilter: 'all',
+
+                classData: {
+                    waliKelas: "Ahmad Fauzi, S.Kom.",
+                    ketuaKelas: "Muhammad Hibatullah Naufal",
+                    wakilKetua: "Rafi Pratama",
+                    tahunAjaran: "2026/2027"
+                },
+
+                students: [
+                    { name: "Muhammad Hibatullah Naufal", nis: "2026001", role: "Ketua Kelas", photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" },
+                    { name: "Rafi Pratama", nis: "2026002", role: "Wakil Ketua", photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80" },
+                    { name: "Rina Melati", nis: "2026003", role: "Sekretaris", photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80" },
+                    { name: "Dimas Anggara", nis: "2026004", role: "Sekretaris", photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80" },
+                    { name: "Siti Aminah", nis: "2026005", role: "Bendahara", photo: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=300&q=80" },
+                    { name: "Aulia Rahma", nis: "2026006", role: "Bendahara", photo: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=300&q=80" },
+                    { name: "Andika Pratama", nis: "2026007", role: "Anggota", photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=300&q=80" },
+                    { name: "Bayu Saputra", nis: "2026008", role: "Anggota", photo: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=300&q=80" },
+                    { name: "Citra Kirana", nis: "2026009", role: "Anggota", photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" },
+                    { name: "Dandi Setiawan", nis: "2026010", role: "Anggota", photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80" },
+                    { name: "Eko Prasetyo", nis: "2026011", role: "Anggota", photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80" },
+                    { name: "Fajar Hidayat", nis: "2026012", role: "Anggota", photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=300&q=80" }
+                ],
+
+                schedule: [
+                    { day: "Senin", time: "07:30 - 09:15", subject: "Pemrograman Web (Laravel)", teacher: "Ahmad Fauzi, S.Kom.", room: "Lab RPL 1" },
+                    { day: "Senin", time: "09:30 - 11:45", subject: "Basis Data (MySQL)", teacher: "Siti Rahma, M.T.", room: "Lab Komputer 2" },
+                    { day: "Selasa", time: "07:30 - 10:00", subject: "Pemrograman Berorientasi Objek", teacher: "Budi Santoso, S.T.", room: "Lab RPL 1" },
+                    { day: "Rabu", time: "07:30 - 11:15", subject: "Desain Antarmuka (UI/UX)", teacher: "Dewi Lestari, S.Ds.", room: "Multimedia Room" },
+                    { day: "Kamis", time: "07:30 - 10:00", subject: "Pemrograman Perangkat Bergerak", teacher: "Ahmad Fauzi, S.Kom.", room: "Lab RPL 1" },
+                    { day: "Jumat", time: "08:00 - 11:00", subject: "Produk Kreatif dan Kewirausahaan", teacher: "Drs. H. M. Ali", room: "Kelas XI RPL 1" }
+                ],
+
+                gallery: [
+                    { title: "Keseruan di Dalam Kelas", category: "Foto Kelas", image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80" },
+                    { title: "Upacara Bendera Senin", category: "Kegiatan Sekolah", image: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=600&q=80" },
+                    { title: "Praktik Coding & Debugging", category: "Praktik RPL", image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80" },
+                    { title: "Pameran Projek Akhir Semester", category: "Projek", image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80" },
+                    { title: "Juara Lomba Coding Antar Kelas", category: "Lomba", image: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=600&q=80" },
+                    { title: "Makrab & Kegiatan Bersama", category: "Kegiatan Bersama", image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80" }
+                ],
+
+                    
+
+                get filteredGallery() {
+                    if (this.galleryFilter === 'all') {
+                        return this.gallery;
+                    }
+                    return this.gallery.filter(item => item.category === this.galleryFilter);
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            AOS.init({ duration: 1000, once: true });
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
