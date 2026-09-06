@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XI RPL 2 - Rekayasa Perangkat Lunak | SMK Negeri 3 Sekayu</title>
+    <title>XI RPL 2 - REKAYASA PERANGKAT LUNAK | SMK Negeri 3 Sekayu</title>
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -115,7 +115,7 @@
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <a href="#home" class="font-bold text-xl tracking-wider flex items-center gap-2 group">
                 <span class="text-neonCyan font-code group-hover:scale-110 transition-transform">&lt;/&gt;</span>
-                <span class="gradient-text">[XI RPL 2]</span>
+                <span class="gradient-text">ARSANEXSA</span>
             </a>
 
             <!-- Desktop Menu -->
@@ -124,7 +124,9 @@
                 <a href="#info" class="hover:text-neonCyan transition-colors">Info</a>
                 <a href="#struktur" class="hover:text-neonCyan transition-colors">Struktur</a>
                 <a href="#anggota" class="hover:text-neonCyan transition-colors">Anggota</a>
-                <a href="#jadwal" class="hover:text-neonCyan transition-colors">Jadwal</a>
+                <a href="#jadwal Piket" class="hover:text-neonCyan transition-colors">Jadwal Piket</a>
+                <a href="#jadwal Pelajaran" class="hover:text-neonCyan transition-colors">Jadwal Blok I</a>
+                <a href="#jadwal Pelajaran" class="hover:text-neonCyan transition-colors">Jadwal Blok II</a>
                 <a href="#pengumuman" class="hover:text-neonCyan transition-colors">Pengumuman</a>
                 <a href="#galeri" class="hover:text-neonCyan transition-colors">Galeri</a>
                 <a href="#projek" class="hover:text-neonCyan transition-colors">Project</a>
@@ -172,7 +174,7 @@
                 </h1>
                 
                 <h2 class="text-2xl sm:text-3xl font-bold text-neonGreen font-code">
-                    REKAYASA PERANGKAT LUNAK
+                    ARSANEXSA CLASS
                 </h2>
 
                 <p class="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto font-light">
@@ -278,27 +280,27 @@
                 <div class="space-y-4 max-w-xl mx-auto" data-aos="fade-up">
                     <div class="glass-card p-4 rounded-xl border border-neonCyan/40 text-center">
                         <span class="text-xs text-neonCyan font-code uppercase block">Wali Kelas</span>
-                        <span class="text-lg font-bold" x-text="classData.waliKelas"></span>
+                        <span class="text-lg font-bold" x-text="classData.waliKelas">Agung Firman, S</span>
                     </div>
                     <div class="text-neonCyan font-bold">↓</div>
                     <div class="glass-card p-4 rounded-xl border border-neonGreen/40 text-center">
-                        <span class="text-xs text-neonGreen font-code uppercase block">Ketua Kelas 1</span>
-                        <span class="text-lg font-bold" x-text="classData.ketuaKelas"></span>
+                        <span class="text-xs text-neonGreen font-code uppercase block">Ketua Kelas</span>
+                        <span class="text-lg font-bold" x-text="classData.ketuaKelas">Melsa Liwindy</span>
                     </div>
                     <div class="text-neonCyan font-bold">↓</div>
                     <div class="glass-card p-4 rounded-xl border border-neonPink/40 text-center">
-                        <span class="text-xs text-neonPink font-code uppercase block">Wakil Ketua 1</span>
-                        <span class="text-lg font-bold" x-text="classData.wakilKetua"></span>
+                        <span class="text-xs text-neonPink font-code uppercase block">Wakil Ketua</span>
+                        <span class="text-lg font-bold" x-text="classData.wakilKetua">Andini Saputri</span>
                     </div>
                     <div class="text-neonCyan font-bold">↓</div>
                     <div class="glass-card p-4 rounded-xl border border-neonCyan/40 text-center">
-                        <span class="text-xs text-neonCyan font-code uppercase block">Sekretaris 2</span>
-                        <span class="text-sm font-bold">Rina Melati & Dimas Anggara</span>
+                        <span class="text-xs text-neonCyan font-code uppercase block">2 Sekretaris</span>
+                        <span class="text-sm font-bold">Meilani Aprillya &</span>
                     </div>
                     <div class="text-neonCyan font-bold">↓</div>
                     <div class="glass-card p-4 rounded-xl border border-neonGreen/40 text-center">
-                        <span class="text-xs text-neonGreen font-code uppercase block">Bendahara 2</span>
-                        <span class="text-sm font-bold">Siti Aminah & Aulia Rahma</span>
+                        <span class="text-xs text-neonGreen font-code uppercase block">2 Bendahara</span>
+                        <span class="text-sm font-bold">Dea Putri Ananda &</span>
                     </div>
                     <div class="text-neonCyan font-bold">↓</div>
                     <div class="glass-card p-4 rounded-xl border border-white/20 text-center">
@@ -330,6 +332,31 @@
                             </div>
                         </div>
                     </template>
+                </div>
+            </div>
+        </section>
+
+        <section id="jadwal" class="py-20 px-6 relative">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-12" data-aos="fade-up">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">Jadwal <span class="gradient-text">Piket</span></h2>
+                    <p class="text-gray-400 text-sm sm:text-base">Jadwal Piket kelas XI RPL 2.</p>
+                </div>
+
+                <!-- Card Gambar Jadwal -->
+                <div class="glass-card p-4 sm:p-6 rounded-3xl border border-neonCyan/30 neon-box-glow overflow-hidden" data-aos="fade-up">
+                    <div class="relative rounded-2xl overflow-hidden group">
+                        <!-- Ganti URL pada 'src' dengan nama file gambar jadwal Anda jika sudah diunggah ke folder lokal, contoh: src="img/jadwal-blok.jpg" -->
+                        <img src="foto6.jpeg" 
+                             alt="Jadwal Blok Pelajaran" 
+                             class="w-full h-auto object-cover rounded-xl group-hover:scale-[1.02] transition-transform duration-500">
+                        
+                        <div class="absolute inset-0 bg-gradient-to-t from-darkBg/80 via-transparent to-transparent opacity-60 pointer-events-none"></div>
+                        <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-code text-neonCyan">
+                            <span class="px-3 py-1 rounded-full glass-card border border-neonCyan/30">XI RPL 2</span>
+                            <span class="px-3 py-1 rounded-full glass-card border border-neonGreen/30 text-neonGreen">SMK Negeri 3 Sekayu</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -521,25 +548,47 @@
                 galleryFilter: 'all',
 
                 classData: {
-                    waliKelas: "Ahmad Fauzi, S.Kom.",
-                    ketuaKelas: "Muhammad Hibatullah Naufal",
-                    wakilKetua: "Rafi Pratama",
+                    waliKelas: "Agung Firman, S",
+                    ketuaKelas: "Melsa Liwindy",
+                    wakilKetua: "Andini Saputri",
                     tahunAjaran: "2026/2027"
                 },
 
                 students: [
-                    { name: "Muhammad Hibatullah Naufal", nis: "2026001", role: "Ketua Kelas", photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" },
-                    { name: "Rafi Pratama", nis: "2026002", role: "Wakil Ketua", photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80" },
-                    { name: "Rina Melati", nis: "2026003", role: "Sekretaris", photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80" },
-                    { name: "Dimas Anggara", nis: "2026004", role: "Sekretaris", photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80" },
-                    { name: "Siti Aminah", nis: "2026005", role: "Bendahara", photo: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=300&q=80" },
-                    { name: "Aulia Rahma", nis: "2026006", role: "Bendahara", photo: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=300&q=80" },
-                    { name: "Andika Pratama", nis: "2026007", role: "Anggota", photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=300&q=80" },
-                    { name: "Bayu Saputra", nis: "2026008", role: "Anggota", photo: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=300&q=80" },
-                    { name: "Citra Kirana", nis: "2026009", role: "Anggota", photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" },
-                    { name: "Dandi Setiawan", nis: "2026010", role: "Anggota", photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80" },
-                    { name: "Eko Prasetyo", nis: "2026011", role: "Anggota", photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80" },
-                    { name: "Fajar Hidayat", nis: "2026012", role: "Anggota", photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=300&q=80" }
+  { name: "Agustian Renaldi", role: "Anggota" },
+  { name: "Aidil Chandra Pratama", role: "Anggota" },
+  { name: "Aisyah Aura", role: "Anggota" },
+  { name: "Alfino Pranata", role: "Anggota" },
+  { name: "ASYIFA ZAHROSITA", role: "Anggota" },
+  { name: "Andini Saputri", role: "Wakil Ketua" },
+  { name: "Dania Tri Umami", role: "Anggota" },
+  { name: "Dea Putri Ananda", role: "Bendahara" },
+  { name: "Gita Purnama Sari", role: "Anggota" },
+  { name: "Harpa Oktaberti", role: "Anggota" },
+  { name: "HIKMAH AMISHA PUTRI", role: "Anggota" },
+  { name: "Ikram Labib Al Muftih", role: "Anggota" },
+  { name: "Jesika Dea Kartini", role: "Anggota" },
+  { name: "Karissa Noperianti", role: "Anggota" },
+  { name: "Karmila", role: "Anggota" },
+  { name: "Khoirun Ni'mah", role: "Anggota" },
+  { name: "M. Faizs Al Fathir", role: "Anggota" },
+  { name: "Melani Aprillya", role: "Sekretaris" },
+  { name: "Melsa Liwindy", role: "Ketua Kelas" },
+  { name: "Muhammad Farhan", role: "Anggota" },
+  { name: "Muhammad Hibatullah Naufal", role: "Anggota" },
+  { name: "Muhammad Oezil Fryandra", role: "Anggota" },
+  { name: "Putri Alvin", role: "Anggota" },
+  { name: "Raffa Alfarizi", role: "Anggota" },
+  { name: "Rahmad Pirlo Ramadoni", role: "Anggota" },
+  { name: "Resky Agustiawan", role: "Anggota" },
+  { name: "Revina Aqilla Nur Azmi", role: "Anggota" },
+  { name: "Riki Rachmad", role: "Anggota" },
+  { name: "Ronald Khadafi", role: "Anggota" },
+  { name: "Shafira Palesca Vanya", role: "Anggota" },
+  { name: "Tiara", role: "Anggota" },
+  { name: "Wisnu Pratama", role: "Anggota" },
+  { name: "Wilda", role: "Anggota" },
+                   
                 ],
 
                 schedule: [
