@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio - Junior RPL Developer</title>
     
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- Tailwind Custom Configuration -->
     <script>
         tailwind.config = {
             theme: {
@@ -27,21 +29,26 @@
         }
     </script>
 
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
+    <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
+    <!-- Alpine.js untuk Interaksi Modal & Filter State -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
+    <!-- Custom CSS untuk Latar Belakang Animasi Sirine Merah, Biru, Orange & Teks Bersih -->
     <style>
         body {
             background-color: #05050A;
             color: #F3F4F6;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            cursor: none; /* Sembunyikan kursor default untuk custom cursor */
+            cursor: none;
         }
 
         /* Custom Cursor */
@@ -68,7 +75,7 @@
             margin-left: -14px;
         }
 
-        /* Glassmorphism & Neon Glow */
+        /* Glassmorphism & Cards */
         .glass-card {
             background: rgba(10, 10, 18, 0.75);
             backdrop-filter: blur(12px);
@@ -85,7 +92,7 @@
             box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
         }
 
-        /* Background Grid Bergerak */
+        /* Background Grid Tipis */
         .bg-grid {
             background-size: 40px 40px;
             background-image: 
@@ -94,7 +101,7 @@
         }
 
         /* ========================================== */
-        /* CYBERNETIC SIREN & DYNAMIC BACKGROUND      */
+        /* BACKGROUND ANIMASI SIREN (MERAH, BIRU, ORANGE) */
         /* ========================================== */
         .cyber-bg-container {
             position: fixed;
@@ -104,80 +111,80 @@
             overflow: hidden;
         }
 
-        /* Lampu Sirine Biru Bergerak (Kiri ke Kanan) */
+        /* Cahaya Sirine Biru */
         .siren-blue {
             position: absolute;
             top: -20%;
             left: -30%;
             width: 70vw;
             height: 70vh;
-            background: radial-gradient(circle, rgba(0, 240, 255, 0.25) 0%, rgba(0, 100, 255, 0.08) 40%, transparent 70%);
-            filter: blur(80px);
+            background: radial-gradient(circle, rgba(0, 140, 255, 0.35) 0%, rgba(0, 50, 200, 0.1) 40%, transparent 70%);
+            filter: blur(90px);
             border-radius: 50%;
-            animation: moveBlueSiren 14s ease-in-out infinite alternate;
+            animation: moveBlueSiren 12s ease-in-out infinite alternate;
         }
 
-        /* Lampu Sirine Merah Bergerak (Kanan ke Kiri) */
+        /* Cahaya Sirine Merah */
         .siren-red {
             position: absolute;
             bottom: -20%;
             right: -30%;
             width: 70vw;
             height: 70vh;
-            background: radial-gradient(circle, rgba(255, 0, 85, 0.22) 0%, rgba(200, 0, 50, 0.06) 40%, transparent 70%);
-            filter: blur(90px);
-            border-radius: 50%;
-            animation: moveRedSiren 16s ease-in-out infinite alternate;
-        }
-
-        /* Aksen Cahaya Hangat Oranye */
-        .siren-orange {
-            position: absolute;
-            top: 40%;
-            left: 30%;
-            width: 50vw;
-            height: 50vh;
-            background: radial-gradient(circle, rgba(255, 120, 0, 0.15) 0%, rgba(255, 60, 0, 0.03) 50%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 0, 60, 0.35) 0%, rgba(180, 0, 20, 0.1) 40%, transparent 70%);
             filter: blur(100px);
             border-radius: 50%;
-            animation: moveOrangeAccent 10s ease-in-out infinite alternate;
+            animation: moveRedSiren 14s ease-in-out infinite alternate;
+        }
+
+        /* Cahaya Aksen Orange Menyala */
+        .siren-orange {
+            position: absolute;
+            top: 30%;
+            left: 30%;
+            width: 60vw;
+            height: 60vh;
+            background: radial-gradient(circle, rgba(255, 120, 0, 0.3) 0%, rgba(255, 60, 0, 0.08) 50%, transparent 70%);
+            filter: blur(110px);
+            border-radius: 50%;
+            animation: moveOrangeSiren 10s ease-in-out infinite alternate;
         }
 
         @keyframes moveBlueSiren {
             0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(45vw, 30vh) scale(1.2); }
-            100% { transform: translate(20vw, 60vh) scale(0.9); }
+            50% { transform: translate(40vw, 30vh) scale(1.25); }
+            100% { transform: translate(15vw, 55vh) scale(0.9); }
         }
 
         @keyframes moveRedSiren {
             0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(-45vw, -30vh) scale(1.3); }
-            100% { transform: translate(-25vw, -50vh) scale(1); }
+            50% { transform: translate(-40vw, -30vh) scale(1.3); }
+            100% { transform: translate(-20vw, -45vh) scale(0.95); }
         }
 
-        @keyframes moveOrangeAccent {
-            0% { transform: translate(-20vw, -10vh) scale(0.9); opacity: 0.5; }
-            50% { transform: translate(25vw, 20vh) scale(1.4); opacity: 0.9; }
-            100% { transform: translate(-10vw, 15vh) scale(1); opacity: 0.6; }
+        @keyframes moveOrangeSiren {
+            0% { transform: translate(-15vw, -10vh) scale(0.85); opacity: 0.5; }
+            50% { transform: translate(25vw, 20vh) scale(1.35); opacity: 1; }
+            100% { transform: translate(-10vw, 15vh) scale(1); opacity: 0.7; }
         }
 
-        /* Partikel Berkilau (Glowing Particles) */
+        /* Partikel Kecil Berkilau */
         .particles-layer {
             position: absolute;
             inset: 0;
             background-image: 
-                radial-gradient(white 1px, transparent 0),
-                radial-gradient(rgba(255, 120, 0, 0.8) 1.5px, transparent 0),
-                radial-gradient(rgba(0, 240, 255, 0.8) 1px, transparent 0);
-            background-size: 160px 160px, 220px 220px, 120px 120px;
-            background-position: 0 0, 40px 60px, 80px 20px;
-            opacity: 0.35;
+                radial-gradient(rgba(255, 255, 255, 0.8) 1px, transparent 0),
+                radial-gradient(rgba(255, 150, 0, 0.8) 1.5px, transparent 0),
+                radial-gradient(rgba(0, 200, 255, 0.8) 1px, transparent 0);
+            background-size: 140px 140px, 190px 190px, 110px 110px;
+            background-position: 0 0, 40px 60px, 80px 30px;
+            opacity: 0.45;
             animation: twinkleParticles 20s linear infinite;
         }
 
         @keyframes twinkleParticles {
             from { transform: translateY(0); }
-            to { transform: translateY(-160px); }
+            to { transform: translateY(-140px); }
         }
 
         /* Floating Animation */
@@ -197,29 +204,15 @@
             animation: spinSlow 15s linear infinite;
         }
 
-        /* Gradient Text */
-        .gradient-text {
-            background: linear-gradient(135deg, #00F0FF 0%, #FF3C00 50%, #FF9900 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        /* Warna Teks Normal (Putih Bersih & Rapi) */
+        .normal-heading-text {
+            color: #FFFFFF;
+        }
+        .name-highlight {
+            color: #00F0FF;
         }
 
-        /* Fade In Halus untuk Teks Intro */
-        @keyframes fadeInSlow {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .animate-fade-in {
-            animation: fadeInSlow 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        /* Scrollbar Styling */
+        /* Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -238,37 +231,37 @@
 </head>
 <body class="bg-darkBg text-gray-100 relative selection:bg-neonBlue selection:text-darkBg" x-data="portfolioApp()">
 
+    <!-- PRELOADER -->
     <div x-show="isLoading" 
          x-transition:leave="transition ease-in-out duration-1000"
          x-transition:leave-start="opacity-100 transform translate-y-0"
          x-transition:leave-end="opacity-0 transform -translate-y-full"
          class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-darkBg px-6">
-        
         <div class="absolute w-[400px] h-[400px] rounded-full bg-neonBlue/10 blur-[120px] pointer-events-none"></div>
-
-        <div class="text-center space-y-6 z-10 animate-fade-in max-w-xl">
+        <div class="text-center space-y-6 z-10 max-w-xl">
             <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
-                Welcome to my <span class="gradient-text">Portfolio Website</span>
+                Welcome to my <span class="text-neonBlue">Portfolio</span>
             </h1>
-            <p class="text-gray-400 text-sm sm:text-base font-light">
-                Mempersiapkan pengalaman digital terbaik untuk Anda...
-            </p>
-
+            <p class="text-gray-400 text-sm sm:text-base font-light">Mempersiapkan pengalaman digital terbaik...</p>
             <div class="w-64 sm:w-80 mx-auto space-y-2 pt-4">
                 <div class="flex justify-between text-xs font-code text-neonBlue">
                     <span>LOADING</span>
                     <span x-text="`${progress}%`"></span>
                 </div>
                 <div class="w-full bg-cardBg rounded-full h-1 overflow-hidden border border-white/10">
-                    <div class="bg-gradient-to-r from-neonBlue to-orange-500 h-full transition-all duration-100 rounded-full" :style="`width: ${progress}%`"></div>
+                    <div class="bg-gradient-to-r from-neonBlue to-neonPurple h-full transition-all duration-100 rounded-full" :style="`width: ${progress}%`"></div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Custom Cursor -->
     <div class="custom-cursor cursor-dot hidden md:block"></div>
     <div class="custom-cursor cursor-outline hidden md:block"></div>
 
+    <!-- ========================================== -->
+    <!-- LATAR BELAKANG ANIMASI (MERAH, BIRU, ORANGE) -->
+    <!-- ========================================== -->
     <div class="cyber-bg-container">
         <div class="siren-blue"></div>
         <div class="siren-red"></div>
@@ -277,11 +270,12 @@
         <div class="absolute inset-0 bg-grid pointer-events-none"></div>
     </div>
 
+    <!-- NAVBAR -->
     <header class="fixed top-0 left-0 right-0 z-40 glass-card border-b border-white/5 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <a href="#home" class="font-bold text-xl tracking-wider flex items-center gap-2 group">
                 <span class="text-neonBlue font-code group-hover:scale-110 transition-transform">&lt;/&gt;</span>
-                <span class="gradient-text" x-text="data.nickname"></span>
+                <span class="text-white" x-text="data.nickname"></span>
             </a>
 
             <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
@@ -298,7 +292,7 @@
                 <a :href="data.cvUrl" class="px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-lg border border-neonBlue/50 text-neonBlue hover:bg-neonBlue/10 transition-all flex items-center gap-2">
                     <i data-lucide="file-text" class="w-4 h-4"></i> Download CV
                 </a>
-                <a href="#contact" class="px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-lg bg-gradient-to-r from-neonBlue to-orange-500 text-darkBg hover:opacity-95 transition-all shadow-lg shadow-neonBlue/20 font-bold">
+                <a href="#contact" class="px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-lg bg-neonBlue text-darkBg hover:opacity-95 transition-all shadow-lg shadow-neonBlue/20 font-bold">
                     Contact Me
                 </a>
             </div>
@@ -316,32 +310,24 @@
             <a href="#experience" @click="mobileMenuOpen = false" class="block hover:text-neonBlue transition-colors">Experience</a>
             <a href="#certificates" @click="mobileMenuOpen = false" class="block hover:text-neonBlue transition-colors">Certificates</a>
             <a href="#contact" @click="mobileMenuOpen = false" class="block hover:text-neonBlue transition-colors">Contact</a>
-            <div class="pt-4 flex flex-col gap-3">
-                <a :href="data.cvUrl" class="w-full py-2 text-center text-xs font-semibold uppercase rounded-lg border border-neonBlue/50 text-neonBlue">Download CV</a>
-                <a href="#contact" @click="mobileMenuOpen = false" class="w-full py-2 text-center text-xs font-semibold uppercase rounded-lg bg-neonBlue text-darkBg font-bold">Contact Me</a>
-            </div>
         </div>
     </header>
 
+    <!-- MAIN CONTENT -->
     <main class="relative z-10 pt-20">
 
+        <!-- 1. HERO SECTION -->
         <section id="home" class="min-h-[90vh] flex items-center justify-center relative px-6 py-20">
-            <div class="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
-                <span class="absolute top-1/4 left-10 font-code text-neonBlue text-xl animate-float" style="animation-delay: 0s;">{ }</span>
-                <span class="absolute top-1/3 right-16 font-code text-orange-500 text-2xl animate-float" style="animation-delay: 1.5s;">&lt;/&gt;</span>
-                <span class="absolute bottom-1/4 left-1/4 font-code text-neonCyan text-lg animate-float" style="animation-delay: 3s;">const dev = true;</span>
-                <span class="absolute top-1/2 right-1/3 font-code text-neonBlue text-xl animate-float" style="animation-delay: 2s;">HTML/CSS/JS</span>
-            </div>
-
             <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Teks Utama Kembali Normal & Rapih (Putih) -->
                 <div class="lg:col-span-7 space-y-6 text-center lg:text-left" data-aos="fade-right">
                     <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-card border border-neonBlue/30 text-neonBlue text-xs font-code tracking-wide">
                         <span class="w-2 h-2 rounded-full bg-neonBlue animate-pulse"></span>
                         <span x-text="`${data.school} • RPL • Junior Developer`"></span>
                     </div>
 
-                    <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight">
-                        Hi, I'm <span class="gradient-text" x-text="data.name"></span>.<br>
+                    <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight normal-heading-text">
+                        Hi, I'm <span class="name-highlight" x-text="data.name"></span>.<br>
                         I Build <span class="text-neonBlue">Digital Experiences</span>.
                     </h1>
 
@@ -357,10 +343,11 @@
                     </div>
                 </div>
 
+                <!-- Right Profile Image -->
                 <div class="lg:col-span-5 flex justify-center" data-aos="fade-left">
                     <div class="relative w-64 h-64 sm:w-80 sm:h-80">
-                        <div class="absolute inset-0 rounded-3xl bg-gradient-to-tr from-neonBlue via-red-600 to-orange-500 animate-spin-slow blur-md opacity-70"></div>
-                        <div class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-neonBlue to-orange-500 opacity-30 blur-lg"></div>
+                        <div class="absolute inset-0 rounded-3xl bg-gradient-to-tr from-neonBlue via-neonPurple to-neonCyan animate-spin-slow blur-md opacity-70"></div>
+                        <div class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-neonBlue to-neonPurple opacity-30 blur-lg"></div>
                         <div class="relative w-full h-full rounded-3xl overflow-hidden glass-card border-2 border-neonBlue/50 p-2">
                             <img :src="data.profilePhoto" alt="Profile" class="w-full h-full object-cover rounded-2xl grayscale hover:grayscale-0 transition-all duration-500">
                         </div>
@@ -369,22 +356,22 @@
             </div>
         </section>
 
+        <!-- 2. ABOUT SECTION -->
         <section id="about" class="py-24 px-6 relative">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
-                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">About <span class="gradient-text">Me</span></h2>
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-white">About <span class="text-neonBlue">Me</span></h2>
                     <p class="text-gray-300 text-sm sm:text-base">Mengenal lebih dekat latar belakang dan semangat saya di dunia teknologi.</p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                     <div class="lg:col-span-6 space-y-6" data-aos="fade-right">
                         <div class="glass-card p-8 rounded-2xl relative overflow-hidden">
-                            <div class="absolute top-0 right-0 w-32 h-32 bg-neonBlue/5 rounded-full blur-2xl pointer-events-none"></div>
                             <h3 class="text-xl font-bold text-neonBlue mb-4 flex items-center gap-2">
                                 <i data-lucide="code-2" class="w-5 h-5"></i> Semangat & Dedikasi
                             </h3>
                             <p class="text-gray-200 leading-relaxed text-sm sm:text-base">
-                                Saya adalah seorang siswa aktif di <span class="text-neonCyan font-semibold" x-text="data.school"></span> mengambil jurusan Rekayasa Perangkat Lunak (RPL). Ketertarikan saya pada dunia pemrograman dimulai dari rasa penasaran bagaimana sebuah website dan aplikasi dapat bekerja secara optimal. Saat ini, saya fokus mendalami pengembangan web frontend & backend serta desain antarmuka.
+                                Saya adalah seorang siswa aktif di <span class="text-neonCyan font-semibold" x-text="data.school"></span> mengambil jurusan Rekayasa Perangkat Lunak (RPL). Ketertarikan saya pada dunia pemrograman dimulai dari rasa penasaran bagaimana sebuah website dan aplikasi dapat bekerja secara optimal.
                             </p>
                         </div>
                     </div>
@@ -394,43 +381,28 @@
                             <div class="w-12 h-12 rounded-xl bg-neonBlue/10 flex items-center justify-center text-neonBlue mb-4">
                                 <i data-lucide="graduation-cap" class="w-6 h-6"></i>
                             </div>
-                            <h4 class="font-bold text-lg mb-2">🎓 Education</h4>
-                            <p class="text-gray-300 text-sm">Siswa RPL di <span x-text="data.school"></span>, mendalami algoritma, logika, dan struktur sistem perangkat lunak.</p>
+                            <h4 class="font-bold text-lg mb-2 text-white">🎓 Education</h4>
+                            <p class="text-gray-300 text-sm">Siswa RPL di <span x-text="data.school"></span>, mendalami algoritma dan sistem perangkat lunak.</p>
                         </div>
 
                         <div class="glass-card p-6 rounded-2xl transition-all duration-300 hover:scale-105 neon-box-glow">
-                            <div class="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center text-red-400 mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-neonPurple/10 flex items-center justify-center text-neonPurple mb-4">
                                 <i data-lucide="cpu" class="w-6 h-6"></i>
                             </div>
-                            <h4 class="font-bold text-lg mb-2">💻 Programming</h4>
+                            <h4 class="font-bold text-lg mb-2 text-white">💻 Programming</h4>
                             <p class="text-gray-300 text-sm">Menguasai HTML, CSS, JavaScript, PHP, MySQL, serta framework Laravel.</p>
-                        </div>
-
-                        <div class="glass-card p-6 rounded-2xl transition-all duration-300 hover:scale-105 neon-box-glow">
-                            <div class="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-400 mb-4">
-                                <i data-lucide="rocket" class="w-6 h-6"></i>
-                            </div>
-                            <h4 class="font-bold text-lg mb-2">🚀 Projects</h4>
-                            <p class="text-gray-300 text-sm">Telah merancang berbagai aplikasi web mulai dari sistem sekolah hingga platform fungsional.</p>
-                        </div>
-
-                        <div class="glass-card p-6 rounded-2xl transition-all duration-300 hover:scale-105 neon-box-glow">
-                            <div class="w-12 h-12 rounded-xl bg-neonBlue/10 flex items-center justify-center text-neonBlue mb-4">
-                                <i data-lucide="target" class="w-6 h-6"></i>
-                            </div>
-                            <h4 class="font-bold text-lg mb-2">🎯 Goals</h4>
-                            <p class="text-gray-300 text-sm">Menjadi Software Engineer profesional yang mampu menciptakan solusi teknologi berdampak luas.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- 3. SKILLS SECTION -->
         <section id="skills" class="py-24 px-6 relative bg-cardBg/40">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
-                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">My <span class="gradient-text">Skills</span></h2>
-                    <p class="text-gray-300 text-sm sm:text-base">Teknologi dan tools yang saya gunakan sehari-hari dalam membangun project.</p>
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-white">My <span class="text-neonBlue">Skills</span></h2>
+                    <p class="text-gray-300 text-sm sm:text-base">Teknologi dan tools yang saya gunakan sehari-hari.</p>
                 </div>
 
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6" data-aos="fade-up">
@@ -439,9 +411,9 @@
                             <div class="w-12 h-12 rounded-xl bg-neonBlue/10 flex items-center justify-center text-neonBlue group-hover:bg-neonBlue group-hover:text-darkBg transition-all">
                                 <i :data-lucide="skill.icon" class="w-6 h-6"></i>
                             </div>
-                            <div class="font-bold text-sm" x-text="skill.name"></div>
+                            <div class="font-bold text-sm text-white" x-text="skill.name"></div>
                             <div class="w-full bg-darkBg rounded-full h-2 overflow-hidden border border-white/10">
-                                <div class="bg-gradient-to-r from-neonBlue to-orange-500 h-full rounded-full transition-all duration-1000" :style="`width: ${skill.level}%`"></div>
+                                <div class="bg-gradient-to-r from-neonBlue to-neonPurple h-full rounded-full transition-all duration-1000" :style="`width: ${skill.level}%`"></div>
                             </div>
                             <div class="text-xs text-gray-300" x-text="`${skill.level}% Proficiency`"></div>
                         </div>
@@ -450,10 +422,11 @@
             </div>
         </section>
 
+        <!-- 4. PROJECTS SECTION -->
         <section id="projects" class="py-24 px-6 relative">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center max-w-2xl mx-auto mb-12" data-aos="fade-up">
-                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">Featured <span class="gradient-text">Projects</span></h2>
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-white">Featured <span class="text-neonBlue">Projects</span></h2>
                     <p class="text-gray-300 text-sm sm:text-base">Beberapa hasil karya terbaik yang telah saya kembangkan.</p>
                 </div>
 
@@ -477,7 +450,7 @@
                                     <span class="absolute top-4 right-4 z-20 px-3 py-1 rounded-full bg-darkBg/80 backdrop-blur-md text-neonBlue text-xs font-semibold uppercase tracking-wider border border-neonBlue/30" x-text="proj.category"></span>
                                 </div>
                                 <div class="p-6">
-                                    <h4 class="text-lg font-bold mb-2 group-hover:text-neonBlue transition-colors" x-text="proj.title"></h4>
+                                    <h4 class="text-lg font-bold mb-2 text-white group-hover:text-neonBlue transition-colors" x-text="proj.title"></h4>
                                     <p class="text-gray-300 text-sm mb-4 leading-relaxed" x-text="proj.desc"></p>
                                     <div class="flex flex-wrap gap-2 mb-4">
                                         <template x-for="t in proj.tech">
@@ -500,10 +473,11 @@
             </div>
         </section>
 
+        <!-- 5. EXPERIENCE SECTION -->
         <section id="experience" class="py-24 px-6 relative bg-cardBg/40">
             <div class="max-w-4xl mx-auto">
                 <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
-                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">My <span class="gradient-text">Experience</span></h2>
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-white">My <span class="text-neonBlue">Experience</span></h2>
                     <p class="text-gray-300 text-sm sm:text-base">Jejak perjalanan belajar dan perkembangan skill di dunia IT.</p>
                 </div>
 
@@ -513,7 +487,7 @@
                             <div class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-darkBg border-2 border-neonBlue group-hover:bg-neonBlue transition-all shadow-[0_0_10px_#00F0FF]"></div>
                             <div class="glass-card p-6 rounded-2xl transition-all duration-300 hover:border-neonBlue">
                                 <span class="inline-block px-3 py-1 rounded-full bg-neonBlue/10 text-neonBlue font-code text-xs mb-2" x-text="exp.year"></span>
-                                <h4 class="text-lg font-bold mb-1" x-text="exp.title"></h4>
+                                <h4 class="text-lg font-bold mb-1 text-white" x-text="exp.title"></h4>
                                 <p class="text-gray-300 text-sm" x-text="exp.desc"></p>
                             </div>
                         </div>
@@ -522,10 +496,11 @@
             </div>
         </section>
 
+        <!-- 6. CERTIFICATES SECTION -->
         <section id="certificates" class="py-24 px-6 relative">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
-                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">Certificates & <span class="gradient-text">Achievements</span></h2>
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-white">Certificates & <span class="text-neonBlue">Achievements</span></h2>
                     <p class="text-gray-300 text-sm sm:text-base">Sertifikat pelatihan dan penghargaan kompetensi programming.</p>
                 </div>
 
@@ -540,7 +515,7 @@
                             </div>
                             <div class="p-6">
                                 <span class="text-xs text-neonCyan font-code" x-text="`${cert.issuer} • ${cert.date}`"></span>
-                                <h4 class="font-bold text-base mt-1 group-hover:text-neonBlue transition-colors" x-text="cert.title"></h4>
+                                <h4 class="font-bold text-base mt-1 text-white group-hover:text-neonBlue transition-colors" x-text="cert.title"></h4>
                             </div>
                         </div>
                     </template>
@@ -548,40 +523,18 @@
             </div>
         </section>
 
-        <section class="py-20 px-6 relative bg-gradient-to-b from-transparent via-neonBlue/5 to-transparent">
-            <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center" data-aos="fade-up">
-                <div class="glass-card p-6 rounded-2xl">
-                    <div class="text-4xl sm:text-5xl font-extrabold text-neonBlue mb-2">10+</div>
-                    <div class="text-gray-300 text-xs sm:text-sm uppercase tracking-wider font-medium">Projects Completed</div>
-                </div>
-                <div class="glass-card p-6 rounded-2xl">
-                    <div class="text-4xl sm:text-5xl font-extrabold text-red-500 mb-2">5+</div>
-                    <div class="text-gray-300 text-xs sm:text-sm uppercase tracking-wider font-medium">Certificates Earned</div>
-                </div>
-                <div class="glass-card p-6 rounded-2xl">
-                    <div class="text-4xl sm:text-5xl font-extrabold text-orange-400 mb-2">3+</div>
-                    <div class="text-gray-300 text-xs sm:text-sm uppercase tracking-wider font-medium">Programming Languages</div>
-                </div>
-                <div class="glass-card p-6 rounded-2xl">
-                    <div class="text-4xl sm:text-5xl font-extrabold text-neonCyan mb-2">2+</div>
-                    <div class="text-gray-300 text-xs sm:text-sm uppercase tracking-wider font-medium">Years Learning</div>
-                </div>
-            </div>
-        </section>
-
+        <!-- 7. CONTACT SECTION -->
         <section id="contact" class="py-24 px-6 relative">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
-                    <h2 class="text-3xl sm:text-4xl font-bold mb-4">Let's Work <span class="gradient-text">Together</span></h2>
-                    <p class="text-gray-300 text-sm sm:text-base">Punya pertanyaan, tawaran project, atau ingin berdiskusi seputar coding? Hubungi saya!</p>
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-white">Let's Work <span class="text-neonBlue">Together</span></h2>
+                    <p class="text-gray-300 text-sm sm:text-base">Punya pertanyaan, tawaran project, atau ingin berdiskusi?</p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
                     <div class="lg:col-span-5 space-y-6" data-aos="fade-right">
                         <div class="glass-card p-8 rounded-2xl space-y-6">
                             <h3 class="text-xl font-bold text-neonBlue">Informasi Kontak</h3>
-                            <p class="text-gray-300 text-sm">Jangan ragu untuk menghubungi saya melalui platform di bawah ini.</p>
-                            
                             <div class="space-y-4">
                                 <a :href="`mailto:${data.email}`" class="flex items-center gap-4 p-3 rounded-xl glass-card hover:border-neonBlue transition-all">
                                     <div class="w-10 h-10 rounded-lg bg-neonBlue/10 flex items-center justify-center text-neonBlue">
@@ -589,27 +542,17 @@
                                     </div>
                                     <div>
                                         <div class="text-xs text-gray-400">Email</div>
-                                        <div class="text-sm font-medium" x-text="data.email"></div>
+                                        <div class="text-sm font-medium text-white" x-text="data.email"></div>
                                     </div>
                                 </a>
 
                                 <a :href="`https://wa.me/${data.whatsapp.replace(/[^0-9]/g, '')}`" target="_blank" class="flex items-center gap-4 p-3 rounded-xl glass-card hover:border-neonBlue transition-all">
-                                    <div class="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center text-orange-400">
+                                    <div class="w-10 h-10 rounded-lg bg-neonPurple/10 flex items-center justify-center text-neonPurple">
                                         <i data-lucide="phone" class="w-5 h-5"></i>
                                     </div>
                                     <div>
                                         <div class="text-xs text-gray-400">WhatsApp</div>
-                                        <div class="text-sm font-medium" x-text="data.whatsapp"></div>
-                                    </div>
-                                </a>
-
-                               <a :href="`https://instagram.com/${data.instagram.replace('@', '')}`" target="_blank" class="flex items-center gap-4 p-3 rounded-xl glass-card hover:border-neonBlue transition-all">
-                                    <div class="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center text-red-400">
-                                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                                    </div>
-                                    <div>
-                                         <div class="text-xs text-gray-400">Instagram</div>
-                                         <div class="text-sm font-medium" x-text="data.instagram"></div>
+                                        <div class="text-sm font-medium text-white" x-text="data.whatsapp"></div>
                                     </div>
                                 </a>
                             </div>
@@ -621,18 +564,18 @@
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 <div class="space-y-2">
                                     <label class="text-xs font-semibold uppercase tracking-wider text-gray-300">Your Name</label>
-                                    <input type="text" required class="w-full px-4 py-3 rounded-xl bg-darkBg border border-white/10 text-white focus:border-neonBlue focus:outline-none transition-all text-sm" placeholder="John Doe">
+                                    <input type="text" required class="w-full px-4 py-3 rounded-xl bg-darkBg border border-white/10 text-white focus:border-neonBlue focus:outline-none text-sm" placeholder="John Doe">
                                 </div>
                                 <div class="space-y-2">
                                     <label class="text-xs font-semibold uppercase tracking-wider text-gray-300">Your Email</label>
-                                    <input type="email" required class="w-full px-4 py-3 rounded-xl bg-darkBg border border-white/10 text-white focus:border-neonBlue focus:outline-none transition-all text-sm" placeholder="john@example.com">
+                                    <input type="email" required class="w-full px-4 py-3 rounded-xl bg-darkBg border border-white/10 text-white focus:border-neonBlue focus:outline-none text-sm" placeholder="john@example.com">
                                 </div>
                             </div>
                             <div class="space-y-2">
                                 <label class="text-xs font-semibold uppercase tracking-wider text-gray-300">Message</label>
-                                <textarea rows="5" required class="w-full px-4 py-3 rounded-xl bg-darkBg border border-white/10 text-white focus:border-neonBlue focus:outline-none transition-all text-sm" placeholder="Tuliskan pesan atau penawaran Anda..."></textarea>
+                                <textarea rows="5" required class="w-full px-4 py-3 rounded-xl bg-darkBg border border-white/10 text-white focus:border-neonBlue focus:outline-none text-sm" placeholder="Tuliskan pesan..."></textarea>
                             </div>
-                            <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-neonBlue via-orange-500 to-red-600 text-darkBg font-bold text-sm tracking-wide uppercase hover:opacity-95 transition-all shadow-lg shadow-neonBlue/20 flex items-center justify-center gap-2">
+                            <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-neonBlue to-neonPurple text-darkBg font-bold text-sm tracking-wide uppercase hover:opacity-95 transition-all shadow-lg shadow-neonBlue/20 flex items-center justify-center gap-2">
                                 Send Message <i data-lucide="send" class="w-4 h-4"></i>
                             </button>
                         </form>
@@ -643,19 +586,19 @@
 
     </main>
 
+    <!-- FOOTER -->
     <footer class="border-t border-white/5 py-8 px-6 text-center text-sm text-gray-400 relative z-10 glass-card">
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
             <div>
-                Designed & Built by <span class="text-neonBlue font-semibold" x-text="data.name"></span> — RPL Student
+                Designed & Built by <span class="text-neonBlue font-semibold" x-text="data.name"></span>
             </div>
             <div class="flex items-center gap-4 text-gray-400">
-                <a :href="`https://${data.github}`" target="_blank" class="hover:text-neonBlue transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
-                <a :href="`https://instagram.com/${data.instagram.replace('@', '')}`" target="_blank" class="hover:text-neonBlue transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
                 <a :href="`mailto:${data.email}`" class="hover:text-neonBlue transition-colors"><i data-lucide="mail" class="w-5 h-5"></i></a>
             </div>
         </div>
     </footer>
 
+    <!-- MODAL -->
     <div x-show="modalOpen" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4" style="display: none;">
         <div @click.outside="modalOpen = false" class="relative max-w-3xl w-full glass-card p-4 rounded-2xl border border-neonBlue/50">
             <button @click="modalOpen = false" class="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-neonBlue text-darkBg flex items-center justify-center font-bold hover:scale-110 transition-transform shadow-lg z-20">
@@ -666,6 +609,7 @@
         </div>
     </div>
 
+    <!-- Script Utama -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         function portfolioApp() {
