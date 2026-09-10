@@ -204,9 +204,6 @@
             animation: spinSlow 15s linear infinite;
         }
 
-        /* Warna Teks Mengikuti Animasi Background (Gradient Text) */
-
-
         .normal-heading-text {
             background: linear-gradient(270deg, #00F0FF, #FF003C, #FF7800, #9D00FF, #00FFCC);
             -webkit-background-clip: text;
@@ -222,13 +219,11 @@
             animation: gradientMove 10s ease infinite;
         }
         
-        }
         .name-highlight {
             background: linear-gradient(135deg, #00FFCC, #00F0FF, #9D00FF);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
 
         @keyframes gradientMove {
             0% { background-position: 0% 50%; }
@@ -283,9 +278,7 @@
     <div class="custom-cursor cursor-dot hidden md:block"></div>
     <div class="custom-cursor cursor-outline hidden md:block"></div>
 
-    <!-- ========================================== -->
-    <!-- LATAR BELAKANG ANIMASI (MERAH, BIRU, ORANGE) -->
-    <!-- ========================================== -->
+    <!-- LATAR BELAKANG ANIMASI -->
     <div class="cyber-bg-container">
         <div class="siren-blue"></div>
         <div class="siren-red"></div>
@@ -298,9 +291,9 @@
     <header class="fixed top-0 left-0 right-0 z-40 glass-card border-b border-white/5 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
            <a href="#home" class="font-bold text-xl tracking-wider flex items-center gap-2 group">
-    <span class="text-neonBlue font-code group-hover:scale-110 transition-transform">&lt;/&gt;</span>
-    <span class="animated-gradient-text" x-text="data.nickname"></span>
-        </a>
+                <span class="text-neonBlue font-code group-hover:scale-110 transition-transform">&lt;/&gt;</span>
+                <span class="animated-gradient-text" x-text="data.nickname"></span>
+            </a>
 
             <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
                 <a href="#home" class="hover:text-neonBlue transition-colors">Home</a>
@@ -313,10 +306,10 @@
             </nav>
 
            <div class="hidden lg:flex items-center gap-4">
-                  <a href="cv.html" download="CV_Muhammad_Hibatullah_Naufal.html" class="flex items-center gap-2 ...">
-                    <i data-lucide="file-text" class="w-4 h-4"></i>
-                         <span>Download CV</span>
-                    </a>
+                <!-- Tombol Download CV Diubah Membuka Modal Pop-up -->
+                <button @click="cvModalOpen = true" class="px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-lg glass-card border border-neonBlue/30 text-neonBlue hover:bg-neonBlue/10 transition-all flex items-center gap-2 cursor-pointer">
+                    <i data-lucide="file-text" class="w-4 h-4"></i> Download CV
+                </button>
                 <a href="#contact" class="px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-lg bg-neonBlue text-darkBg hover:opacity-95 transition-all shadow-lg shadow-neonBlue/20 font-bold">
                     Contact Me
                 </a>
@@ -335,6 +328,9 @@
             <a href="#experience" @click="mobileMenuOpen = false" class="block hover:text-neonBlue transition-colors">Experience</a>
             <a href="#certificates" @click="mobileMenuOpen = false" class="block hover:text-neonBlue transition-colors">Certificates</a>
             <a href="#contact" @click="mobileMenuOpen = false" class="block hover:text-neonBlue transition-colors">Contact</a>
+            <button @click="cvModalOpen = true; mobileMenuOpen = false" class="w-full py-2 text-center text-xs font-semibold uppercase tracking-wider rounded-lg glass-card border border-neonBlue/30 text-neonBlue">
+                Download CV
+            </button>
         </div>
     </header>
 
@@ -344,7 +340,6 @@
         <!-- 1. HERO SECTION -->
         <section id="home" class="min-h-[90vh] flex items-center justify-center relative px-6 py-20">
             <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                <!-- Teks Utama Kembali Normal & Rapih (Putih) -->
                 <div class="lg:col-span-7 space-y-6 text-center lg:text-left" data-aos="fade-right">
                     <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-card border border-neonBlue/30 text-neonBlue text-xs font-code tracking-wide">
                         <span class="w-2 h-2 rounded-full bg-neonBlue animate-pulse"></span>
@@ -368,7 +363,6 @@
                     </div>
                 </div>
 
-                <!-- Right Profile Image -->
                 <div class="lg:col-span-5 flex justify-center" data-aos="fade-left">
                     <div class="relative w-64 h-64 sm:w-80 sm:h-80">
                         <div class="absolute inset-0 rounded-3xl bg-gradient-to-tr from-neonBlue via-neonPurple to-neonCyan animate-spin-slow blur-md opacity-70"></div>
@@ -549,114 +543,111 @@
         </section>
 
         <!-- 7. CONTACT SECTION -->
-<section id="contact" class="py-24 px-6 relative">
-    <div class="max-w-7xl mx-auto">
-        <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
-            <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-white">Let's Work <span class="text-neonBlue">Together</span></h2>
-            <p class="text-gray-300 text-sm sm:text-base">Punya pertanyaan, tawaran project, atau ingin berdiskusi?</p>
-        </div>
+        <section id="contact" class="py-24 px-6 relative">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-white">Let's Work <span class="text-neonBlue">Together</span></h2>
+                    <p class="text-gray-300 text-sm sm:text-base">Punya pertanyaan, tawaran project, atau ingin berdiskusi?</p>
+                </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
-            <!-- Informasi Kontak (Kiri) -->
-            <div class="lg:col-span-5 space-y-6" data-aos="fade-right">
-                <div class="glass-card p-8 rounded-2xl space-y-6">
-                    <h3 class="text-xl font-bold text-neonBlue">Informasi Kontak</h3>
-                    <div class="space-y-4">
-                        <a :href="`mailto:${data.email}`" class="flex items-center gap-4 p-3 rounded-xl glass-card hover:border-neonBlue transition-all">
-                            <div class="w-10 h-10 rounded-lg bg-neonBlue/10 flex items-center justify-center text-neonBlue">
-                                <i data-lucide="mail" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <div class="text-xs text-gray-400">Email</div>
-                                <div class="text-sm font-medium text-white" x-text="data.email"></div>
-                            </div>
-                        </a>
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                    <!-- Informasi Kontak (Kiri) -->
+                    <div class="lg:col-span-5 space-y-6" data-aos="fade-right">
+                        <div class="glass-card p-8 rounded-2xl space-y-6">
+                            <h3 class="text-xl font-bold text-neonBlue">Informasi Kontak</h3>
+                            <div class="space-y-4">
+                                <a :href="`mailto:${data.email}`" class="flex items-center gap-4 p-3 rounded-xl glass-card hover:border-neonBlue transition-all">
+                                    <div class="w-10 h-10 rounded-lg bg-neonBlue/10 flex items-center justify-center text-neonBlue">
+                                        <i data-lucide="mail" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-gray-400">Email</div>
+                                        <div class="text-sm font-medium text-white" x-text="data.email"></div>
+                                    </div>
+                                </a>
 
-                        <a :href="`https://wa.me/${data.whatsapp.replace(/[^0-9]/g, '')}`" target="_blank" class="flex items-center gap-4 p-3 rounded-xl glass-card hover:border-neonBlue transition-all">
-                            <div class="w-10 h-10 rounded-lg bg-neonPurple/10 flex items-center justify-center text-neonPurple">
-                                <i data-lucide="phone" class="w-5 h-5"></i>
+                                <a :href="`https://wa.me/${data.whatsapp.replace(/[^0-9]/g, '')}`" target="_blank" class="flex items-center gap-4 p-3 rounded-xl glass-card hover:border-neonBlue transition-all">
+                                    <div class="w-10 h-10 rounded-lg bg-neonPurple/10 flex items-center justify-center text-neonPurple">
+                                        <i data-lucide="phone" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-gray-400">WhatsApp</div>
+                                        <div class="text-sm font-medium text-white" x-text="data.whatsapp"></div>
+                                    </div>
+                                </a>
+                                
+                                <a :href="`https://instagram.com/${data.instagram.replace(/^@/, '')}`" target="_blank" class="flex items-center gap-4 p-3 rounded-xl glass-card hover:border-neonBlue transition-all">
+                                    <div class="w-10 h-10 rounded-lg bg-neonPurple/10 flex items-center justify-center text-neonPurple">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-gray-400">Instagram</div>
+                                        <div class="text-sm font-medium text-white" x-text="data.instagram"></div>
+                                    </div>
+                                </a>
                             </div>
-                            <div>
-                                <div class="text-xs text-gray-400">WhatsApp</div>
-                                <div class="text-sm font-medium text-white" x-text="data.whatsapp"></div>
+                        </div>
+                    </div>
+
+                    <!-- Formulir Kontak (Kanan) -->
+                    <div class="lg:col-span-7" data-aos="fade-left">
+                        <form @submit.prevent="submitForm" class="glass-card p-8 rounded-2xl space-y-6 relative">
+                            <input type="hidden" name="access_key" value="63ac1758-5f2f-4863-8199-6e71f16aed0d">
+                            <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+                            <template x-if="formStatus.message">
+                                <div class="p-4 rounded-xl text-sm font-medium transition-all"
+                                     :class="formStatus.success ? 'bg-neonCyan/10 border border-neonCyan/30 text-neonCyan' : 'bg-red-500/10 border border-red-500/30 text-red-400'">
+                                    <span x-text="formStatus.message"></span>
+                                </div>
+                            </template>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div class="space-y-2">
+                                    <label for="name" class="text-xs font-semibold uppercase tracking-wider text-gray-300">Your Name</label>
+                                    <input type="text" id="name" name="name" x-model="formData.name" required 
+                                           class="w-full px-4 py-3 rounded-xl bg-darkBg border border-white/10 text-white focus:border-neonBlue focus:outline-none text-sm" 
+                                           placeholder="John Doe">
+                                </div>
+                                <div class="space-y-2">
+                                    <label for="email" class="text-xs font-semibold uppercase tracking-wider text-gray-300">Your Email</label>
+                                    <input type="email" id="email" name="email" x-model="formData.email" required 
+                                           class="w-full px-4 py-3 rounded-xl bg-darkBg border border-white/10 text-white focus:border-neonBlue focus:outline-none text-sm" 
+                                           placeholder="john@example.com">
+                                </div>
                             </div>
-                        </a>
-                        
-                        <a :href="`https://instagram.com/${data.instagram.replace(/^@/, '')}`" target="_blank" class="flex items-center gap-4 p-3 rounded-xl glass-card hover:border-neonBlue transition-all">
-                            <div class="w-10 h-10 rounded-lg bg-neonPurple/10 flex items-center justify-center text-neonPurple">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+
+                            <div class="space-y-2">
+                                <label for="subject" class="text-xs font-semibold uppercase tracking-wider text-gray-300">Subject</label>
+                                <input type="text" id="subject" name="subject" x-model="formData.subject" required 
+                                       class="w-full px-4 py-3 rounded-xl bg-darkBg border border-white/10 text-white focus:border-neonBlue focus:outline-none text-sm" 
+                                       placeholder="Subjek Pesan">
                             </div>
-                            <div>
-                                <div class="text-xs text-gray-400">Instagram</div>
-                                <div class="text-sm font-medium text-white" x-text="data.instagram"></div>
+
+                            <div class="space-y-2">
+                                <label for="message" class="text-xs font-semibold uppercase tracking-wider text-gray-300">Message</label>
+                                <textarea id="message" name="message" x-model="formData.message" rows="5" required 
+                                          class="w-full px-4 py-3 rounded-xl bg-darkBg border border-white/10 text-white focus:border-neonBlue focus:outline-none text-sm" 
+                                          placeholder="Tuliskan pesan..."></textarea>
                             </div>
-                        </a>
+
+                            <button type="submit" :disabled="isSubmitting" 
+                                    class="w-full py-4 rounded-xl bg-gradient-to-r from-neonBlue to-neonPurple text-darkBg font-bold text-sm tracking-wide uppercase hover:opacity-95 transition-all shadow-lg shadow-neonBlue/20 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                                <span x-show="!isSubmitting">Kirim Pesan</span>
+                                <span x-show="isSubmitting" class="flex items-center gap-2">
+                                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-darkBg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    Mengirim...
+                                </span>
+                                <i data-lucide="send" class="w-4 h-4" x-show="!isSubmitting"></i>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
-
-            <!-- Formulir Kontak (Kanan) -->
-            <div class="lg:col-span-7" data-aos="fade-left">
-                <form @submit.prevent="submitForm" class="glass-card p-8 rounded-2xl space-y-6 relative">
-                    <!-- Web3Forms Access Key (Ganti dengan Access Key Anda) -->
-                    <input type="hidden" name="access_key" value="63ac1758-5f2f-4863-8199-6e71f16aed0d">
-                    <!-- Honeypot Spam Protection -->
-                    <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
-
-                    <!-- Notifikasi Modern (Success / Error) -->
-                    <template x-if="formStatus.message">
-                        <div class="p-4 rounded-xl text-sm font-medium transition-all"
-                             :class="formStatus.success ? 'bg-neonCyan/10 border border-neonCyan/30 text-neonCyan' : 'bg-red-500/10 border border-red-500/30 text-red-400'">
-                            <span x-text="formStatus.message"></span>
-                        </div>
-                    </template>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <div class="space-y-2">
-                            <label for="name" class="text-xs font-semibold uppercase tracking-wider text-gray-300">Your Name</label>
-                            <input type="text" id="name" name="name" x-model="formData.name" required 
-                                   class="w-full px-4 py-3 rounded-xl bg-darkBg border border-white/10 text-white focus:border-neonBlue focus:outline-none text-sm" 
-                                   placeholder="John Doe">
-                        </div>
-                        <div class="space-y-2">
-                            <label for="email" class="text-xs font-semibold uppercase tracking-wider text-gray-300">Your Email</label>
-                            <input type="email" id="email" name="email" x-model="formData.email" required 
-                                   class="w-full px-4 py-3 rounded-xl bg-darkBg border border-white/10 text-white focus:border-neonBlue focus:outline-none text-sm" 
-                                   placeholder="john@example.com">
-                        </div>
-                    </div>
-
-                    <div class="space-y-2">
-                        <label for="subject" class="text-xs font-semibold uppercase tracking-wider text-gray-300">Subject</label>
-                        <input type="text" id="subject" name="subject" x-model="formData.subject" required 
-                               class="w-full px-4 py-3 rounded-xl bg-darkBg border border-white/10 text-white focus:border-neonBlue focus:outline-none text-sm" 
-                               placeholder="Subjek Pesan">
-                    </div>
-
-                    <div class="space-y-2">
-                        <label for="message" class="text-xs font-semibold uppercase tracking-wider text-gray-300">Message</label>
-                        <textarea id="message" name="message" x-model="formData.message" rows="5" required 
-                                  class="w-full px-4 py-3 rounded-xl bg-darkBg border border-white/10 text-white focus:border-neonBlue focus:outline-none text-sm" 
-                                  placeholder="Tuliskan pesan..."></textarea>
-                    </div>
-
-                    <button type="submit" :disabled="isSubmitting" 
-                            class="w-full py-4 rounded-xl bg-gradient-to-r from-neonBlue to-neonPurple text-darkBg font-bold text-sm tracking-wide uppercase hover:opacity-95 transition-all shadow-lg shadow-neonBlue/20 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
-                        <span x-show="!isSubmitting">Kirim Pesan</span>
-                        <span x-show="isSubmitting" class="flex items-center gap-2">
-                            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-darkBg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
-                            Mengirim...
-                        </span>
-                        <i data-lucide="send" class="w-4 h-4" x-show="!isSubmitting"></i>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-</section>
+        </section>
     </main>
 
     <!-- FOOTER -->
@@ -671,10 +662,105 @@
         </div>
     </footer>
 
-    <!-- MODAL -->
+    <!-- MODAL PREVIEW & REQUEST CV -->
+    <div x-show="cvModalOpen" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4" style="display: none;">
+        <div @click.outside="cvModalOpen = false" class="relative max-w-2xl w-full glass-card rounded-2xl border border-neonBlue/50 shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-darkBg/50">
+                <div class="flex items-center gap-2">
+                    <span class="text-xs bg-darkBg text-gray-300 px-2.5 py-1 rounded-full border border-white/10 font-code">CURRICULUM VITAE</span>
+                    <span class="text-xs bg-neonBlue/10 text-neonBlue px-2.5 py-1 rounded-full border border-neonBlue/30 font-code">🔒 PRIVACY PROTECTED</span>
+                </div>
+                <button @click="cvModalOpen = false" class="text-gray-400 hover:text-white p-1 rounded-lg hover:bg-white/5 transition cursor-pointer">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-6 overflow-y-auto space-y-6 flex-1">
+                <div>
+                    <h2 class="text-xl font-bold text-white" x-text="data.name"></h2>
+                    <p class="text-sm text-gray-400" x-text="`${data.major} · ${data.city}, Jawa Timur`"></p>
+                </div>
+
+                <!-- Tab Navigasi Modal -->
+                <div class="flex gap-2 border-b border-white/10 pb-3">
+                    <button @click="cvTab = 'ringkasan'" 
+                            :class="cvTab === 'ringkasan' ? 'bg-neonBlue text-darkBg font-bold' : 'text-gray-400 hover:bg-white/5'"
+                            class="px-4 py-2 text-sm rounded-lg transition cursor-pointer">
+                        Ringkasan Profil
+                    </button>
+                    <button @click="cvTab = 'minta'" 
+                            :class="cvTab === 'minta' ? 'bg-neonBlue text-darkBg font-bold' : 'text-gray-400 hover:bg-white/5'"
+                            class="px-4 py-2 text-sm rounded-lg transition cursor-pointer">
+                        Minta Dokumen Lengkap
+                    </button>
+                </div>
+
+                <!-- Tab 1: Ringkasan -->
+                <div x-show="cvTab === 'ringkasan'" class="space-y-4">
+                    <div class="glass-card p-4 rounded-xl border border-white/10 space-y-1">
+                        <h3 class="font-semibold text-white" x-text="data.school"></h3>
+                        <p class="text-sm text-gray-300" x-text="`${data.major} · Junior Developer`"></p>
+                    </div>
+                    <div class="glass-card p-4 rounded-xl border border-white/10 space-y-2">
+                        <h4 class="font-semibold text-neonBlue text-sm">Keahlian Utama:</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <template x-for="skill in data.skills.slice(0, 6)">
+                                <span class="px-2.5 py-1 rounded-md bg-neonBlue/10 text-neonBlue text-xs font-code" x-text="skill.name"></span>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Form Minta CV -->
+                <div x-show="cvTab === 'minta'" class="space-y-4">
+                    <div class="bg-amber-500/10 border border-amber-500/30 p-4 rounded-xl text-amber-200 text-sm flex gap-3 items-start">
+                        <i data-lucide="lock" class="w-5 h-5 shrink-0 mt-0.5 text-amber-400"></i>
+                        <p>Untuk menjaga privasi data pribadi (nomor telepon & alamat), file CV lengkap akan dikirimkan langsung ke email resmi instansi/perusahaan Anda.</p>
+                    </div>
+                    <form @submit.prevent="alert('Permintaan CV berhasil dikirim! File akan segera diproses ke email Anda.'); cvModalOpen = false;" class="space-y-3">
+                        <div>
+                            <label class="block text-xs text-gray-300 mb-1">Nama Anda / Recruiter</label>
+                            <input type="text" placeholder="cth. Budi (HRD PT ABC)" required class="w-full bg-darkBg border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-neonBlue">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-gray-300 mb-1">Email Perusahaan / Perekrut</label>
+                            <input type="email" placeholder="cth. hrd@perusahaan.com" required class="w-full bg-darkBg border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-neonBlue">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-gray-300 mb-1">Tujuan / Posisi</label>
+                            <input type="text" placeholder="cth. Rekrutmen Junior Web Developer" required class="w-full bg-darkBg border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-neonBlue">
+                        </div>
+                        <button type="submit" class="w-full bg-neonBlue text-darkBg font-bold py-2.5 rounded-lg hover:bg-neonCyan transition text-sm shadow-lg shadow-neonBlue/20 cursor-pointer">
+                            Kirim Permintaan CV
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="px-6 py-4 border-t border-white/10 flex justify-between items-center bg-darkBg/50">
+                <button @click="cvTab = 'ringkasan'" x-show="cvTab === 'minta'" class="text-xs text-gray-400 hover:text-white flex items-center gap-1 transition cursor-pointer">
+                    ← Kembali ke Ringkasan
+                </button>
+                <div x-show="cvTab === 'ringkasan'">
+                    <a href="cv.html" target="_blank" class="text-xs text-neonBlue hover:underline flex items-center gap-1">
+                        <i data-lucide="external-link" class="w-3 h-3"></i> Buka CV Full-Screen
+                    </a>
+                </div>
+                <button @click="cvTab = 'minta'" x-show="cvTab === 'ringkasan'" class="glass-card hover:border-neonBlue text-xs px-3 py-2 rounded-lg transition text-white font-medium cursor-pointer">
+                    Minta Dokumen Lengkap →
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL SERTIFIKAT -->
     <div x-show="modalOpen" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4" style="display: none;">
         <div @click.outside="modalOpen = false" class="relative max-w-3xl w-full glass-card p-4 rounded-2xl border border-neonBlue/50">
-            <button @click="modalOpen = false" class="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-neonBlue text-darkBg flex items-center justify-center font-bold hover:scale-110 transition-transform shadow-lg z-20">
+            <button @click="modalOpen = false" class="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-neonBlue text-darkBg flex items-center justify-center font-bold hover:scale-110 transition-transform shadow-lg z-20 cursor-pointer">
                 <i data-lucide="x" class="w-6 h-6"></i>
             </button>
             <img :src="activeCert.image" alt="Certificate Preview" class="w-full h-auto rounded-xl object-contain max-h-[75vh]">
@@ -685,145 +771,146 @@
     <!-- Script Utama -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-
         function portfolioApp() {
-    return {
-        isLoading: true,
-        progress: 0,
-        mobileMenuOpen: false,
-        projectFilter: 'all',
-        modalOpen: false,
-        activeCert: {},
+            return {
+                isLoading: true,
+                progress: 0,
+                mobileMenuOpen: false,
+                projectFilter: 'all',
+                modalOpen: false,
+                activeCert: {},
 
-        // State untuk Formulir Kontak
-        formData: {
-            name: '',
-            email: '',
-            subject: '',
-            message: ''
-        },
-        isSubmitting: false,
-        formStatus: {
-            success: false,
-            message: ''
-        },
-        
-        data: {
-            name: "MUHAMMAD HIBATULLAH NAUFAL",
-            nickname: "Muhammad Hibatullah Naufal",
-            school: "SMK Negeri 3 Sekayu",
-            major: "Rekayasa Perangkat Lunak",
-            class: "XI RPL 2",
-            city: "Sekayu",
-            age: 17,
-            email: "muhammadhibatullahnaufal09@gmail.com",
-            instagram: "@vwall2009",
-            whatsapp: "+6285709051828",
-            profilePhoto: "foto1.jpeg",
-            cvUrl: "cv.html", // Ubah dari "#" menjadi "cv.html"
+                // State Modal CV
+                cvModalOpen: false,
+                cvTab: 'ringkasan',
 
-            skills: [
-                { name: "HTML", level: 95, icon: "code" },
-                { name: "CSS", level: 90, icon: "layout" },
-                { name: "JavaScript", level: 85, icon: "file-code" },
-                { name: "PHP", level: 80, icon: "server" },
-                { name: "Laravel", level: 80, icon: "layers" },
-                { name: "MySQL", level: 85, icon: "database" },
-                { name: "Git & GitHub", level: 90, icon: "git-branch" },
-                { name: "Python", level: 80, icon: "terminal" }
-            ],
-
-            projects: [
-                {
-                    title: "XI RPL 2",
-                    category: "Web",
-                    desc: "Website resmi kelas XI RPL 2 SMK Negeri 3 Sekayu yang informatif, modern, dan interaktif.",
-                    image: "foto3.jpeg",
-                    tech: ["HTML", "Tailwind", "JavaScript", "Alpine.js"],
-                    liveUrl: "kelas.html",
-                    githubUrl: "#"
+                // State untuk Formulir Kontak
+                formData: {
+                    name: '',
+                    email: '',
+                    subject: '',
+                    message: ''
                 },
-            ],
-
-            experiences: [
-                { year: "2025", title: "Masuk SMK Jurusan RPL", desc: "Memulai perjalanan di dunia IT, mempelajari dasar-dasar algoritma, logika pemrograman, dan struktur komputer." },
-                { year: "2025", title: "Mulai Belajar Web Development", desc: "Menguasai dasar HTML, CSS, dan JavaScript secara otodidak maupun dari materi sekolah, serta membuat website statis pertama." },
-                { year: "2026", title: "Membuat Project Pertama", desc: "Berhasil merancang Sistem Informasi Sekolah sederhana menggunakan PHP native dan database MySQL." },
-                { year: "2027", title: "Harapan Mengikuti PKL Nanti / Kegiatan IT", desc: "Terlibat langsung dalam lingkungan kerja profesional, memperdalam framework Laravel dan kolaborasi tim via Git." },
-                { year: "2027", title: "Ingin Mengembangkan Portfolio Professional", desc: "Terus mengeksplorasi teknologi modern untuk membangun portofolio digital yang siap menghadapi industri." }
-            ],
-
-            certificates: [
-                { title: "Sertifikat Kompetensi Keahlian RPL", issuer: "LSP SMK Negeri 3 Sekayu", date: "2025", image: "foto2.jpeg" },
-            ]
-        },
-
-        init() {
-            let interval = setInterval(() => {
-                if (this.progress < 100) {
-                    this.progress += 2;
-                } else {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        this.isLoading = false;
-                    }, 300);
-                }
-            }, 30);
-        },
-
-        get filteredProjects() {
-            if (this.projectFilter === 'all') {
-                return this.data.projects;
-            }
-            return this.data.projects.filter(p => p.category === this.projectFilter);
-        },
-
-        openModal(cert) {
-            this.activeCert = cert;
-            this.modalOpen = true;
-        },
-
-        // Fungsi Submit Form Asynchronous menggunakan Web3Forms
-        async submitForm(e) {
-            this.isSubmitting = true;
-            this.formStatus = { success: false, message: '' };
-
-            const formElement = e.target;
-            const formDataObj = new FormData(formElement);
-
-            try {
-                const response = await fetch('https://api.web3forms.com/submit', {
-                    method: 'POST',
-                    body: formDataObj
-                });
-
-                const result = await response.json();
-
-                if (response.status === 200) {
-                    this.formStatus = {
-                        success: true,
-                        message: 'Pesan berhasil dikirim! Terima kasih telah menghubungi saya.'
-                    };
-                    // Kosongkan form dan reset data state
-                    formElement.reset();
-                    this.formData = { name: '', email: '', subject: '', message: '' };
-                } else {
-                    this.formStatus = {
-                        success: false,
-                        message: result.message || 'Terjadi kesalahan saat mengirim pesan. Silakan coba lagi.'
-                    };
-                }
-            } catch (error) {
-                this.formStatus = {
+                isSubmitting: false,
+                formStatus: {
                     success: false,
-                    message: 'Gagal terhubung ke server. Periksa koneksi internet Anda.'
-                };
-            } finally {
-                this.isSubmitting = false;
+                    message: ''
+                },
+                
+                data: {
+                    name: "MUHAMMAD HIBATULLAH NAUFAL",
+                    nickname: "Muhammad Hibatullah Naufal",
+                    school: "SMK Negeri 3 Sekayu",
+                    major: "Rekayasa Perangkat Lunak",
+                    class: "XI RPL 2",
+                    city: "Sekayu",
+                    age: 17,
+                    email: "muhammadhibatullahnaufal09@gmail.com",
+                    instagram: "@vwall2009",
+                    whatsapp: "+6285709051828",
+                    profilePhoto: "foto1.jpeg",
+                    cvUrl: "cv.html",
+
+                    skills: [
+                        { name: "HTML", level: 95, icon: "code" },
+                        { name: "CSS", level: 90, icon: "layout" },
+                        { name: "JavaScript", level: 85, icon: "file-code" },
+                        { name: "PHP", level: 80, icon: "server" },
+                        { name: "Laravel", level: 80, icon: "layers" },
+                        { name: "MySQL", level: 85, icon: "database" },
+                        { name: "Git & GitHub", level: 90, icon: "git-branch" },
+                        { name: "Python", level: 80, icon: "terminal" }
+                    ],
+
+                    projects: [
+                        {
+                            title: "XI RPL 2",
+                            category: "Web",
+                            desc: "Website resmi kelas XI RPL 2 SMK Negeri 3 Sekayu yang informatif, modern, dan interaktif.",
+                            image: "foto3.jpeg",
+                            tech: ["HTML", "Tailwind", "JavaScript", "Alpine.js"],
+                            liveUrl: "kelas.html",
+                            githubUrl: "#"
+                        },
+                    ],
+
+                    experiences: [
+                        { year: "2025", title: "Masuk SMK Jurusan RPL", desc: "Memulai perjalanan di dunia IT, mempelajari dasar-dasar algoritma, logika pemrograman, dan struktur komputer." },
+                        { year: "2025", title: "Mulai Belajar Web Development", desc: "Menguasai dasar HTML, CSS, dan JavaScript secara otodidak maupun dari materi sekolah, serta membuat website statis pertama." },
+                        { year: "2026", title: "Membuat Project Pertama", desc: "Berhasil merancang Sistem Informasi Sekolah sederhana menggunakan PHP native dan database MySQL." },
+                        { year: "2027", title: "Harapan Mengikuti PKL Nanti / Kegiatan IT", desc: "Terlibat langsung dalam lingkungan kerja profesional, memperdalam framework Laravel dan kolaborasi tim via Git." },
+                        { year: "2027", title: "Ingin Mengembangkan Portfolio Professional", desc: "Terus mengeksplorasi teknologi modern untuk membangun portofolio digital yang siap menghadapi industri." }
+                    ],
+
+                    certificates: [
+                        { title: "Sertifikat Kompetensi Keahlian RPL", issuer: "LSP SMK Negeri 3 Sekayu", date: "2025", image: "foto2.jpeg" },
+                    ]
+                },
+
+                init() {
+                    let interval = setInterval(() => {
+                        if (this.progress < 100) {
+                            this.progress += 2;
+                        } else {
+                            clearInterval(interval);
+                            setTimeout(() => {
+                                this.isLoading = false;
+                            }, 300);
+                        }
+                    }, 30);
+                },
+
+                get filteredProjects() {
+                    if (this.projectFilter === 'all') {
+                        return this.data.projects;
+                    }
+                    return this.data.projects.filter(p => p.category === this.projectFilter);
+                },
+
+                openModal(cert) {
+                    this.activeCert = cert;
+                    this.modalOpen = true;
+                },
+
+                async submitForm(e) {
+                    this.isSubmitting = true;
+                    this.formStatus = { success: false, message: '' };
+
+                    const formElement = e.target;
+                    const formDataObj = new FormData(formElement);
+
+                    try {
+                        const response = await fetch('https://api.web3forms.com/submit', {
+                            method: 'POST',
+                            body: formDataObj
+                        });
+
+                        const result = await response.json();
+
+                        if (response.status === 200) {
+                            this.formStatus = {
+                                success: true,
+                                message: 'Pesan berhasil dikirim! Terima kasih telah menghubungi saya.'
+                            };
+                            formElement.reset();
+                            this.formData = { name: '', email: '', subject: '', message: '' };
+                        } else {
+                            this.formStatus = {
+                                success: false,
+                                message: result.message || 'Terjadi kesalahan saat mengirim pesan. Silakan coba lagi.'
+                            };
+                        }
+                    } catch (error) {
+                        this.formStatus = {
+                            success: false,
+                            message: 'Gagal terhubung ke server. Periksa koneksi internet Anda.'
+                        };
+                    } finally {
+                        this.isSubmitting = false;
+                    }
+                }
             }
         }
-    }
-}
 
         document.addEventListener('DOMContentLoaded', () => {
             AOS.init({ duration: 1000, once: true });
