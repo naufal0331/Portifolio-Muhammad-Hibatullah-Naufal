@@ -555,6 +555,16 @@
                                         <div class="text-sm font-medium text-white" x-text="data.whatsapp"></div>
                                     </div>
                                 </a>
+                                
+                                <a :href="`https://instagram.com/${data.instagram.replace(/^@/, '')}`" target="_blank" class="flex items-center gap-4 p-3 rounded-xl glass-card hover:border-neonBlue transition-all">
+                                    <div class="w-10 h-10 rounded-lg bg-neonPurple/10 flex items-center justify-center text-neonPurple">
+                                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                                    </div>
+                                        <div>
+                                            <div class="text-xs text-gray-400">Instagram</div>
+                                        <div class="text-sm font-medium text-white" x-text="data.instagram"></div>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </div>
