@@ -313,7 +313,7 @@
             </nav>
 
             <div class="hidden lg:flex items-center gap-4">
-                <a :href="data.cvUrl" class="px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-lg border border-neonBlue/50 text-neonBlue hover:bg-neonBlue/10 transition-all flex items-center gap-2">
+               <a :href="data.cvUrl" download class="...">
                     <i data-lucide="file-text" class="w-4 h-4"></i> Download CV
                 </a>
                 <a href="#contact" class="px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-lg bg-neonBlue text-darkBg hover:opacity-95 transition-all shadow-lg shadow-neonBlue/20 font-bold">
@@ -719,7 +719,7 @@
             instagram: "@vwall2009",
             whatsapp: "+6285709051828",
             profilePhoto: "foto1.jpeg",
-            cvUrl: "#",
+            cvUrl: "cv.html", // Ubah dari "#" menjadi "cv.html"
 
             skills: [
                 { name: "HTML", level: 95, icon: "code" },
