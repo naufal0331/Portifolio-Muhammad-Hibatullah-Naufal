@@ -708,17 +708,17 @@
             <div x-show="activeTab === 'ringkasan'" class="space-y-6">
                 
                 <!-- Kartu Utama Profil & Foto -->
-                <div class="bg-[#18181b] border border-zinc-800/80 rounded-2xl p-6 flex flex-row items-center gap-5">
-                    <div class="relative w-16 h-16 rounded-full overflow-hidden border border-zinc-700 shrink-0">
-                        <img :src="profilePhoto" alt="Foto Profil" class="w-full h-full object-cover">
-                        <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-[#18181b] rounded-full"></span>
-                    </div>
-                    <div>
-                        <h3 class="text-base font-bold text-white" x-text="name">MUHAMMAD HIBATULLAH NAUFAL</h3>
-                        <p class="text-xs text-zinc-400 mt-0.5">Junior Developer @ SMK Negeri 3 Sekayu</p>
-                        <p class="text-xs font-semibold text-white mt-2 tracking-wide">Rekayasa Perangkat Lunak · Web Development</p>
-                    </div>
+            <div class="bg-[#18181b] border border-zinc-800/80 rounded-2xl p-6 flex items-center gap-5">
+            <div class="relative w-16 h-16 rounded-full overflow-hidden border border-zinc-700 shrink-0">
+                <img :src="profilePhoto" alt="Foto Profil" class="w-full h-full object-cover">
+                    <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-[#18181b] rounded-full"></span>
                 </div>
+                <div class="flex-1 min-w-0">
+                    <h3 class="text-base font-bold text-white truncate" x-text="name">MUHAMMAD HIBATULLAH NAUFAL</h3>
+                    <p class="text-xs text-zinc-400 mt-0.5">Junior Developer @ SMK Negeri 3 Sekayu</p>
+                    <p class="text-xs font-semibold text-white mt-2 tracking-wide">Rekayasa Perangkat Lunak · Web Development</p>
+                </div>
+        </div>
 
                 <!-- Grid 2 Kolom: Pendidikan & Keahlian Teknis -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
