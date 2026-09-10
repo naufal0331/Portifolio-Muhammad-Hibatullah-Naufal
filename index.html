@@ -347,7 +347,7 @@
                     </div>
 
                     <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight normal-heading-text">
-                        Hi, I'm <span class="name-highlight" x-text="data.name"></span>.<br>
+                        Hi, I'm <span class="animated-gradient-text" x-text="data.name"></span>.<br>
                         I Build <span class="text-neonBlue">Digital Experiences</span>.
                     </h1>
 
@@ -745,11 +745,6 @@
                 <button @click="cvTab = 'ringkasan'" x-show="cvTab === 'minta'" class="text-xs text-gray-400 hover:text-white flex items-center gap-1 transition cursor-pointer">
                     ← Kembali ke Ringkasan
                 </button>
-                <div x-show="cvTab === 'ringkasan'">
-                    <a href="cv.html" target="_blank" class="text-xs text-neonBlue hover:underline flex items-center gap-1">
-                        <i data-lucide="external-link" class="w-3 h-3"></i> Buka CV Full-Screen
-                    </a>
-                </div>
                 <button @click="cvTab = 'minta'" x-show="cvTab === 'ringkasan'" class="glass-card hover:border-neonBlue text-xs px-3 py-2 rounded-lg transition text-white font-medium cursor-pointer">
                     Minta Dokumen Lengkap →
                 </button>
