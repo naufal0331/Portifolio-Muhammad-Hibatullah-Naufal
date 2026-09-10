@@ -205,18 +205,21 @@
         }
 
         /* Warna Teks Mengikuti Animasi Background (Gradient Text) */
-        .normal-heading-text {
+        .animated-gradient-text {
             background: linear-gradient(270deg, #00F0FF, #FF003C, #FF7800, #9D00FF, #00FFCC);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-size: 400% 400%;
             animation: gradientMove 10s ease infinite;
         }
+        
+        }
         .name-highlight {
             background: linear-gradient(135deg, #00FFCC, #00F0FF, #9D00FF);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
 
         @keyframes gradientMove {
             0% { background-position: 0% 50%; }
@@ -285,10 +288,10 @@
     <!-- NAVBAR -->
     <header class="fixed top-0 left-0 right-0 z-40 glass-card border-b border-white/5 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="#home" class="font-bold text-xl tracking-wider flex items-center gap-2 group">
-                <span class="text-neonBlue font-code group-hover:scale-110 transition-transform">&lt;/&gt;</span>
-                <span class="text-white" x-text="data.nickname"></span>
-            </a>
+           <a href="#home" class="font-bold text-xl tracking-wider flex items-center gap-2 group">
+    <span class="text-neonBlue font-code group-hover:scale-110 transition-transform">&lt;/&gt;</span>
+    <span class="animated-gradient-text" x-text="data.nickname"></span>
+        </a>
 
             <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
                 <a href="#home" class="hover:text-neonBlue transition-colors">Home</a>
