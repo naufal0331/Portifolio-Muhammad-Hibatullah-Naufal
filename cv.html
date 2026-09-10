@@ -1,171 +1,162 @@
 <!DOCTYPE html>
-<html lang="id" class="dark">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Curriculum Vitae - Muhammad Hibatullah Naufal</title>
+    <title>CV - Muhammad Hibatullah Naufal</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Alpine.js CDN -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        darkBg: '#121212',
-                        cardBg: '#18181b',
-                        cardBorder: '#27272a',
-                    }
-                }
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #3f3f46;
+            color: #18181b;
+            -webkit-print-color-adjust: exact;
+        }
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 15mm;
+            margin: 10mm auto;
+            background: #ffffff;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            box-sizing: border-box;
+        }
+        @media print {
+            body {
+                background-color: #ffffff;
+            }
+            .page {
+                margin: 0;
+                box-shadow: none;
+                padding: 12mm;
+                width: 100%;
+            }
+            .no-print {
+                display: none !important;
             }
         }
-    </script>
+    </style>
 </head>
-<body class="bg-zinc-950 text-zinc-100 font-['Inter'] antialiased min-h-screen flex items-center justify-center p-4 md:p-6" x-data="{ activeTab: 'ringkasan' }">
+<body class="py-8">
 
-    <!-- Container Utama (Model Kartu Portofolio Web) -->
-    <div class="w-full max-w-2xl bg-cardBg border border-cardBorder rounded-2xl p-6 md:p-8 shadow-2xl relative">
-        
-        <!-- Top Status & Privacy Badge -->
-        <div class="flex items-center justify-between mb-4">
-            <span class="text-[11px] uppercase tracking-widest text-zinc-400 font-semibold">Curriculum Vitae</span>
-            <div class="flex items-center gap-1.5 bg-zinc-800/80 border border-zinc-700/80 px-3 py-1 rounded-full text-xs text-zinc-300">
-                <i class="fa-solid fa-lock text-[10px] text-amber-400"></i>
-                <span>Privacy Protected</span>
-            </div>
-        </div>
+    <!-- Tombol Aksi Cepat (Hanya tampil di layar, hilang saat diprint/download) -->
+    <div class="max-w-[210mm] mx-auto mb-4 flex justify-between items-center px-2 no-print">
+        <a href="index.html" class="bg-zinc-800 hover:bg-zinc-700 text-white text-xs px-4 py-2 rounded-lg font-medium transition flex items-center gap-2">
+            <i class="fa-solid fa-arrow-left"></i> Kembali ke Portofolio
+        </a>
+        <button onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 shadow-lg">
+            <i class="fa-solid fa-download"></i> Download / Cetak PDF
+        </button>
+    </div>
 
-        <!-- Nama & Title Utama -->
-        <h1 class="text-2xl md:text-3xl font-bold text-white tracking-tight mb-1">Muhammad Hibatullah Naufal</h1>
-        <p class="text-sm text-zinc-400 mb-6 font-medium">Rekayasa Perangkat Lunak (RPL) · SMK Negeri 3 Sekayu</p>
-
-        <!-- Tab Navigasi (Ringkasan Profil & Minta Dokumen) -->
-        <div class="grid grid-cols-2 gap-2 bg-zinc-900 p-1.5 rounded-xl border border-cardBorder mb-6">
-            <button @click="activeTab = 'ringkasan'" 
-                :class="activeTab === 'ringkasan' ? 'bg-zinc-800 text-white shadow' : 'text-zinc-400 hover:text-zinc-200'"
-                class="flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs md:text-sm font-medium transition-all cursor-pointer">
-                <i class="fa-regular fa-id-badge"></i> Ringkasan Profil
-            </button>
-            <button @click="activeTab = 'dokumen'" 
-                :class="activeTab === 'dokumen' ? 'bg-zinc-800 text-white shadow' : 'text-zinc-400 hover:text-zinc-200'"
-                class="flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs md:text-sm font-medium transition-all cursor-pointer">
-                <i class="fa-solid fa-lock text-xs text-amber-400"></i> Minta Dokumen Lengkap
-            </button>
-        </div>
-
-        <!-- ================= TAB 1: RINGKASAN PROFIL ================= -->
-        <div x-show="activeTab === 'ringkasan'" class="space-y-6">
-            
-            <!-- Pendidikan -->
-            <div class="bg-zinc-900/60 border border-cardBorder rounded-xl p-4 md:p-5">
-                <h2 class="text-xs uppercase tracking-wider text-zinc-400 font-semibold flex items-center gap-2 mb-3">
-                    <i class="fa-solid fa-graduation-cap text-zinc-300"></i> Pendidikan
-                </h2>
-                <div class="space-y-3">
-                    <div class="flex justify-between items-start text-xs">
-                        <div>
-                            <h3 class="font-bold text-white text-sm">SMK Negeri 3 Sekayu</h3>
-                            <p class="text-emerald-400 font-medium mt-0.5">Rekayasa Perangkat Lunak (RPL)</p>
-                        </div>
-                        <span class="text-zinc-400 font-medium">2025 – Sekarang</span>
+    <!-- KERTAS CV UTAMA (Format A4) -->
+    <div class="page flex flex-col justify-between">
+        <div>
+            <!-- HEADER -->
+            <header class="border-b-2 border-emerald-500 pb-4 mb-4 flex justify-between items-start">
+                <div>
+                    <h1 class="text-2xl font-bold tracking-tight text-zinc-900 uppercase">Muhammad Hibatullah Naufal</h1>
+                    <p class="text-sm font-semibold text-emerald-600 mt-0.5">Rekayasa Perangkat Lunak (RPL)</p>
+                    <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-zinc-600 mt-2">
+                        <span><i class="fa-solid fa-envelope text-emerald-600"></i> muhammadhibatullahnaufal09@gmail.com</span>
+                        <span><i class="fa-solid fa-phone text-emerald-600"></i> +62 857-0905-1828</span>
+                        <span><i class="fa-solid fa-globe text-emerald-600"></i> <a href="#" class="text-emerald-600 underline">[Portfolio Link]</a></span>
+                        <span><i class="fa-brands fa-github text-emerald-600"></i> <a href="#" class="text-emerald-600 underline">[GitHub Link]</a></span>
                     </div>
                 </div>
-            </div>
-
-            <!-- Keahlian Teknis (Model Badge Keren) -->
-            <div class="bg-zinc-900/60 border border-cardBorder rounded-xl p-4 md:p-5">
-                <h2 class="text-xs uppercase tracking-wider text-zinc-400 font-semibold flex items-center gap-2 mb-3">
-                    <i class="fa-solid fa-code text-zinc-300"></i> Keahlian Teknis
-                </h2>
-                <div class="flex flex-wrap gap-2">
-                    <span class="bg-zinc-800 border border-zinc-700 text-zinc-200 text-xs px-3 py-1.5 rounded-md font-mono">HTML</span>
-                    <span class="bg-zinc-800 border border-zinc-700 text-zinc-200 text-xs px-3 py-1.5 rounded-md font-mono">CSS</span>
-                    <span class="bg-zinc-800 border border-zinc-700 text-zinc-200 text-xs px-3 py-1.5 rounded-md font-mono">JavaScript</span>
-                    <span class="bg-zinc-800 border border-zinc-700 text-zinc-200 text-xs px-3 py-1.5 rounded-md font-mono">PHP</span>
-                    <span class="bg-zinc-800 border border-zinc-700 text-zinc-200 text-xs px-3 py-1.5 rounded-md font-mono">MySQL</span>
-                    <span class="bg-zinc-800 border border-zinc-700 text-zinc-200 text-xs px-3 py-1.5 rounded-md font-mono">Tailwind CSS</span>
-                    <span class="bg-zinc-800 border border-zinc-700 text-zinc-200 text-xs px-3 py-1.5 rounded-md font-mono">Git & GitHub</span>
+                <!-- Area Foto Profil -->
+                <div class="w-20 h-20 rounded-lg border-2 border-dashed border-zinc-300 flex items-center justify-center text-[10px] text-zinc-400 text-center p-1 bg-zinc-50">
+                    Foto Profil
                 </div>
-            </div>
+            </header>
 
-            <!-- Proyek Pilihan -->
-            <div class="bg-zinc-900/60 border border-cardBorder rounded-xl p-4 md:p-5">
-                <h2 class="text-xs uppercase tracking-wider text-zinc-400 font-semibold flex items-center gap-2 mb-3">
-                    <i class="fa-solid fa-folder-open text-zinc-300"></i> Proyek Pilihan
-                </h2>
-                <div class="space-y-3">
-                    <div class="bg-zinc-800/60 border border-zinc-800 p-3.5 rounded-lg">
-                        <div class="flex justify-between items-center mb-1">
-                            <h3 class="font-bold text-white text-xs md:text-sm">Website Portfolio Pribadi</h3>
-                            <span class="text-[11px] text-emerald-400 font-medium">HTML, CSS, JS, Tailwind</span>
-                        </div>
-                        <p class="text-xs text-zinc-400 leading-relaxed">Membuat website portfolio interaktif untuk menampilkan profil, keahlian, proyek, dan informasi kontak menggunakan teknologi modern.</p>
+            <!-- PROFIL -->
+            <section class="mb-4">
+                <h2 class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-1 rounded mb-2">Profil Singkat</h2>
+                <p class="text-xs text-zinc-700 leading-relaxed">
+                    Siswa SMK Negeri 3 Sekayu jurusan Rekayasa Perangkat Lunak yang memiliki ketertarikan tinggi pada dunia teknologi, pemrograman, web development, dan pengembangan proyek digital. Bersemangat untuk terus belajar, mengembangkan solusi fungsional, serta siap berkontribusi dalam lingkungan kerja profesional.
+                </p>
+            </section>
+
+            <!-- PENDIDIKAN -->
+            <section class="mb-4">
+                <h2 class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-1 rounded mb-2">Pendidikan</h2>
+                <div class="flex justify-between items-baseline text-xs">
+                    <div>
+                        <h3 class="font-bold text-zinc-800">SMK Negeri 3 Sekayu</h3>
+                        <p class="text-zinc-600">Rekayasa Perangkat Lunak (RPL)</p>
                     </div>
-                    <div class="bg-zinc-800/60 border border-zinc-800 p-3.5 rounded-lg">
-                        <div class="flex justify-between items-center mb-1">
-                            <h3 class="font-bold text-white text-xs md:text-sm">Project Pembelajaran RPL</h3>
-                            <span class="text-[11px] text-emerald-400 font-medium">PHP, MySQL</span>
+                    <span class="text-zinc-500 font-medium">2025 – Sekarang</span>
+                </div>
+            </section>
+
+            <!-- KEAHLIAN -->
+            <section class="mb-4">
+                <h2 class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-1 rounded mb-2">Keahlian Teknis</h2>
+                <div class="grid grid-cols-4 gap-2 text-xs">
+                    <div class="bg-zinc-50 border border-zinc-200 px-2.5 py-1.5 rounded text-center font-medium text-zinc-700">HTML</div>
+                    <div class="bg-zinc-50 border border-zinc-200 px-2.5 py-1.5 rounded text-center font-medium text-zinc-700">CSS</div>
+                    <div class="bg-zinc-50 border border-zinc-200 px-2.5 py-1.5 rounded text-center font-medium text-zinc-700">JavaScript</div>
+                    <div class="bg-zinc-50 border border-zinc-200 px-2.5 py-1.5 rounded text-center font-medium text-zinc-700">PHP & MySQL</div>
+                    <div class="bg-zinc-50 border border-zinc-200 px-2.5 py-1.5 rounded text-center font-medium text-zinc-700">Tailwind CSS</div>
+                    <div class="bg-zinc-50 border border-zinc-200 px-2.5 py-1.5 rounded text-center font-medium text-zinc-700">Git & GitHub</div>
+                </div>
+            </section>
+
+            <!-- PROYEK -->
+            <section class="mb-4">
+                <h2 class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-1 rounded mb-2">Proyek Pilihan</h2>
+                <div class="space-y-3 text-xs">
+                    <div>
+                        <div class="flex justify-between font-bold text-zinc-800">
+                            <span>Website Portfolio Pribadi</span>
+                            <span class="text-emerald-600 font-normal underline cursor-pointer">[Lihat Proyek]</span>
                         </div>
-                        <p class="text-xs text-zinc-400 leading-relaxed">Mengerjakan proyek pengembangan perangkat lunak dan website fungsional sebagai bagian dari kurikulum pembelajaran jurusan RPL.</p>
+                        <p class="text-zinc-600 mt-0.5">Membuat website portfolio interaktif untuk menampilkan profil, keahlian, proyek, dan informasi kontak menggunakan teknologi modern.</p>
+                        <p class="text-[11px] text-emerald-600 mt-1 font-medium">Teknologi: HTML, CSS, JavaScript, Tailwind CSS</p>
+                    </div>
+                    <div>
+                        <div class="flex justify-between font-bold text-zinc-800">
+                            <span>Project Pembelajaran RPL</span>
+                            <span class="text-emerald-600 font-normal underline cursor-pointer">[Lihat Proyek]</span>
+                        </div>
+                        <p class="text-zinc-600 mt-0.5">Mengerjakan proyek pengembangan perangkat lunak dan website fungsional sebagai bagian dari kurikulum pembelajaran jurusan RPL.</p>
+                        <p class="text-[11px] text-emerald-600 mt-1 font-medium">Teknologi: HTML, PHP, MySQL</p>
                     </div>
                 </div>
+            </section>
+
+            <!-- SERTIFIKAT & PRESTASI -->
+            <section class="mb-4">
+                <h2 class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-1 rounded mb-2">Sertifikat & Prestasi</h2>
+                <ul class="list-disc list-inside text-xs text-zinc-600 space-y-1">
+                    <li>Sertifikat Pelatihan Dasar Pemrograman & Web Development (Opsional)</li>
+                </ul>
+            </section>
+
+            <!-- PENGALAMAN & BAHASA -->
+            <div class="grid grid-cols-2 gap-4">
+                <section>
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-1 rounded mb-2">Pengalaman</h2>
+                    <p class="text-xs text-zinc-600 italic">Mengandalkan Proyek Pengembangan Perangkat Lunak dan tugas sekolah sebagai portofolio pengalaman awal.</p>
+                </section>
+                <section>
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-1 rounded mb-2">Bahasa</h2>
+                    <ul class="text-xs text-zinc-700 space-y-1">
+                        <li><span class="font-medium">Bahasa Indonesia:</span> Aktif</li>
+                        <li><span class="font-medium">Bahasa Inggris:</span> Dasar</li>
+                    </ul>
+                </section>
             </div>
-
         </div>
 
-        <!-- ================= TAB 2: MINTA DOKUMEN LENGKAP ================= -->
-        <div x-show="activeTab === 'dokumen'" class="space-y-5 text-center py-2" style="display: none;">
-            <div class="w-14 h-14 bg-amber-500/10 border border-amber-500/20 text-amber-400 rounded-full flex items-center justify-center mx-auto text-xl mb-2">
-                <i class="fa-solid fa-lock"></i>
-            </div>
-            <h2 class="text-lg md:text-xl font-bold text-white">Minta File CV Resmi (Full PDF / HD)</h2>
-            <p class="text-xs text-zinc-400 max-w-md mx-auto leading-relaxed">Untuk mencegah penyalahgunaan data pribadi (nomor telepon & alamat), file CV lengkap akan dikirimkan langsung ke email resmi instansi/perusahaan Anda.</p>
-
-            <!-- Form Permintaan -->
-            <form @submit.prevent="alert('Permintaan CV berhasil dikirim! Silakan tunggu balasan email.'); activeTab = 'ringkasan';" class="bg-zinc-900/80 border border-cardBorder rounded-xl p-4 md:p-5 text-left space-y-3.5">
-                <div>
-                    <label class="block text-xs font-medium text-zinc-400 mb-1">Nama Anda / Recruiter</label>
-                    <input type="text" required placeholder="cth. Budi Santoso (HRD PT ABC)" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-xs md:text-sm text-white focus:outline-none focus:border-zinc-600">
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-zinc-400 mb-1">Email Perusahaan / Penerima</label>
-                    <input type="email" required placeholder="cth. hrd@perusahaan.com" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-xs md:text-sm text-white focus:outline-none focus:border-zinc-600">
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-zinc-400 mb-1">Tujuan / Posisi</label>
-                    <input type="text" required placeholder="cth. Pengajuan Magang / PKL" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-xs md:text-sm text-white focus:outline-none focus:border-zinc-600">
-                </div>
-                <button type="submit" class="w-full bg-white hover:bg-zinc-200 text-zinc-900 font-semibold py-2.5 rounded-lg text-xs md:text-sm transition flex items-center justify-center gap-2 cursor-pointer mt-2">
-                    Kirim Permintaan CV <i class="fa-solid fa-arrow-right text-xs"></i>
-                </button>
-            </form>
-        </div>
-
-        <!-- ================= FOOTER / ACTION BAR BAWAH ================= -->
-        <div class="mt-8 pt-4 border-t border-cardBorder flex flex-col sm:flex-row items-center justify-between gap-3">
-            
-            <!-- Tombol Kembali (Hanya muncul saat di tab dokumen) -->
-            <button @click="activeTab = 'ringkasan'" x-show="activeTab === 'dokumen'" class="text-xs text-zinc-400 hover:text-white flex items-center gap-1.5 transition cursor-pointer" style="display: none;">
-                <i class="fa-solid fa-arrow-left"></i> Kembali ke Ringkasan
-            </button>
-            <div x-show="activeTab === 'ringkasan'"></div> <!-- Spacer -->
-
-            <!-- Tombol Minta File CV Lengkap (Memicu pindah ke form dokumen) -->
-            <button @click="activeTab = 'dokumen'" x-show="activeTab === 'ringkasan'" class="w-full sm:w-auto bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-white text-xs font-medium px-4 py-2.5 rounded-lg flex items-center justify-center gap-2 transition cursor-pointer">
-                <i class="fa-solid fa-lock text-amber-400 text-[11px]"></i> Minta File CV Lengkap <i class="fa-solid fa-arrow-right text-[10px]"></i>
-            </button>
-
-            <!-- Tombol Kirim Email Langsung -->
-            <a href="mailto:muhammadhibatullahnaufal09@gmail.com" class="w-full sm:w-auto bg-white hover:bg-zinc-200 text-zinc-900 text-xs font-semibold px-4 py-2.5 rounded-lg flex items-center justify-center gap-2 transition">
-                Kirim Email Langsung <i class="fa-solid fa-paper-plane text-[10px]"></i>
-            </a>
-        </div>
-
+        <!-- FOOTER / CATATAN KECIL -->
+        <footer class="text-[10px] text-zinc-400 text-center pt-4 border-t border-zinc-100">
+            CV disusun untuk keperluan pengajuan PKL / Magang.
+        </footer>
     </div>
 
 </body>
