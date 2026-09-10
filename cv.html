@@ -46,12 +46,12 @@
         <div class="grid grid-cols-2 gap-3 bg-[#161616] p-1.5 rounded-xl border border-cardBorder mb-6">
             <button @click="activeTab = 'ringkasan'" 
                 :class="activeTab === 'ringkasan' ? 'bg-[#222] text-white shadow' : 'text-gray-400 hover:text-gray-200'"
-                class="flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-medium transition-all duration-200">
+                class="flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer">
                 <i class="fa-regular fa-id-badge"></i> Ringkasan Profil
             </button>
             <button @click="activeTab = 'dokumen'" 
                 :class="activeTab === 'dokumen' ? 'bg-[#222] text-white shadow' : 'text-gray-400 hover:text-gray-200'"
-                class="flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-medium transition-all duration-200">
+                class="flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer">
                 <i class="fa-solid fa-lock text-xs text-amber-400"></i> Minta Dokumen Lengkap
             </button>
         </div>
@@ -127,7 +127,7 @@
         </div>
 
         <!-- ================= TAB 2: MINTA DOKUMEN LENGKAP ================= -->
-        <div x-show="activeTab === 'dokumen'" class="space-y-6 transition-all text-center py-4">
+        <div x-show="activeTab === 'dokumen'" class="space-y-6 transition-all text-center py-4" style="display: none;">
             <div class="w-16 h-16 bg-amber-500/10 border border-amber-500/20 text-amber-400 rounded-full flex items-center justify-center mx-auto text-2xl mb-3">
                 <i class="fa-solid fa-lock"></i>
             </div>
@@ -148,7 +148,7 @@
                     <label class="block text-xs font-medium text-gray-400 mb-1">Tujuan / Posisi</label>
                     <input type="text" required placeholder="cth. Pengajuan Magang / PKL" class="w-full bg-[#121212] border border-gray-800 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-gray-600">
                 </div>
-                <button type="submit" class="w-full bg-white hover:bg-gray-200 text-gray-900 font-semibold py-2.5 rounded-lg text-sm transition flex items-center justify-center gap-2">
+                <button type="submit" class="w-full bg-white hover:bg-gray-200 text-gray-900 font-semibold py-2.5 rounded-lg text-sm transition flex items-center justify-center gap-2 cursor-pointer">
                     Kirim Permintaan CV <i class="fa-solid fa-arrow-right text-xs"></i>
                 </button>
             </form>
@@ -156,12 +156,13 @@
 
         <!-- Footer Action Bar -->
         <div class="mt-8 pt-4 border-t border-cardBorder flex flex-col sm:flex-row items-center justify-between gap-3">
-            <button @click="activeTab = 'ringkasan'" x-show="activeTab === 'dokumen'" class="text-xs text-gray-400 hover:text-white flex items-center gap-1.5 transition">
+            <button @click="activeTab = 'ringkasan'" x-show="activeTab === 'dokumen'" class="text-xs text-gray-400 hover:text-white flex items-center gap-1.5 transition cursor-pointer" style="display: none;">
                 <i class="fa-solid fa-arrow-left"></i> Kembali ke Ringkasan
             </button>
             <div x-show="activeTab === 'ringkasan'"></div> <!-- Spacer -->
 
-            <button @click="activeTab = 'dokumen'" class="w-full sm:w-auto bg-[#222] hover:bg-[#2a2a2a] border border-gray-700 text-white text-xs font-medium px-4 py-2.5 rounded-lg flex items-center justify-center gap-2 transition">
+            <!-- Tombol bawah ini sekarang memicu perpindahan tab ke 'dokumen' -->
+            <button @click="activeTab = 'dokumen'" x-show="activeTab === 'ringkasan'" class="w-full sm:w-auto bg-[#222] hover:bg-[#2a2a2a] border border-gray-700 text-white text-xs font-medium px-4 py-2.5 rounded-lg flex items-center justify-center gap-2 transition cursor-pointer">
                 <i class="fa-solid fa-lock text-amber-400"></i> Minta File CV Lengkap <i class="fa-solid fa-arrow-right"></i>
             </button>
 
