@@ -246,7 +246,80 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #00F0FF;
         }
-    </style>
+    
+        /* Public Comments — isolated styles so the rest of the website is unchanged */
+        .public-comments-shell {
+            background:
+                radial-gradient(circle at 16% 42%, rgba(0, 119, 255, .28), transparent 30%),
+                radial-gradient(circle at 73% 26%, rgba(255, 0, 72, .34), transparent 34%),
+                linear-gradient(125deg, rgba(12, 12, 20, .97), rgba(24, 10, 20, .95));
+            box-shadow: 0 24px 70px rgba(0,0,0,.35);
+        }
+        .comments-glow {
+            position:absolute; width:420px; height:240px; border-radius:50%;
+            filter:blur(65px); opacity:.42; pointer-events:none;
+        }
+        .comments-red { top:30px; left:20%; background:rgba(255,0,70,.35); }
+        .comments-blue { bottom:30px; left:5%; background:rgba(0,120,255,.32); }
+        .comments-grid {
+            position:absolute; inset:0; opacity:.10; pointer-events:none;
+            background-image:
+                linear-gradient(rgba(255,255,255,.16) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.16) 1px, transparent 1px);
+            background-size:38px 38px;
+            mask-image:linear-gradient(to bottom, transparent, black 18%, black 82%, transparent);
+        }
+        .public-comment-input {
+            color:#fff;
+            background:rgba(15,15,20,.34);
+            border:1px solid rgba(255,255,255,.13);
+            backdrop-filter:blur(12px);
+            transition:.2s ease;
+        }
+        .public-comment-input::placeholder { color:rgba(161,161,170,.72); }
+        .public-comment-input:focus {
+            outline:none;
+            border-color:rgba(0,240,255,.38);
+            box-shadow:0 0 0 2px rgba(0,240,255,.06);
+        }
+        .comment-card {
+            position:relative;
+            background:rgba(20,20,29,.28);
+            border:1px solid rgba(255,255,255,.12);
+            border-radius:16px;
+            padding:18px 20px;
+            backdrop-filter:blur(13px);
+        }
+        .comment-card.pinned {
+            border-left:2px solid #1687ff;
+            box-shadow:inset 16px 0 40px rgba(0,110,255,.08);
+        }
+        .comment-avatar {
+            width:42px; height:42px; border-radius:999px;
+            display:flex; align-items:center; justify-content:center;
+            flex:0 0 auto;
+            color:#4aa8ff;
+            background:rgba(20,90,220,.13);
+            font-size:10px; font-weight:600;
+        }
+        .comment-badge {
+            display:inline-flex; align-items:center;
+            padding:3px 7px; border-radius:5px;
+            font-size:9px; font-weight:700;
+            border:1px solid rgba(170,255,50,.35);
+            color:#baff4c; background:rgba(140,220,20,.09);
+        }
+        .comment-pin {
+            display:inline-flex; align-items:center;
+            padding:3px 7px; border-radius:5px;
+            font-size:9px; font-weight:600;
+            border:1px solid rgba(60,140,255,.38);
+            color:#9bc8ff; background:rgba(20,100,220,.12);
+        }
+        .comments-scroll::-webkit-scrollbar { width:7px; }
+        .comments-scroll::-webkit-scrollbar-track { background:rgba(255,255,255,.04); border-radius:20px; }
+        .comments-scroll::-webkit-scrollbar-thumb { background:rgba(255,255,255,.28); border-radius:20px; }
+</style>
 </head>
 <body class="bg-darkBg text-gray-100 relative selection:bg-neonBlue selection:text-darkBg" x-data="portfolioApp()">
 
@@ -303,6 +376,7 @@
                 <a href="#experience" class="hover:text-neonBlue transition-colors">Experience</a>
                 <a href="#certificates" class="hover:text-neonBlue transition-colors">Certificates</a>
                 <a href="#contact" class="hover:text-neonBlue transition-colors">Contact</a>
+                <a href="#comments" class="hover:text-neonBlue transition-colors">Comments</a>
             </nav>
 
            <div class="hidden lg:flex items-center gap-4">
@@ -328,6 +402,7 @@
             <a href="#experience" @click="mobileMenuOpen = false" class="block hover:text-neonBlue transition-colors">Experience</a>
             <a href="#certificates" @click="mobileMenuOpen = false" class="block hover:text-neonBlue transition-colors">Certificates</a>
             <a href="#contact" @click="mobileMenuOpen = false" class="block hover:text-neonBlue transition-colors">Contact</a>
+            <a href="#comments" @click="mobileMenuOpen = false" class="block hover:text-neonBlue transition-colors">Comments</a>
             <button @click="cvModalOpen = true; mobileMenuOpen = false" class="w-full py-2 text-center text-xs font-semibold uppercase tracking-wider rounded-lg glass-card border border-neonBlue/30 text-neonBlue">
                 Download CV
             </button>
@@ -542,7 +617,65 @@
             </div>
         </section>
 
-        <!-- 7. CONTACT SECTION -->
+
+        <!-- 7. PUBLIC COMMENTS SECTION -->
+        <section id="comments" class="py-24 px-6 relative">
+            <div class="max-w-7xl mx-auto">
+                <div class="public-comments-shell relative overflow-hidden rounded-[24px] border border-white/10 px-6 py-8 sm:px-10 sm:py-10">
+                    <div class="comments-glow comments-red"></div>
+                    <div class="comments-glow comments-blue"></div>
+                    <div class="comments-grid"></div>
+
+                    <div class="relative z-10">
+                        <div class="flex items-start justify-between gap-4 mb-4">
+                            <div>
+                                <div class="flex items-center gap-4">
+                                    <span class="text-[10px] sm:text-xs text-zinc-500 font-code">02</span>
+                                    <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">Public Comments</h2>
+                                </div>
+                                <p class="text-sm sm:text-base text-zinc-400 mt-5 max-w-4xl">
+                                    Tinggalkan pesan atau feedback publik. Komentar terhubung real-time ke Cloud Database &amp; dimoderasi otomatis.
+                                </p>
+                            </div>
+
+                            <div class="hidden sm:flex items-center gap-4 shrink-0">
+                                <span id="commentsCloudStatus" class="text-[9px] uppercase tracking-wider font-bold text-lime-300">
+                                    <span class="inline-block w-1.5 h-1.5 rounded-full bg-lime-300 mr-1.5 animate-pulse"></span>
+                                    CLOUD REALTIME
+                                </span>
+                                <button type="button" class="w-10 h-10 rounded-xl border border-white/10 bg-white/5 text-amber-400/80"
+                                        title="Komentar publik dilindungi">
+                                    <i data-lucide="lock" class="w-4 h-4 mx-auto"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 space-y-4">
+                            <input id="publicCommentName" type="text" maxlength="60"
+                                placeholder="Nama Anda (cth. Reihan / Recruiter)"
+                                class="public-comment-input w-full rounded-xl px-5 py-4 text-sm">
+
+                            <textarea id="publicCommentText" maxlength="500" rows="4"
+                                placeholder="Tulis komentar yang sopan & profesional..."
+                                class="public-comment-input w-full rounded-xl px-5 py-4 text-sm resize-y"></textarea>
+
+                            <button id="publicCommentSubmit" type="button"
+                                class="w-full rounded-xl bg-white text-zinc-900 hover:bg-zinc-200 py-4 text-sm font-bold transition-all">
+                                Post Comment ↗
+                            </button>
+
+                            <div id="publicCommentNotice" class="hidden rounded-lg px-4 py-2.5 text-xs"></div>
+                        </div>
+
+                        <div id="publicCommentsList" class="mt-6 max-h-[430px] overflow-y-auto pr-1 space-y-3 comments-scroll">
+                            <div class="text-center text-xs text-zinc-500 py-10">Memuat komentar...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. CONTACT SECTION -->
         <section id="contact" class="py-24 px-6 relative">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
@@ -1064,5 +1197,273 @@
             });
         });
     </script>
+
+<script>
+/*
+ * PUBLIC COMMENTS
+ * - Set SUPABASE_URL and SUPABASE_ANON_KEY below to make comments public/realtime.
+ * - Until configured, the component safely falls back to this browser's localStorage.
+ */
+const PUBLIC_COMMENTS_CONFIG = {
+    // Isi dua nilai ini dari Supabase Dashboard > Connect/API.
+    // Gunakan Publishable key / anon key untuk browser, JANGAN service_role key.
+    SUPABASE_URL: "https://YOUR_PROJECT_ID.supabase.co",
+    SUPABASE_ANON_KEY: "YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY",
+    TABLE: "public_comments"
+};
+
+let publicComments = [];
+let commentsSupabase = null;
+
+function commentInitials(name) {
+    return (name || "?").trim().split(/\s+/).slice(0,2).map(x => x[0]).join("").toUpperCase();
+}
+
+function commentTime(value) {
+    const d = new Date(value);
+    if (Number.isNaN(d.getTime())) return "";
+    return d.toLocaleDateString("id-ID", {
+        day: "2-digit", month: "short", year: "2-digit"
+    }) + " " + d.toLocaleTimeString("id-ID", {
+        hour: "2-digit", minute: "2-digit"
+    });
+}
+
+function commentEscape(value) {
+    return String(value ?? "").replace(/[&<>"']/g, c => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+    }[c]));
+}
+
+function showCommentNotice(message, ok=false) {
+    const box=document.getElementById("publicCommentNotice");
+    if (!box) return;
+    box.textContent=message;
+    box.className = "rounded-lg px-4 py-2.5 text-xs " +
+        (ok ? "bg-emerald-500/10 border border-emerald-500/20 text-emerald-300"
+            : "bg-rose-500/10 border border-rose-500/20 text-rose-300");
+    box.classList.remove("hidden");
+}
+
+function setCloudStatus(connected) {
+    const el=document.getElementById("commentsCloudStatus");
+    if (!el) return;
+    el.innerHTML = connected
+        ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-lime-300 mr-1.5 animate-pulse"></span>CLOUD REALTIME'
+        : '<span class="inline-block w-1.5 h-1.5 rounded-full bg-zinc-500 mr-1.5"></span>LOCAL PREVIEW';
+    el.className = connected
+        ? "text-[9px] uppercase tracking-wider font-bold text-lime-300"
+        : "text-[9px] uppercase tracking-wider font-bold text-zinc-500";
+}
+
+function renderPublicComments() {
+    const list=document.getElementById("publicCommentsList");
+    if (!list) return;
+
+    if (!publicComments.length) {
+        list.innerHTML='<div class="text-center text-xs text-zinc-500 py-10">Belum ada komentar. Jadilah yang pertama.</div>';
+        return;
+    }
+
+    list.innerHTML = publicComments.map(c => `
+        <article class="comment-card ${c.pinned ? "pinned" : ""}">
+            <div class="flex items-start gap-3.5">
+                <div class="comment-avatar">${commentEscape(commentInitials(c.name))}</div>
+                <div class="min-w-0 flex-1">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="text-sm font-bold text-zinc-100">${commentEscape(c.name)}</span>
+                        ${c.owner ? '<span class="comment-badge">OWNER</span>' : ""}
+                        ${c.pinned ? '<span class="comment-pin">PINNED 📌</span>' : ""}
+                    </div>
+                    <p class="text-xs text-zinc-400 mt-2 leading-relaxed whitespace-pre-wrap">${commentEscape(c.message)}</p>
+                </div>
+                <div class="text-[8px] text-zinc-600 shrink-0 text-right">
+                    ${c.pinned ? 'Pinned 📌' : commentTime(c.created_at)}
+                </div>
+            </div>
+        </article>
+    `).join("");
+}
+
+function loadLocalComments() {
+    try {
+        publicComments=JSON.parse(localStorage.getItem("publicComments") || "[]");
+        if (!Array.isArray(publicComments)) publicComments=[];
+    } catch { publicComments=[]; }
+    publicComments.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+    renderPublicComments();
+    setCloudStatus(false);
+}
+
+function saveLocalComments() {
+    localStorage.setItem("publicComments", JSON.stringify(publicComments));
+}
+
+function basicModeration(name, message) {
+    const banned = ["pornografi", "judi online", "penipuan"];
+    const value=(name+" "+message).toLowerCase();
+    return !banned.some(word=>value.includes(word));
+}
+
+async function initPublicComments() {
+    const hasCloud = PUBLIC_COMMENTS_CONFIG.SUPABASE_URL &&
+                     PUBLIC_COMMENTS_CONFIG.SUPABASE_ANON_KEY;
+
+    if (!hasCloud) {
+        loadLocalComments();
+        return;
+    }
+
+    try {
+        if (!window.supabase) throw new Error("Supabase belum termuat");
+        commentsSupabase=window.supabase.createClient(
+            PUBLIC_COMMENTS_CONFIG.SUPABASE_URL,
+            PUBLIC_COMMENTS_CONFIG.SUPABASE_ANON_KEY
+        );
+
+        const {data,error}=await commentsSupabase
+            .from(PUBLIC_COMMENTS_CONFIG.TABLE)
+            .select("*")
+            .eq("approved", true)
+            .order("pinned",{ascending:false})
+            .order("created_at",{ascending:false});
+
+        if (error) throw error;
+
+        publicComments=data || [];
+        renderPublicComments();
+        setCloudStatus(true);
+
+        commentsSupabase
+            .channel("public-comments-realtime")
+            .on(
+                "postgres_changes",
+                {
+                    event: "*",
+                    schema: "public",
+                    table: PUBLIC_COMMENTS_CONFIG.TABLE
+                },
+                async (payload) => {
+                    // INSERT/UPDATE/DELETE dikirim realtime oleh Supabase.
+                    if (payload.eventType === "INSERT" && payload.new?.approved) {
+                        publicComments = [payload.new, ...publicComments.filter(c => c.id !== payload.new.id)];
+                    } else if (payload.eventType === "UPDATE") {
+                        if (payload.new?.approved) {
+                            publicComments = [
+                                payload.new,
+                                ...publicComments.filter(c => c.id !== payload.new.id)
+                            ];
+                        } else {
+                            publicComments = publicComments.filter(c => c.id !== payload.new?.id);
+                        }
+                    } else if (payload.eventType === "DELETE") {
+                        publicComments = publicComments.filter(c => c.id !== payload.old?.id);
+                    }
+
+                    publicComments.sort((a, b) => {
+                        if (Boolean(b.pinned) !== Boolean(a.pinned)) {
+                            return Number(Boolean(b.pinned)) - Number(Boolean(a.pinned));
+                        }
+                        return new Date(b.created_at) - new Date(a.created_at);
+                    });
+                    renderPublicComments();
+                }
+            )
+            .subscribe((status) => {
+                if (status === "SUBSCRIBED") setCloudStatus(true);
+            });
+    } catch (err) {
+        console.warn("Public comments cloud error:", err);
+        loadLocalComments();
+        showCommentNotice("Supabase belum tersambung. Periksa URL dan Publishable/anon key.", false);
+    }
+}
+
+async function postPublicComment() {
+    const nameEl=document.getElementById("publicCommentName");
+    const textEl=document.getElementById("publicCommentText");
+    const btn=document.getElementById("publicCommentSubmit");
+
+    const name=nameEl.value.trim();
+    const message=textEl.value.trim();
+
+    if (name.length < 2) {
+        showCommentNotice("Nama minimal 2 karakter.");
+        return;
+    }
+    if (message.length < 3) {
+        showCommentNotice("Komentar terlalu pendek.");
+        return;
+    }
+    if (!basicModeration(name,message)) {
+        showCommentNotice("Komentar ditolak oleh filter moderasi otomatis.");
+        return;
+    }
+
+    btn.disabled=true;
+    btn.textContent="Posting...";
+
+    const item={
+        name,
+        message,
+        created_at:new Date().toISOString(),
+        approved:true,
+        owner:false,
+        pinned:false
+    };
+
+    try {
+        if (commentsSupabase) {
+            const {data,error}=await commentsSupabase
+                .from(PUBLIC_COMMENTS_CONFIG.TABLE)
+                .insert([{
+                    name:item.name,
+                    message:item.message,
+                    approved:true,
+                    owner:false,
+                    pinned:false
+                }])
+                .select()
+                .single();
+
+            if (error) throw error;
+            publicComments.unshift(data);
+            renderPublicComments();
+        } else {
+            publicComments.unshift(item);
+            publicComments.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+            saveLocalComments();
+            renderPublicComments();
+        }
+
+        nameEl.value="";
+        textEl.value="";
+        showCommentNotice(
+            commentsSupabase
+                ? "Komentar berhasil diposting ke Cloud Database."
+                : "Komentar berhasil ditambahkan di preview lokal. Hubungkan Supabase agar terlihat publik.",
+            true
+        );
+    } catch (err) {
+        console.error(err);
+        showCommentNotice("Komentar gagal diposting. Periksa URL/key Supabase dan aturan RLS tabel public_comments.");
+    } finally {
+        btn.disabled=false;
+        btn.textContent="Post Comment ↗";
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const btn=document.getElementById("publicCommentSubmit");
+    if (btn) btn.addEventListener("click", postPublicComment);
+
+    const script=document.createElement("script");
+    script.src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+    script.onload=initPublicComments;
+    script.onerror=()=>loadLocalComments();
+    document.head.appendChild(script);
+});
+</script>
+
 </body>
 </html>
