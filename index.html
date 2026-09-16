@@ -349,17 +349,14 @@
 </head>
 <body class="bg-darkBg text-gray-100 relative selection:bg-neonBlue selection:text-darkBg" x-data="portfolioApp()">
 
-    <!-- INTRO ANIMATION SCREEN (PETIR & GALAKSI SEPERTI DI VIDEO) -->
+   <!-- INTRO ANIMATION SCREEN (DENGAN VIDEO ANIMASI PETIR ASLI) -->
     <div id="intro-overlay">
-        <div class="absolute inset-0 overflow-hidden pointer-events-none">
-            <!-- Background Galaksi / Bintang -->
-            <div class="absolute inset-0 bg-grid opacity-30"></div>
-            <!-- Kilatan Petir / Cahaya Biru Menyala -->
-            <div class="absolute inset-0 flex items-center justify-center lightning-effect">
-                <div class="w-[500px] h-[500px] sm:w-[700px] sm:h-[700px] bg-gradient-to-r from-blue-600/20 via-cyan-400/30 to-indigo-600/20 rounded-full blur-[120px]"></div>
-            </div>
-        </div>
-        
+        <!-- Video Latar Belakang Petir & Galaksi -->
+        <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-60 pointer-events-none">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-starry-night-sky-with-a-shooting-star-42643-large.mp4" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 bg-darkBg/50 pointer-events-none"></div>
+
         <div class="relative z-10 text-center px-6 max-w-xl space-y-6">
             <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
                 Welcome To My <br><span class="text-neonBlue">Portofollo Website</span>
