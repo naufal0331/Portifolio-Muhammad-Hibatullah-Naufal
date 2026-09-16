@@ -41,14 +41,13 @@
     <!-- Alpine.js untuk Interaksi Modal & Filter State -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-    <!-- Custom CSS untuk Latar Belakang Animasi Sirine Merah, Biru, Orange & Teks Bersih -->
+    <!-- Custom CSS -->
     <style>
         body {
             background-color: #05050A;
             color: #F3F4F6;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            
         }
 
         /* Custom Cursor */
@@ -100,9 +99,7 @@
                 linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
         }
 
-        /* ========================================== */
-        /* BACKGROUND ANIMASI SIREN (MERAH, BIRU, ORANGE) */
-        /* ========================================== */
+        /* BACKGROUND ANIMASI SIREN */
         .cyber-bg-container {
             position: fixed;
             inset: 0;
@@ -110,8 +107,6 @@
             z-index: 0;
             overflow: hidden;
         }
-
-        /* Cahaya Sirine Biru */
         .siren-blue {
             position: absolute;
             top: -20%;
@@ -123,8 +118,6 @@
             border-radius: 50%;
             animation: moveBlueSiren 12s ease-in-out infinite alternate;
         }
-
-        /* Cahaya Sirine Merah */
         .siren-red {
             position: absolute;
             bottom: -20%;
@@ -136,8 +129,6 @@
             border-radius: 50%;
             animation: moveRedSiren 14s ease-in-out infinite alternate;
         }
-
-        /* Cahaya Aksen Orange Menyala */
         .siren-orange {
             position: absolute;
             top: 30%;
@@ -155,20 +146,17 @@
             50% { transform: translate(40vw, 30vh) scale(1.25); }
             100% { transform: translate(15vw, 55vh) scale(0.9); }
         }
-
         @keyframes moveRedSiren {
             0% { transform: translate(0, 0) scale(1); }
             50% { transform: translate(-40vw, -30vh) scale(1.3); }
             100% { transform: translate(-20vw, -45vh) scale(0.95); }
         }
-
         @keyframes moveOrangeSiren {
             0% { transform: translate(-15vw, -10vh) scale(0.85); opacity: 0.5; }
             50% { transform: translate(25vw, 20vh) scale(1.35); opacity: 1; }
             100% { transform: translate(-10vw, 15vh) scale(1); opacity: 0.7; }
         }
 
-        /* Partikel Kecil Berkilau */
         .particles-layer {
             position: absolute;
             inset: 0;
@@ -181,19 +169,9 @@
             opacity: 0.45;
             animation: twinkleParticles 20s linear infinite;
         }
-
         @keyframes twinkleParticles {
             from { transform: translateY(0); }
             to { transform: translateY(-140px); }
-        }
-
-        /* Floating Animation */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(2deg); }
-        }
-        .animate-float {
-            animation: float 5s ease-in-out infinite;
         }
 
         @keyframes spinSlow {
@@ -204,27 +182,13 @@
             animation: spinSlow 15s linear infinite;
         }
 
-        .normal-heading-text {
+        .normal-heading-text, .animated-gradient-text {
             background: linear-gradient(270deg, #00F0FF, #FF003C, #FF7800, #9D00FF, #00FFCC);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-size: 400% 400%;
             animation: gradientMove 10s ease infinite;
         }
-        .animated-gradient-text {
-            background: linear-gradient(270deg, #00F0FF, #FF003C, #FF7800, #9D00FF, #00FFCC);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-size: 400% 400%;
-            animation: gradientMove 10s ease infinite;
-        }
-        
-        .name-highlight {
-            background: linear-gradient(135deg, #00FFCC, #00F0FF, #9D00FF);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
         @keyframes gradientMove {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -232,95 +196,16 @@
         }
 
         /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #05050A;
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #05050A; }
         ::-webkit-scrollbar-thumb {
             background: #1F1F2E;
             border-radius: 4px;
             border: 1px solid rgba(0, 240, 255, 0.2);
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #00F0FF;
-        }
-    
-        /* Public Comments — isolated styles so the rest of the website is unchanged */
-        .public-comments-shell {
-            background:
-                radial-gradient(circle at 16% 42%, rgba(0, 119, 255, .28), transparent 30%),
-                radial-gradient(circle at 73% 26%, rgba(255, 0, 72, .34), transparent 34%),
-                linear-gradient(125deg, rgba(12, 12, 20, .97), rgba(24, 10, 20, .95));
-            box-shadow: 0 24px 70px rgba(0,0,0,.35);
-        }
-        .comments-glow {
-            position:absolute; width:420px; height:240px; border-radius:50%;
-            filter:blur(65px); opacity:.42; pointer-events:none;
-        }
-        .comments-red { top:30px; left:20%; background:rgba(255,0,70,.35); }
-        .comments-blue { bottom:30px; left:5%; background:rgba(0,120,255,.32); }
-        .comments-grid {
-            position:absolute; inset:0; opacity:.10; pointer-events:none;
-            background-image:
-                linear-gradient(rgba(255,255,255,.16) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,.16) 1px, transparent 1px);
-            background-size:38px 38px;
-            mask-image:linear-gradient(to bottom, transparent, black 18%, black 82%, transparent);
-        }
-        .public-comment-input {
-            color:#fff;
-            background:rgba(15,15,20,.34);
-            border:1px solid rgba(255,255,255,.13);
-            backdrop-filter:blur(12px);
-            transition:.2s ease;
-        }
-        .public-comment-input::placeholder { color:rgba(161,161,170,.72); }
-        .public-comment-input:focus {
-            outline:none;
-            border-color:rgba(0,240,255,.38);
-            box-shadow:0 0 0 2px rgba(0,240,255,.06);
-        }
-        .comment-card {
-            position:relative;
-            background:rgba(20,20,29,.28);
-            border:1px solid rgba(255,255,255,.12);
-            border-radius:16px;
-            padding:18px 20px;
-            backdrop-filter:blur(13px);
-        }
-        .comment-card.pinned {
-            border-left:2px solid #1687ff;
-            box-shadow:inset 16px 0 40px rgba(0,110,255,.08);
-        }
-        .comment-avatar {
-            width:42px; height:42px; border-radius:999px;
-            display:flex; align-items:center; justify-content:center;
-            flex:0 0 auto;
-            color:#4aa8ff;
-            background:rgba(20,90,220,.13);
-            font-size:10px; font-weight:600;
-        }
-        .comment-badge {
-            display:inline-flex; align-items:center;
-            padding:3px 7px; border-radius:5px;
-            font-size:9px; font-weight:700;
-            border:1px solid rgba(170,255,50,.35);
-            color:#baff4c; background:rgba(140,220,20,.09);
-        }
-        .comment-pin {
-            display:inline-flex; align-items:center;
-            padding:3px 7px; border-radius:5px;
-            font-size:9px; font-weight:600;
-            border:1px solid rgba(60,140,255,.38);
-            color:#9bc8ff; background:rgba(20,100,220,.12);
-        }
-        .comments-scroll::-webkit-scrollbar { width:7px; }
-        .comments-scroll::-webkit-scrollbar-track { background:rgba(255,255,255,.04); border-radius:20px; }
-        .comments-scroll::-webkit-scrollbar-thumb { background:rgba(255,255,255,.28); border-radius:20px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00F0FF; }
 
-        /* Intro Animation Overlay ala Video */
+        /* INTRO ANIMATION PRELOADER (PERSIS SEPERTI DI VIDEO) */
         #intro-overlay {
             position: fixed;
             inset: 0;
@@ -335,26 +220,28 @@
         .intro-hidden {
             opacity: 0;
             visibility: hidden;
+            pointer-events: none;
         }
-</style>
+    </style>
 </head>
 <body class="bg-darkBg text-gray-100 relative selection:bg-neonBlue selection:text-darkBg" x-data="portfolioApp()">
 
-    <!-- INTRO ANIMATION SCREEN (SESUAI VIDEO) -->
+    <!-- INTRO ANIMATION SCREEN (SESUAI VIDEO: PETIR/GALAKSI & WELCOME TO MY PORTOFOLLIO WEBSITE) -->
     <div id="intro-overlay">
         <div class="absolute inset-0 overflow-hidden opacity-40 pointer-events-none">
             <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/30 via-darkBg to-darkBg"></div>
+            <!-- Efek petir latar belakang -->
             <div class="absolute inset-0 flex items-center justify-center">
-                <div class="w-[600px] h-[600px] bg-neonBlue/10 rounded-full blur-3xl animate-pulse"></div>
+                <div class="w-[600px] h-[600px] bg-neonBlue/15 rounded-full blur-3xl animate-pulse"></div>
             </div>
         </div>
         <div class="relative z-10 text-center px-4 max-w-2xl space-y-4">
             <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
-                Welcome To My <span class="text-neonBlue">Portfolio Website</span>
+                Welcome To My <br><span class="text-neonBlue">Portofollo Website</span>
             </h1>
-            <div class="w-64 sm:w-80 mx-auto space-y-2 pt-4">
+            <div class="w-64 sm:w-80 mx-auto space-y-2 pt-6">
                 <div class="flex justify-between text-xs font-code text-neonBlue">
-                    <span>LOADING</span>
+                    <span>Loading</span>
                     <span id="intro-percentage">0%</span>
                 </div>
                 <div class="w-full bg-cardBg rounded-full h-1 overflow-hidden border border-white/10">
@@ -397,11 +284,9 @@
             </nav>
 
            <div class="hidden lg:flex items-center gap-3">
-                <!-- Tombol Trigger Dev CLI di Navbar -->
                 <button @click="cliOpen = !cliOpen" class="px-3 py-2 text-xs font-semibold uppercase tracking-wider rounded-lg glass-card border border-neonCyan/40 text-neonCyan hover:bg-neonCyan/10 transition-all flex items-center gap-1.5 cursor-pointer font-code">
                     <span>>_</span> Dev CLI
                 </button>
-                <!-- Tombol Download CV Diubah Membuka Modal Pop-up -->
                 <button @click="cvModalOpen = true" class="px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-lg glass-card border border-neonBlue/30 text-neonBlue hover:bg-neonBlue/10 transition-all flex items-center gap-2 cursor-pointer">
                     <i data-lucide="file-text" class="w-4 h-4"></i> Download CV
                 </button>
@@ -436,9 +321,9 @@
     <!-- MAIN CONTENT -->
     <main class="relative z-10 pt-20">
 
-        <!-- 1. HERO SECTION (ASLI DARI index_2.html DITAMBAH DAILY ROTATION DI SEBELAH KANAN SEPERTI VIDEO) -->
+        <!-- 1. HERO SECTION (DENGAN FOTO PROFIL ASLI ANDA `foto1.jpeg`) -->
         <section id="home" class="min-h-[90vh] flex items-center justify-center relative px-6 py-20">
-            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                 <div class="lg:col-span-7 space-y-6 text-center lg:text-left" data-aos="fade-right">
                     <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-card border border-neonBlue/30 text-neonBlue text-xs font-code tracking-wide">
                         <span class="w-2 h-2 rounded-full bg-neonBlue animate-pulse"></span>
@@ -456,82 +341,21 @@
                         <a href="#projects" class="px-6 py-3 rounded-xl bg-neonBlue text-darkBg font-bold text-sm tracking-wide hover:bg-neonCyan transition-all shadow-lg shadow-neonBlue/25 flex items-center gap-2">
                             View My Projects <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </a>
-                        <!-- Tombol Pintasan ke CLI -->
                         <button @click="cliOpen = true" class="px-6 py-3 rounded-xl glass-card border border-neonCyan/40 text-neonCyan font-semibold text-sm tracking-wide hover:border-neonCyan transition-all font-code flex items-center gap-2">
                             <span>>_</span> Open CLI
                         </button>
                     </div>
                 </div>
 
-                <!-- DAILY ROTATION WIDGET (DI SEBELAH KANAN HERO SESUAI VIDEO) -->
-                <div class="lg:col-span-5" data-aos="fade-left">
-                    <div class="bg-cardBg/90 border border-white/10 rounded-3xl p-6 shadow-2xl backdrop-blur-xl relative overflow-hidden group glass-card">
-                        <div class="absolute -right-10 -top-10 w-40 h-40 bg-neonPurple/10 rounded-full blur-2xl group-hover:bg-neonBlue/20 transition-all duration-500"></div>
-                        
-                        <div class="flex items-center justify-between mb-6 relative z-10">
-                            <div>
-                                <h2 class="text-xl font-bold tracking-wide text-white">Daily Rotation</h2>
-                                <p class="text-xs text-gray-400 mt-1">A curated collection of tracks that keep me in the zone and inspired while coding.</p>
-                            </div>
+                <div class="lg:col-span-5 flex justify-center" data-aos="fade-left">
+                    <div class="relative w-64 h-64 sm:w-80 sm:h-80">
+                        <div class="absolute inset-0 rounded-3xl bg-gradient-to-tr from-neonBlue via-neonPurple to-neonCyan animate-spin-slow blur-md opacity-70"></div>
+                        <div class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-neonBlue to-neonPurple opacity-30 blur-lg"></div>
+                        <div class="relative w-full h-full rounded-3xl overflow-hidden glass-card border-2 border-neonBlue/50 p-2">
+                            <img :src="data.profilePhoto" alt="Profile" class="w-full h-full object-cover rounded-2xl grayscale hover:grayscale-0 transition-all duration-500">
                         </div>
-
-                        <!-- Now Playing Card -->
-                        <div class="bg-darkBg/60 border border-white/5 rounded-2xl p-4 flex items-center gap-4 mb-6 relative z-10">
-                            <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center font-bold text-xl shadow-inner shrink-0 relative overflow-hidden">
-                                <div class="absolute inset-0 bg-black/20"></div>
-                                <i data-lucide="music" class="w-8 h-8 text-white relative z-10"></i>
-                            </div>
-                            <div class="flex-grow min-w-0">
-                                <h3 id="current-song-title" class="font-semibold text-sm truncate text-white">New Life</h3>
-                                <p id="current-song-artist" class="text-xs text-gray-400 truncate mt-0.5">wiffy</p>
-                                <span class="inline-block mt-2 text-[10px] px-2 py-0.5 rounded bg-green-500/20 text-green-400 border border-green-500/30">
-                                    🟢 Save on Spotify
-                                </span>
-                            </div>
-                            <button id="play-pause-btn" class="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center hover:scale-105 transition-transform shadow-lg shrink-0 cursor-pointer">
-                                <i data-lucide="play" class="w-5 h-5 fill-black ml-0.5"></i>
-                            </button>
-                        </div>
-
-                        <!-- Playlist Items -->
-                        <div class="space-y-3 relative z-10">
-                            <div class="flex items-center justify-between p-2.5 rounded-xl hover:bg-white/5 transition-colors cursor-pointer playlist-item" data-title="Terbuang Dalam Waktu" data-artist="Barasuara">
-                                <div class="flex items-center gap-3">
-                                    <span class="text-xs text-gray-500 font-code w-4">1</span>
-                                    <div>
-                                        <h4 class="text-xs font-medium text-white">Terbuang Dalam Waktu</h4>
-                                        <p class="text-[10px] text-gray-400">Barasuara</p>
-                                    </div>
-                                </div>
-                                <span class="text-xs font-code text-gray-500">04:41</span>
-                            </div>
-
-                            <div class="flex items-center justify-between p-2.5 rounded-xl hover:bg-white/5 transition-colors cursor-pointer playlist-item" data-title="Raindance (Feat. Tams)" data-artist="Dewa, Tams">
-                                <div class="flex items-center gap-3">
-                                    <span class="text-xs text-gray-500 font-code w-4">2</span>
-                                    <div>
-                                        <h4 class="text-xs font-medium text-white">Raindance (Feat. Tams)</h4>
-                                        <p class="text-[10px] text-gray-400">Dewa, Tams</p>
-                                    </div>
-                                </div>
-                                <span class="text-xs font-code text-gray-500">03:39</span>
-                            </div>
-
-                            <div class="flex items-center justify-between p-2.5 rounded-xl hover:bg-white/5 transition-colors cursor-pointer playlist-item" data-title="Capaian" data-artist="Tenaria Anggayana">
-                                <div class="flex items-center gap-3">
-                                    <span class="text-xs text-gray-500 font-code w-4">3</span>
-                                    <div>
-                                        <h4 class="text-xs font-medium text-white">Capaian</h4>
-                                        <p class="text-[10px] text-gray-400">Tenaria Anggayana</p>
-                                    </div>
-                                </div>
-                                <span class="text-xs font-code text-gray-500">03:12</span>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
-
             </div>
         </section>
 
@@ -702,10 +526,9 @@
             </div>
         </section>
 
-
-        <!-- 7. PUBLIC COMMENTS SECTION -->
+        <!-- 7. PUBLIC COMMENTS SECTION (DIBATASI UKURANNYA AGAR TIDAK MELAR KE SAMPUNG) -->
         <section id="comments" class="py-24 px-6 relative">
-            <div class="max-w-7xl mx-auto">
+            <div class="max-w-4xl mx-auto">
                 <div class="public-comments-shell relative overflow-hidden rounded-[24px] border border-white/10 px-6 py-8 sm:px-10 sm:py-10">
                     <div class="comments-glow comments-red"></div>
                     <div class="comments-glow comments-blue"></div>
@@ -769,7 +592,6 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
-                    <!-- Informasi Kontak (Kiri) -->
                     <div class="lg:col-span-5 space-y-6" data-aos="fade-right">
                         <div class="glass-card p-8 rounded-2xl space-y-6">
                             <h3 class="text-xl font-bold text-neonBlue">Informasi Kontak</h3>
@@ -807,7 +629,6 @@
                         </div>
                     </div>
 
-                    <!-- Formulir Kontak (Kanan) -->
                     <div class="lg:col-span-7" data-aos="fade-left">
                         <form @submit.prevent="submitForm" class="glass-card p-8 rounded-2xl space-y-6 relative">
                             <input type="hidden" name="access_key" value="63ac1758-5f2f-4863-8199-6e71f16aed0d">
@@ -880,12 +701,9 @@
         </div>
     </footer>
 
-    <!-- ========================================== -->
-    <!-- FITUR DEV CLI (DEVELOPER TERMINAL MODAL)    -->
-    <!-- ========================================== -->
+    <!-- DEV CLI MODAL -->
     <div x-show="cliOpen" x-cloak class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
         <div @click.outside="cliOpen = false" class="w-full max-w-2xl bg-[#080810] border border-neonCyan/50 rounded-2xl shadow-2xl overflow-hidden flex flex-col font-code" style="box-shadow: 0 0 35px rgba(0,255,204,0.15);">
-            <!-- CLI Titlebar -->
             <div class="bg-[#12121c] px-4 py-3 border-b border-white/10 flex items-center justify-between select-none">
                 <div class="flex items-center gap-2">
                     <span class="w-3 h-3 rounded-full bg-red-500 inline-block cursor-pointer" @click="cliOpen = false"></span>
@@ -896,7 +714,6 @@
                 <button @click="cliOpen = false" class="text-gray-400 hover:text-white text-xs px-2 py-0.5 rounded bg-white/5 border border-white/10">ESC</button>
             </div>
 
-            <!-- CLI Body / Output Screen -->
             <div id="cli-screen" class="p-4 sm:p-5 h-80 sm:h-96 overflow-y-auto text-xs sm:text-sm text-gray-200 space-y-3 bg-[#05050a]/90">
                 <div class="text-neonCyan space-y-1">
                     <p>✨ Selamat datang di Dev CLI Portfolio Muhammad Hibatullah Naufal.</p>
@@ -915,7 +732,6 @@
                 </template>
             </div>
 
-            <!-- CLI Input Bar -->
             <form @submit.prevent="runCliCommand" class="bg-[#0e0e18] px-4 py-3 border-t border-white/10 flex items-center gap-3">
                 <span class="text-neonCyan font-bold text-xs sm:text-sm shrink-0">guest:~$</span>
                 <input id="cli-input" type="text" x-model="cliInputText" placeholder="Ketik perintah (cth: help, skills, contact)..." 
@@ -925,228 +741,62 @@
         </div>
     </div>
 
-    <!-- Floating Toggle Button untuk Dev CLI di Pojok Kanan Bawah -->
     <button @click="cliOpen = true" class="fixed bottom-6 right-6 z-30 px-4 py-3 rounded-full glass-card border border-neonCyan text-neonCyan font-code text-xs font-bold shadow-[0_0_20px_rgba(0,255,204,0.3)] hover:scale-105 transition-all flex items-center gap-2 cursor-pointer">
         <span class="w-2.5 h-2.5 rounded-full bg-neonCyan animate-ping"></span>
         <span>>_ Dev CLI</span>
     </button>
 
-    <!-- MODAL / POP-UP CV : hanya bagian ini yang diubah -->
+    <!-- MODAL CV -->
     <div class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm p-3 sm:p-4 overflow-y-auto"
          x-show="cvModalOpen"
          x-cloak
          x-data="{ activeTab: 'ringkasan' }">
-
         <div class="min-h-full flex items-start justify-center py-4 sm:py-8">
             <div class="bg-[#121214] border border-zinc-800/80 w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden relative text-zinc-100 max-h-[92vh] flex flex-col">
-
-                <!-- Header -->
                 <div class="px-5 sm:px-8 pt-5 sm:pt-6 pb-4 border-b border-zinc-800/60 shrink-0">
                     <div class="flex items-center gap-3 mb-2">
-                        <span class="text-[10px] sm:text-[11px] uppercase tracking-wider text-zinc-400 font-medium">
-                            Curriculum Vitae
-                        </span>
-                        <span class="text-[9px] sm:text-[11px] bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2.5 py-0.5 rounded-full flex items-center gap-1.5 font-medium">
-                            <i class="fa-solid fa-lock text-[8px]"></i> Privacy Protected
-                        </span>
+                        <span class="text-[10px] sm:text-[11px] uppercase tracking-wider text-zinc-400 font-medium">Curriculum Vitae</span>
+                        <span class="text-[9px] sm:text-[11px] bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2.5 py-0.5 rounded-full flex items-center gap-1.5 font-medium">Privacy Protected</span>
                     </div>
-
-                    <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-white" x-text="data.name">
-                        MUHAMMAD HIBATULLAH NAUFAL
-                    </h2>
-
+                    <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-white" x-text="data.name"></h2>
                     <p class="text-[10px] sm:text-xs text-zinc-400 mt-1">
-                        <span x-text="data.major">Rekayasa Perangkat Lunak</span>
-                        ·
-                        <span x-text="`${data.city}, ${data.province}`">Sekayu, Sumatera Selatan</span>
+                        <span x-text="data.major"></span> · <span x-text="`${data.city}, ${data.province}`"></span>
                     </p>
                 </div>
 
-                <!-- Tabs -->
                 <div class="px-5 sm:px-8 py-3 bg-[#121214] border-b border-zinc-800/60 shrink-0">
                     <div class="bg-[#18181b] border border-zinc-800 p-1 rounded-xl grid grid-cols-2 gap-1 max-w-xl">
-                        <button @click="activeTab = 'ringkasan'"
-                            :class="activeTab === 'ringkasan'
-                                ? 'bg-[#121214] text-white font-medium shadow-sm border border-zinc-700/50'
-                                : 'text-zinc-400 hover:text-zinc-200'"
-                            class="text-[10px] sm:text-xs py-2 rounded-lg flex items-center justify-center gap-2 transition">
-                            <i class="fa-solid fa-file-lines text-[9px] sm:text-[11px]"></i>
-                            Ringkasan Profil
-                        </button>
-
-                        <button @click="activeTab = 'minta'"
-                            :class="activeTab === 'minta'
-                                ? 'bg-[#121214] text-white font-medium shadow-sm border border-zinc-700/50'
-                                : 'text-zinc-400 hover:text-zinc-200'"
-                            class="text-[10px] sm:text-xs py-2 rounded-lg flex items-center justify-center gap-2 transition">
-                            <i class="fa-solid fa-lock text-[8px] sm:text-[10px] text-amber-400"></i>
-                            Minta Dokumen Lengkap
-                        </button>
+                        <button @click="activeTab = 'ringkasan'" :class="activeTab === 'ringkasan' ? 'bg-[#121214] text-white font-medium shadow-sm border border-zinc-700/50' : 'text-zinc-400 hover:text-zinc-200'" class="text-[10px] sm:text-xs py-2 rounded-lg flex items-center justify-center gap-2 transition">Ringkasan Profil</button>
+                        <button @click="activeTab = 'minta'" :class="activeTab === 'minta' ? 'bg-[#121214] text-white font-medium shadow-sm border border-zinc-700/50' : 'text-zinc-400 hover:text-zinc-200'" class="text-[10px] sm:text-xs py-2 rounded-lg flex items-center justify-center gap-2 transition">Minta Dokumen Lengkap</button>
                     </div>
                 </div>
 
-                <!-- Content -->
-                <div class="px-5 sm:px-8 py-5 sm:py-6 space-y-5 overflow-y-auto flex-1 custom-scrollbar">
-
-                    <!-- Ringkasan -->
+                <div class="px-5 sm:px-8 py-5 sm:py-6 space-y-5 overflow-y-auto flex-1">
                     <div x-show="activeTab === 'ringkasan'" class="space-y-5">
-
                         <div class="bg-[#18181b] border border-zinc-800/80 rounded-2xl p-5 sm:p-6 flex items-center gap-4 sm:gap-5">
                             <div class="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border border-zinc-700 shrink-0">
                                 <img :src="data.profilePhoto" alt="Foto Profil" class="w-full h-full object-cover">
-                                <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-[#18181b] rounded-full"></span>
                             </div>
-
                             <div class="min-w-0">
-                                <h3 class="text-sm sm:text-base font-bold text-white" x-text="data.name">
-                                    MUHAMMAD HIBATULLAH NAUFAL
-                                </h3>
-                                <p class="text-[10px] sm:text-xs text-zinc-400 mt-0.5">
-                                    Junior Developer @ SMK Negeri 3 Sekayu
-                                </p>
-                                <p class="text-[10px] sm:text-xs font-semibold text-white mt-1.5 tracking-wide">
-                                    Rekayasa Perangkat Lunak · Web Development
-                                </p>
+                                <h3 class="text-sm sm:text-base font-bold text-white" x-text="data.name"></h3>
+                                <p class="text-[10px] sm:text-xs text-zinc-400 mt-0.5">Junior Developer @ SMK Negeri 3 Sekayu</p>
                             </div>
                         </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
-
-                            <div class="bg-[#18181b] border border-zinc-800/80 rounded-2xl p-5 sm:p-6 space-y-4">
-                                <h4 class="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-zinc-200 flex items-center gap-2">
-                                    <i class="fa-solid fa-graduation-cap text-indigo-400"></i>
-                                    Pendidikan
-                                </h4>
-
-                                <div class="text-[10px] sm:text-xs">
-                                    <div class="font-bold text-white">SMK Negeri 3 Sekayu</div>
-                                    <div class="text-zinc-500 text-[9px] sm:text-[11px] mt-0.5">(2025 – Sekarang)</div>
-                                    <div class="text-cyan-400 font-medium mt-1">Rekayasa Perangkat Lunak</div>
-                                </div>
-                            </div>
-
-                            <div class="bg-[#18181b] border border-zinc-800/80 rounded-2xl p-5 sm:p-6 space-y-4">
-                                <h4 class="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-zinc-200 flex items-center gap-2">
-                                    <i class="fa-solid fa-bolt text-amber-400"></i>
-                                    Keahlian Teknis
-                                </h4>
-
-                                <div class="flex flex-wrap gap-1.5 sm:gap-2">
-                                    <span class="text-[9px] sm:text-[11px] bg-zinc-800/70 text-zinc-300 border border-zinc-700/60 px-2 sm:px-3 py-1 rounded-md">HTML</span>
-                                    <span class="text-[9px] sm:text-[11px] bg-zinc-800/70 text-zinc-300 border border-zinc-700/60 px-2 sm:px-3 py-1 rounded-md">CSS</span>
-                                    <span class="text-[9px] sm:text-[11px] bg-zinc-800/70 text-zinc-300 border border-zinc-700/60 px-2 sm:px-3 py-1 rounded-md">JavaScript</span>
-                                    <span class="text-[9px] sm:text-[11px] bg-zinc-800/70 text-zinc-300 border border-zinc-700/60 px-2 sm:px-3 py-1 rounded-md">PHP</span>
-                                    <span class="text-[9px] sm:text-[11px] bg-zinc-800/70 text-zinc-300 border border-zinc-700/60 px-2 sm:px-3 py-1 rounded-md">Tailwind CSS</span>
-                                    <span class="text-[9px] sm:text-[11px] bg-zinc-800/70 text-zinc-300 border border-zinc-700/60 px-2 sm:px-3 py-1 rounded-md">MySQL</span>
-                                    <span class="text-[9px] sm:text-[11px] bg-zinc-800/70 text-zinc-300 border border-zinc-700/60 px-2 sm:px-3 py-1 rounded-md">Git & GitHub</span>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="bg-[#18181b] border border-zinc-800/80 rounded-2xl p-5 sm:p-6 space-y-4">
-                            <h4 class="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-zinc-200 flex items-center gap-2">
-                                <i class="fa-solid fa-rocket text-rose-400"></i>
-                                Proyek Pilihan
-                            </h4>
-
-                            <div class="space-y-3 text-[10px] sm:text-xs">
-                                <div class="border-b border-zinc-800/60 pb-3">
-                                    <div class="font-bold text-white">Website Portfolio Pribadi</div>
-                                    <p class="text-zinc-400 mt-1 leading-relaxed">
-                                        Membangun portfolio interaktif menggunakan Tailwind CSS untuk menampilkan profil, keahlian, dan riwayat proyek.
-                                    </p>
-                                </div>
-
-                                <div>
-                                    <div class="font-bold text-white">Sistem Informasi Akademik / Tugas RPL</div>
-                                    <p class="text-zinc-400 mt-1 leading-relaxed">
-                                        Pengembangan aplikasi berbasis web fungsional menggunakan PHP dan database MySQL.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
-
-                    <!-- Minta Dokumen -->
                     <div x-show="activeTab === 'minta'" class="space-y-5" x-cloak>
-
                         <div class="bg-[#18181b] border border-zinc-800/80 rounded-2xl p-5 sm:p-6 text-center space-y-3">
-                            <div class="w-10 h-10 bg-amber-500/10 text-amber-400 rounded-full flex items-center justify-center mx-auto border border-amber-500/20">
-                                <i class="fa-solid fa-lock text-sm"></i>
-                            </div>
-
-                            <h3 class="text-sm sm:text-base font-bold text-white">
-                                Minta File CV Resmi (Full PDF / HD)
-                            </h3>
-
-                            <p class="text-[10px] sm:text-xs text-zinc-400 max-w-md mx-auto leading-relaxed">
-                                Untuk mencegah penyalahgunaan data pribadi (nomor telepon & alamat), file CV lengkap akan dikirimkan langsung ke email resmi instansi/perusahaan Anda.
-                            </p>
+                            <h3 class="text-sm sm:text-base font-bold text-white">Minta File CV Resmi (Full PDF / HD)</h3>
+                            <p class="text-[10px] sm:text-xs text-zinc-400 max-w-md mx-auto leading-relaxed">File CV lengkap akan dikirimkan langsung ke email resmi instansi/perusahaan Anda.</p>
                         </div>
-
-                        <div class="bg-[#18181b] border border-zinc-800/80 rounded-2xl p-5 sm:p-6 space-y-4">
-                            <div>
-                                <label class="block text-[10px] sm:text-[11px] font-semibold text-zinc-400 uppercase tracking-wider mb-2">
-                                    Nama Anda / Recruiter
-                                </label>
-                                <input type="text"
-                                    placeholder="cth. Nama Anda (HRD PT ABC)"
-                                    class="w-full bg-[#121214] border border-zinc-800 rounded-xl px-4 py-3 text-[10px] sm:text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-zinc-600 transition">
-                            </div>
-
-                            <div>
-                                <label class="block text-[10px] sm:text-[11px] font-semibold text-zinc-400 uppercase tracking-wider mb-2">
-                                    Email Perusahaan / Penerima
-                                </label>
-                                <input type="email"
-                                    placeholder="cth. hrd@perusahaan.com"
-                                    class="w-full bg-[#121214] border border-zinc-800 rounded-xl px-4 py-3 text-[10px] sm:text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-zinc-600 transition">
-                            </div>
-
-                            <div>
-                                <label class="block text-[10px] sm:text-[11px] font-semibold text-zinc-400 uppercase tracking-wider mb-2">
-                                    Tujuan / Posisi
-                                </label>
-                                <input type="text"
-                                    placeholder="cth. Rekrutmen Junior Web Developer"
-                                    class="w-full bg-[#121214] border border-zinc-800 rounded-xl px-4 py-3 text-[10px] sm:text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-zinc-600 transition">
-                            </div>
-
-                            <button type="button"
-                                class="w-full bg-white hover:bg-zinc-200 text-black text-[10px] sm:text-xs px-5 py-3 rounded-xl font-semibold transition flex items-center justify-center gap-2">
-                                <i class="fa-regular fa-envelope"></i>
-                                Buat Permintaan Email
-                            </button>
-                        </div>
-
                     </div>
                 </div>
 
-                <!-- Footer -->
                 <div class="px-5 sm:px-8 py-3.5 sm:py-4 bg-[#121214] border-t border-zinc-800/60 flex flex-wrap justify-between items-center gap-3 shrink-0">
-
-                    <button @click="activeTab = activeTab === 'ringkasan' ? 'minta' : 'ringkasan'"
-                        class="bg-[#18181b] hover:bg-zinc-800 border border-zinc-700/80 text-white text-[10px] sm:text-xs px-4 sm:px-5 py-2.5 rounded-xl font-medium transition flex items-center gap-2">
+                    <button @click="activeTab = activeTab === 'ringkasan' ? 'minta' : 'ringkasan'" class="bg-[#18181b] hover:bg-zinc-800 border border-zinc-700/80 text-white text-[10px] sm:text-xs px-4 sm:px-5 py-2.5 rounded-xl font-medium transition">
                         <span x-text="activeTab === 'ringkasan' ? 'Minta File CV Lengkap' : 'Kembali ke Ringkasan'"></span>
-                        <i :class="activeTab === 'ringkasan' ? 'fa-solid fa-arrow-right text-[9px]' : 'fa-solid fa-arrow-left text-[9px]'"></i>
                     </button>
-
-                    <a :href="`mailto:${data.email}?subject=Ketertarikan%20terhadap%20CV`"
-                        class="bg-white hover:bg-zinc-200 text-black text-[10px] sm:text-xs px-4 sm:px-5 py-2.5 rounded-xl font-medium transition flex items-center gap-2 shadow-lg">
-                        Kirim Email Langsung
-                        <i class="fa-regular fa-envelope"></i>
-                    </a>
+                    <button @click="cvModalOpen = false" class="bg-white hover:bg-zinc-200 text-black text-[10px] sm:text-xs px-4 sm:px-5 py-2.5 rounded-xl font-medium transition">Tutup</button>
                 </div>
-
-                <!-- Close -->
-                <button @click="cvModalOpen = false"
-                    class="absolute top-3 right-3 sm:top-4 sm:right-4 text-zinc-400 hover:text-white transition p-2 z-10"
-                    aria-label="Tutup CV">
-                    <i class="fa-solid fa-xmark text-base sm:text-lg"></i>
-                </button>
-
             </div>
         </div>
     </div>
@@ -1167,34 +817,17 @@
     <script>
         function portfolioApp() {
             return {
-                isLoading: false, // Diganti false agar preloader kustom intro yang aktif
-                progress: 0,
                 mobileMenuOpen: false,
                 projectFilter: 'all',
                 modalOpen: false,
                 activeCert: {},
-
-                // State Modal CV
                 cvModalOpen: false,
-                cvTab: 'ringkasan',
-
-                // State Dev CLI Terminal
                 cliOpen: false,
                 cliInputText: '',
                 cliHistory: [],
-
-                // State untuk Formulir Kontak
-                formData: {
-                    name: '',
-                    email: '',
-                    subject: '',
-                    message: ''
-                },
+                formData: { name: '', email: '', subject: '', message: '' },
                 isSubmitting: false,
-                formStatus: {
-                    success: false,
-                    message: ''
-                },
+                formStatus: { success: false, message: '' },
                 
                 data: {
                     name: "MUHAMMAD HIBATULLAH NAUFAL",
@@ -1247,67 +880,39 @@
                     ]
                 },
 
-                init() {
-                    // Kosongkan agar Alpine aman
-                },
-
-                // Fungsi Logika Perintah Dev CLI
                 runCliCommand() {
                     const cmd = this.cliInputText.trim().toLowerCase();
                     if (!cmd) return;
-
                     let output = '';
                     switch (cmd) {
                         case 'help':
-                            output = `Perintah yang tersedia:\n` +
-                                     `- <span class="text-neonCyan">about</span>    : Menampilkan informasi singkat profil\n` +
-                                     `- <span class="text-neonCyan">skills</span>   : Daftar keahlian pemrograman\n` +
-                                     `- <span class="text-neonCyan">projects</span> : Daftar proyek portfolio\n` +
-                                     `- <span class="text-neonCyan">contact</span>  : Informasi kontak & email\n` +
-                                     `- <span class="text-neonCyan">whoami</span>   : Mengetahui status sesi Anda\n` +
-                                     `- <span class="text-neonCyan">date</span>     : Menampilkan tanggal sistem\n` +
-                                     `- <span class="text-neonCyan">clear</span>    : Membersihkan layar terminal`;
+                            output = `Perintah yang tersedia:\n- about, skills, projects, contact, whoami, date, clear`;
                             break;
                         case 'about':
-                            output = `Nama: ${this.data.name}\nSekolah: ${this.data.school}\nJurusan: ${this.data.major} (${this.data.class})\nLokasi: ${this.data.city}, ${this.data.province}`;
+                            output = `Nama: ${this.data.name}\nSekolah: ${this.data.school}\nJurusan: ${this.data.major}`;
                             break;
                         case 'skills':
                             output = this.data.skills.map(s => `• ${s.name} (${s.level}%)`).join('\n');
                             break;
                         case 'projects':
-                            output = this.data.projects.map(p => `• [${p.category}] ${p.title}: ${p.desc}`).join('\n');
+                            output = this.data.projects.map(p => `• [${p.category}] ${p.title}`).join('\n');
                             break;
                         case 'contact':
-                            output = `Email: ${this.data.email}\nWhatsApp: ${this.data.whatsapp}\nInstagram: ${this.data.instagram}`;
-                            break;
-                        case 'whoami':
-                            output = `guest-visitor@muhammad-naufal-portfolio (Akses Publik Terverifikasi)`;
-                            break;
-                        case 'date':
-                            output = new Date().toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'medium' });
+                            output = `Email: ${this.data.email}\nWhatsApp: ${this.data.whatsapp}`;
                             break;
                         case 'clear':
                             this.cliHistory = [];
                             this.cliInputText = '';
                             return;
                         default:
-                            output = `Perintah tidak dikenal: "${cmd}". Ketik <span class="text-yellow-400">help</span> untuk daftar perintah.`;
+                            output = `Perintah tidak dikenal. Ketik help.`;
                     }
-
                     this.cliHistory.push({ command: this.cliInputText, output: output });
                     this.cliInputText = '';
-
-                    // Auto scroll ke bawah terminal
-                    setTimeout(() => {
-                        const screen = document.getElementById('cli-screen');
-                        if (screen) screen.scrollTop = screen.scrollHeight;
-                    }, 50);
                 },
 
                 get filteredProjects() {
-                    if (this.projectFilter === 'all') {
-                        return this.data.projects;
-                    }
+                    if (this.projectFilter === 'all') return this.data.projects;
                     return this.data.projects.filter(p => p.category === this.projectFilter);
                 },
 
@@ -1318,37 +923,15 @@
 
                 async submitForm(e) {
                     this.isSubmitting = true;
-                    this.formStatus = { success: false, message: '' };
-
-                    const formElement = e.target;
-                    const formDataObj = new FormData(formElement);
-
+                    const formDataObj = new FormData(e.target);
                     try {
-                        const response = await fetch('https://api.web3forms.com/submit', {
-                            method: 'POST',
-                            body: formDataObj
-                        });
-
-                        const result = await response.json();
-
+                        const response = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: formDataObj });
                         if (response.status === 200) {
-                            this.formStatus = {
-                                success: true,
-                                message: 'Pesan berhasil dikirim! Terima kasih telah menghubungi saya.'
-                            };
-                            formElement.reset();
-                            this.formData = { name: '', email: '', subject: '', message: '' };
-                        } else {
-                            this.formStatus = {
-                                success: false,
-                                message: result.message || 'Terjadi kesalahan saat mengirim pesan. Silakan coba lagi.'
-                            };
+                            this.formStatus = { success: true, message: 'Pesan berhasil dikirim!' };
+                            e.target.reset();
                         }
                     } catch (error) {
-                        this.formStatus = {
-                            success: false,
-                            message: 'Gagal terhubung ke server. Periksa koneksi internet Anda.'
-                        };
+                        this.formStatus = { success: false, message: 'Gagal mengirim pesan.' };
                     } finally {
                         this.isSubmitting = false;
                     }
@@ -1360,14 +943,14 @@
             AOS.init({ duration: 1000, once: true });
             lucide.createIcons();
 
-            // Intro Animation & Loading Percentage Logic
+            // SCRIPT INTRO ANIMATION & PERCENTAGE (PERSIS SEPERTI DI VIDEO)
             const overlay = document.getElementById("intro-overlay");
             const progressBar = document.getElementById("intro-progress");
             const percentageText = document.getElementById("intro-percentage");
 
             let currentProgress = 0;
             const introInterval = setInterval(() => {
-                currentProgress += Math.floor(Math.random() * 8) + 3;
+                currentProgress += Math.floor(Math.random() * 8) + 4;
                 if (currentProgress >= 100) {
                     currentProgress = 100;
                     clearInterval(introInterval);
@@ -1377,279 +960,8 @@
                 }
                 if (progressBar) progressBar.style.width = currentProgress + "%";
                 if (percentageText) percentageText.textContent = currentProgress + "%";
-            }, 40);
-
-            // Daily Rotation Play/Pause Interactivity
-            const playPauseBtn = document.getElementById("play-pause-btn");
-            let isPlaying = false;
-            if (playPauseBtn) {
-                playPauseBtn.addEventListener("click", () => {
-                    isPlaying = !isPlaying;
-                    playPauseBtn.innerHTML = isPlaying ? '<i data-lucide="pause" class="w-5 h-5 fill-black"></i>' : '<i data-lucide="play" class="w-5 h-5 fill-black ml-0.5"></i>';
-                    lucide.createIcons();
-                });
-            }
-
-            const playlistItems = document.querySelectorAll(".playlist-item");
-            const currentTitle = document.getElementById("current-song-title");
-            const currentArtist = document.getElementById("current-song-artist");
-
-            playlistItems.forEach(item => {
-                item.addEventListener("click", () => {
-                    if (currentTitle) currentTitle.textContent = item.getAttribute("data-title");
-                    if (currentArtist) currentArtist.textContent = item.getAttribute("data-artist");
-                    isPlaying = true;
-                    if (playPauseBtn) playPauseBtn.innerHTML = '<i data-lucide="pause" class="w-5 h-5 fill-black"></i>';
-                    lucide.createIcons();
-                });
-            });
-
-            const cursorDot = document.querySelector('.cursor-dot');
-            const cursorOutline = document.querySelector('.cursor-outline');
-            
-            window.addEventListener('mousemove', (e) => {
-                const posX = e.clientX;
-                const posY = e.clientY;
-                if(cursorDot) cursorDot.style.transform = `translate(${posX}px, ${posY}px)`;
-                if(cursorOutline) cursorOutline.style.transform = `translate(${posX}px, ${posY}px)`;
-            });
-
-            document.querySelectorAll('a, button, input, textarea').forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    if(cursorOutline) {
-                        cursorOutline.style.transform += ' scale(1.5)';
-                        cursorOutline.style.backgroundColor = 'rgba(0, 240, 255, 0.1)';
-                    }
-                });
-                el.addEventListener('mouseleave', () => {
-                    if(cursorOutline) {
-                        cursorOutline.style.transform = cursorOutline.style.transform.replace(' scale(1.5)', '');
-                        cursorOutline.style.backgroundColor = 'transparent';
-                    }
-                });
-            });
+            }, 35);
         });
     </script>
-
-<script>
-/*
- * PUBLIC COMMENTS
- * - Set SUPABASE_URL and SUPABASE_ANON_KEY below to make comments public/realtime.
- * - Until configured, the component safely falls back to this browser's localStorage.
- */
-const PUBLIC_COMMENTS_CONFIG = {
-    SUPABASE_URL: "https://uttfikbminsfhtcybdky.supabase.co",
-    SUPABASE_ANON_KEY: "sb_publishable__bAqBLmknggI0RQDow0org_Z1A6rMx2",
-    TABLE: "public_comments"
-};
-
-let publicComments = [];
-let commentsSupabase = null;
-
-function commentInitials(name) {
-    return (name || "?").trim().split(/\s+/).slice(0,2).map(x => x[0]).join("").toUpperCase();
-}
-
-function commentTime(value) {
-    const d = new Date(value);
-    if (Number.isNaN(d.getTime())) return "";
-    return d.toLocaleDateString("id-ID", {
-        day: "2-digit", month: "short", year: "2-digit"
-    }) + " " + d.toLocaleTimeString("id-ID", {
-        hour: "2-digit", minute: "2-digit"
-    });
-}
-
-function commentEscape(value) {
-    return String(value ?? "").replace(/[&<>"']/g, c => ({
-        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-    }[c]));
-}
-
-function showCommentNotice(message, ok=false) {
-    const box=document.getElementById("publicCommentNotice");
-    if (!box) return;
-    box.textContent=message;
-    box.className = "rounded-lg px-4 py-2.5 text-xs " +
-        (ok ? "bg-emerald-500/10 border border-emerald-500/20 text-emerald-300"
-            : "bg-rose-500/10 border border-rose-500/20 text-rose-300");
-    box.classList.remove("hidden");
-}
-
-function setCloudStatus(connected) {
-    const el=document.getElementById("commentsCloudStatus");
-    if (!el) return;
-    el.innerHTML = connected
-        ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-lime-300 mr-1.5 animate-pulse"></span>CLOUD REALTIME'
-        : '<span class="inline-block w-1.5 h-1.5 rounded-full bg-zinc-500 mr-1.5"></span>LOCAL PREVIEW';
-    el.className = connected
-        ? "text-[9px] uppercase tracking-wider font-bold text-lime-300"
-        : "text-[9px] uppercase tracking-wider font-bold text-zinc-500";
-}
-
-function renderPublicComments() {
-    const list=document.getElementById("publicCommentsList");
-    if (!list) return;
-
-    if (!publicComments.length) {
-        list.innerHTML='<div class="text-center text-xs text-zinc-500 py-10">Belum ada komentar. Jadilah yang pertama.</div>';
-        return;
-    }
-
-    list.innerHTML = publicComments.map(c => `
-        <article class="comment-card ${c.pinned ? "pinned" : ""}">
-            <div class="flex items-start gap-3.5">
-                <div class="comment-avatar">${commentEscape(commentInitials(c.name))}</div>
-                <div class="min-w-0 flex-1">
-                    <div class="flex flex-wrap items-center gap-2">
-                        <span class="text-sm font-bold text-zinc-100">${commentEscape(c.name)}</span>
-                        ${c.owner ? '<span class="comment-badge">OWNER</span>' : ""}
-                        ${c.pinned ? '<span class="comment-pin">PINNED 📌</span>' : ""}
-                    </div>
-                    <p class="text-xs text-zinc-400 mt-2 leading-relaxed whitespace-pre-wrap">${commentEscape(c.message)}</p>
-                </div>
-                <div class="text-[8px] text-zinc-600 shrink-0 text-right">
-                    ${c.pinned ? 'Pinned 📌' : commentTime(c.created_at)}
-                </div>
-            </div>
-        </article>
-    `).join("");
-}
-
-function loadLocalComments() {
-    try {
-        publicComments=JSON.parse(localStorage.getItem("publicComments") || "[]");
-        if (!Array.isArray(publicComments)) publicComments=[];
-    } catch { publicComments=[]; }
-    publicComments.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
-    renderPublicComments();
-    setCloudStatus(false);
-}
-
-function saveLocalComments() {
-    localStorage.setItem("publicComments", JSON.stringify(publicComments));
-}
-
-function basicModeration(name, message) {
-    const banned = ["pornografi", "judi online", "penipuan"];
-    const value=(name+" "+message).toLowerCase();
-    return !banned.some(word=>value.includes(word));
-}
-
-async function initPublicComments() {
-    const hasCloud = PUBLIC_COMMENTS_CONFIG.SUPABASE_URL &&
-                     PUBLIC_COMMENTS_CONFIG.SUPABASE_ANON_KEY;
-
-    if (!hasCloud) {
-        loadLocalComments();
-        return;
-    }
-
-    try {
-        if (!window.supabase) throw new Error("Supabase belum termuat");
-        commentsSupabase=window.supabase.createClient(
-            PUBLIC_COMMENTS_CONFIG.SUPABASE_URL,
-            PUBLIC_COMMENTS_CONFIG.SUPABASE_ANON_KEY
-        );
-
-        const {data,error}=await commentsSupabase
-            .from(PUBLIC_COMMENTS_CONFIG.TABLE)
-            .select("*")
-            .eq("approved", true)
-            .order("pinned",{ascending:false})
-            .order("created_at",{ascending:false});
-
-        if (error) throw error;
-
-        publicComments=data || [];
-        renderPublicComments();
-        setCloudStatus(true);
-    } catch (err) {
-        console.warn("Public comments cloud error:", err);
-        loadLocalComments();
-    }
-}
-
-async function postPublicComment() {
-    const nameEl=document.getElementById("publicCommentName");
-    const textEl=document.getElementById("publicCommentText");
-    const btn=document.getElementById("publicCommentSubmit");
-
-    const name=nameEl.value.trim();
-    const message=textEl.value.trim();
-
-    if (name.length < 2) {
-        showCommentNotice("Nama minimal 2 karakter.");
-        return;
-    }
-    if (message.length < 3) {
-        showCommentNotice("Komentar terlalu pendek.");
-        return;
-    }
-    if (!basicModeration(name,message)) {
-        showCommentNotice("Komentar ditolak oleh filter moderasi otomatis.");
-        return;
-    }
-
-    btn.disabled=true;
-    btn.textContent="Posting...";
-
-    const item={
-        name,
-        message,
-        created_at:new Date().toISOString(),
-        approved:true,
-        owner:false,
-        pinned:false
-    };
-
-    try {
-        if (commentsSupabase) {
-            const {data,error}=await commentsSupabase
-                .from(PUBLIC_COMMENTS_CONFIG.TABLE)
-                .insert([{
-                    name:item.name,
-                    message:item.message,
-                    approved:true,
-                    owner:false,
-                    pinned:false
-                }])
-                .select()
-                .single();
-
-            if (error) throw error;
-            publicComments.unshift(data);
-            renderPublicComments();
-        } else {
-            publicComments.unshift(item);
-            publicComments.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
-            saveLocalComments();
-            renderPublicComments();
-        }
-
-        nameEl.value="";
-        textEl.value="";
-        showCommentNotice("Komentar berhasil diposting.", true);
-    } catch (err) {
-        console.error(err);
-        showCommentNotice("Komentar gagal diposting.");
-    } finally {
-        btn.disabled=false;
-        btn.textContent="Post Comment ↗";
-    }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    const btn=document.getElementById("publicCommentSubmit");
-    if (btn) btn.addEventListener("click", postPublicComment);
-
-    const script=document.createElement("script");
-    script.src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
-    script.onload=initPublicComments;
-    script.onerror=()=>loadLocalComments();
-    document.head.appendChild(script);
-});
-</script>
-
 </body>
 </html>
