@@ -319,29 +319,49 @@
         .comments-scroll::-webkit-scrollbar { width:7px; }
         .comments-scroll::-webkit-scrollbar-track { background:rgba(255,255,255,.04); border-radius:20px; }
         .comments-scroll::-webkit-scrollbar-thumb { background:rgba(255,255,255,.28); border-radius:20px; }
+
+        /* Intro Animation Overlay */
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #05050A;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        .intro-hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
 </style>
 </head>
 <body class="bg-darkBg text-gray-100 relative selection:bg-neonBlue selection:text-darkBg" x-data="portfolioApp()">
 
-    <!-- PRELOADER -->
-    <div x-show="isLoading" 
-         x-transition:leave="transition ease-in-out duration-1000"
-         x-transition:leave-start="opacity-100 transform translate-y-0"
-         x-transition:leave-end="opacity-0 transform -translate-y-full"
-         class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-darkBg px-6">
-        <div class="absolute w-[400px] h-[400px] rounded-full bg-neonBlue/10 blur-[120px] pointer-events-none"></div>
-        <div class="text-center space-y-6 z-10 max-w-xl">
+    <!-- INTRO ANIMATION SCREEN -->
+    <div id="intro-overlay">
+        <div class="absolute inset-0 overflow-hidden opacity-40 pointer-events-none">
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/30 via-darkBg to-darkBg"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-[600px] h-[600px] bg-neonBlue/10 rounded-full blur-3xl animate-pulse"></div>
+            </div>
+        </div>
+        <div class="relative z-10 text-center px-4 max-w-2xl space-y-4">
             <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
-                Welcome to my <span class="text-neonBlue">Portfolio</span>
+                Welcome To My <span class="text-neonBlue">Portfolio Website</span>
             </h1>
-            <p class="text-gray-400 text-sm sm:text-base font-light">Mempersiapkan pengalaman digital terbaik...</p>
             <div class="w-64 sm:w-80 mx-auto space-y-2 pt-4">
                 <div class="flex justify-between text-xs font-code text-neonBlue">
                     <span>LOADING</span>
-                    <span x-text="`${progress}%`"></span>
+                    <span id="intro-percentage">0%</span>
                 </div>
                 <div class="w-full bg-cardBg rounded-full h-1 overflow-hidden border border-white/10">
-                    <div class="bg-gradient-to-r from-neonBlue to-neonPurple h-full transition-all duration-100 rounded-full" :style="`width: ${progress}%`"></div>
+                    <div id="intro-progress" class="bg-gradient-to-r from-neonBlue to-neonPurple h-full transition-all duration-100 rounded-full w-0"></div>
                 </div>
             </div>
         </div>
@@ -419,9 +439,11 @@
     <!-- MAIN CONTENT -->
     <main class="relative z-10 pt-20">
 
-        <!-- 1. HERO SECTION -->
+        <!-- 1. HERO SECTION & DAILY ROTATION -->
         <section id="home" class="min-h-[90vh] flex items-center justify-center relative px-6 py-20">
-            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full">
+                
+                <!-- Hero Text Left -->
                 <div class="lg:col-span-7 space-y-6 text-center lg:text-left" data-aos="fade-right">
                     <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-card border border-neonBlue/30 text-neonBlue text-xs font-code tracking-wide">
                         <span class="w-2 h-2 rounded-full bg-neonBlue animate-pulse"></span>
@@ -430,10 +452,10 @@
 
                     <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight normal-heading-text">
                         Hi, I'm <span class="animated-gradient-text" x-text="data.name"></span>.<br>
-                        I Build <span class="text-neonBlue">Digital Experiences</span>.
+                        Turning Ideas <span class="text-neonBlue">Into Reality</span>.
                     </h1>
 
-                    <p class="text-gray-300 text-base sm:text-lg max-w-xl mx-auto lg:mx-0 font-light" x-text="`Siswa SMK Jurusan Rekayasa Perangkat Lunak di ${data.school} yang antusias dalam mengembangkan aplikasi web modern, sistem fungsional, dan desain interaktif.`"></p>
+                    <p class="text-gray-300 text-base sm:text-lg max-w-xl mx-auto lg:mx-0 font-light" x-text="`Siswa SMK Jurusan Rekayasa Perangkat Lunak di ${data.school}. Dimulai dari rasa penasaran, berkembang menjadi passion. Aku membangun pengalaman digital yang bermakna.`"></p>
 
                     <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
                         <a href="#projects" class="px-6 py-3 rounded-xl bg-neonBlue text-darkBg font-bold text-sm tracking-wide hover:bg-neonCyan transition-all shadow-lg shadow-neonBlue/25 flex items-center gap-2">
@@ -446,15 +468,75 @@
                     </div>
                 </div>
 
-                <div class="lg:col-span-5 flex justify-center" data-aos="fade-left">
-                    <div class="relative w-64 h-64 sm:w-80 sm:h-80">
-                        <div class="absolute inset-0 rounded-3xl bg-gradient-to-tr from-neonBlue via-neonPurple to-neonCyan animate-spin-slow blur-md opacity-70"></div>
-                        <div class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-neonBlue to-neonPurple opacity-30 blur-lg"></div>
-                        <div class="relative w-full h-full rounded-3xl overflow-hidden glass-card border-2 border-neonBlue/50 p-2">
-                            <img :src="data.profilePhoto" alt="Profile" class="w-full h-full object-cover rounded-2xl grayscale hover:grayscale-0 transition-all duration-500">
+                <!-- Daily Rotation Widget Right -->
+                <div class="lg:col-span-5" data-aos="fade-left">
+                    <div class="bg-cardBg/90 border border-white/10 rounded-3xl p-6 shadow-2xl backdrop-blur-xl relative overflow-hidden group glass-card">
+                        <div class="absolute -right-10 -top-10 w-40 h-40 bg-neonPurple/10 rounded-full blur-2xl group-hover:bg-neonBlue/20 transition-all duration-500"></div>
+                        
+                        <div class="flex items-center justify-between mb-6 relative z-10">
+                            <div>
+                                <h2 class="text-xl font-bold tracking-wide text-white">Daily Rotation</h2>
+                                <p class="text-xs text-gray-400 mt-1">A curated collection of tracks that keep me in the zone and inspired while coding.</p>
+                            </div>
                         </div>
+
+                        <!-- Now Playing Card -->
+                        <div class="bg-darkBg/60 border border-white/5 rounded-2xl p-4 flex items-center gap-4 mb-6 relative z-10">
+                            <div class="w-16 h-16 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center font-bold text-xl shadow-inner shrink-0 relative overflow-hidden">
+                                <div class="absolute inset-0 bg-black/20"></div>
+                                <i data-lucide="music" class="w-8 h-8 text-white relative z-10"></i>
+                            </div>
+                            <div class="flex-grow min-w-0">
+                                <h3 id="current-song-title" class="font-semibold text-sm truncate text-white">New Life</h3>
+                                <p id="current-song-artist" class="text-xs text-gray-400 truncate mt-0.5">wiffy</p>
+                                <span class="inline-block mt-2 text-[10px] px-2 py-0.5 rounded bg-green-500/20 text-green-400 border border-green-500/30">
+                                    🟢 Save on Spotify
+                                </span>
+                            </div>
+                            <button id="play-pause-btn" class="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center hover:scale-105 transition-transform shadow-lg shrink-0 cursor-pointer">
+                                <i data-lucide="play" class="w-5 h-5 fill-black ml-0.5"></i>
+                            </button>
+                        </div>
+
+                        <!-- Playlist Items -->
+                        <div class="space-y-3 relative z-10">
+                            <div class="flex items-center justify-between p-2.5 rounded-xl hover:bg-white/5 transition-colors cursor-pointer playlist-item" data-title="Terbuang Dalam Waktu" data-artist="Barasuara">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-xs text-gray-500 font-code w-4">1</span>
+                                    <div>
+                                        <h4 class="text-xs font-medium text-white">Terbuang Dalam Waktu</h4>
+                                        <p class="text-[10px] text-gray-400">Barasuara</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs font-code text-gray-500">04:41</span>
+                            </div>
+
+                            <div class="flex items-center justify-between p-2.5 rounded-xl hover:bg-white/5 transition-colors cursor-pointer playlist-item" data-title="Raindance (Feat. Tams)" data-artist="Dewa, Tams">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-xs text-gray-500 font-code w-4">2</span>
+                                    <div>
+                                        <h4 class="text-xs font-medium text-white">Raindance (Feat. Tams)</h4>
+                                        <p class="text-[10px] text-gray-400">Dewa, Tams</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs font-code text-gray-500">03:39</span>
+                            </div>
+
+                            <div class="flex items-center justify-between p-2.5 rounded-xl hover:bg-white/5 transition-colors cursor-pointer playlist-item" data-title="Capaian" data-artist="Tenaria Anggayana">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-xs text-gray-500 font-code w-4">3</span>
+                                    <div>
+                                        <h4 class="text-xs font-medium text-white">Capaian</h4>
+                                        <p class="text-[10px] text-gray-400">Tenaria Anggayana</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs font-code text-gray-500">03:12</span>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
+
             </div>
         </section>
 
@@ -535,7 +617,7 @@
                 <div class="flex flex-wrap items-center justify-center gap-3 mb-12" data-aos="fade-up">
                     <template x-for="cat in ['all', 'Web', 'App', 'UI/UX']">
                         <button @click="projectFilter = cat" 
-                            class="px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all"
+                            class="px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all cursor-pointer"
                             :class="projectFilter === cat ? 'bg-neonBlue text-darkBg shadow-lg shadow-neonBlue/30 font-bold' : 'glass-card text-gray-300 hover:text-neonBlue'"
                             x-text="cat.toUpperCase()">
                         </button>
@@ -625,7 +707,6 @@
             </div>
         </section>
 
-
         <!-- 7. PUBLIC COMMENTS SECTION -->
         <section id="comments" class="py-24 px-6 relative">
             <div class="max-w-7xl mx-auto">
@@ -651,7 +732,7 @@
                                     <span class="inline-block w-1.5 h-1.5 rounded-full bg-lime-300 mr-1.5 animate-pulse"></span>
                                     CLOUD REALTIME
                                 </span>
-                                <button type="button" class="w-10 h-10 rounded-xl border border-white/10 bg-white/5 text-amber-400/80"
+                                <button type="button" class="w-10 h-10 rounded-xl border border-white/10 bg-white/5 text-amber-400/80 cursor-pointer"
                                         title="Komentar publik dilindungi">
                                     <i data-lucide="lock" class="w-4 h-4 mx-auto"></i>
                                 </button>
@@ -668,7 +749,7 @@
                                 class="public-comment-input w-full rounded-xl px-5 py-4 text-sm resize-y"></textarea>
 
                             <button id="publicCommentSubmit" type="button"
-                                class="w-full rounded-xl bg-white text-zinc-900 hover:bg-zinc-200 py-4 text-sm font-bold transition-all">
+                                class="w-full rounded-xl bg-white text-zinc-900 hover:bg-zinc-200 py-4 text-sm font-bold transition-all cursor-pointer">
                                 Post Comment ↗
                             </button>
 
@@ -773,7 +854,7 @@
                             </div>
 
                             <button type="submit" :disabled="isSubmitting" 
-                                    class="w-full py-4 rounded-xl bg-gradient-to-r from-neonBlue to-neonPurple text-darkBg font-bold text-sm tracking-wide uppercase hover:opacity-95 transition-all shadow-lg shadow-neonBlue/20 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                                    class="w-full py-4 rounded-xl bg-gradient-to-r from-neonBlue to-neonPurple text-darkBg font-bold text-sm tracking-wide uppercase hover:opacity-95 transition-all shadow-lg shadow-neonBlue/20 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
                                 <span x-show="!isSubmitting">Kirim Pesan</span>
                                 <span x-show="isSubmitting" class="flex items-center gap-2">
                                     <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-darkBg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -816,7 +897,7 @@
                     <span class="w-3 h-3 rounded-full bg-green-500 inline-block"></span>
                     <span class="text-xs text-neonCyan ml-2 font-bold tracking-wider">muhammad-naufal@dev-terminal:~#</span>
                 </div>
-                <button @click="cliOpen = false" class="text-gray-400 hover:text-white text-xs px-2 py-0.5 rounded bg-white/5 border border-white/10">ESC</button>
+                <button @click="cliOpen = false" class="text-gray-400 hover:text-white text-xs px-2 py-0.5 rounded bg-white/5 border border-white/10 cursor-pointer">ESC</button>
             </div>
 
             <!-- CLI Body / Output Screen -->
@@ -843,7 +924,7 @@
                 <span class="text-neonCyan font-bold text-xs sm:text-sm shrink-0">guest:~$</span>
                 <input id="cli-input" type="text" x-model="cliInputText" placeholder="Ketik perintah (cth: help, skills, contact)..." 
                        class="w-full bg-transparent text-white focus:outline-none text-xs sm:text-sm font-code placeholder-gray-600" autocomplete="off">
-                <button type="submit" class="px-3 py-1.5 bg-neonCyan text-darkBg text-xs font-bold rounded hover:opacity-90 shrink-0">Kirim</button>
+                <button type="submit" class="px-3 py-1.5 bg-neonCyan text-darkBg text-xs font-bold rounded hover:opacity-90 shrink-0 cursor-pointer">Kirim</button>
             </form>
         </div>
     </div>
@@ -854,7 +935,7 @@
         <span>>_ Dev CLI</span>
     </button>
 
-    <!-- MODAL / POP-UP CV : hanya bagian ini yang diubah -->
+    <!-- MODAL / POP-UP CV -->
     <div class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm p-3 sm:p-4 overflow-y-auto"
          x-show="cvModalOpen"
          x-cloak
@@ -870,7 +951,7 @@
                             Curriculum Vitae
                         </span>
                         <span class="text-[9px] sm:text-[11px] bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2.5 py-0.5 rounded-full flex items-center gap-1.5 font-medium">
-                            <i class="fa-solid fa-lock text-[8px]"></i> Privacy Protected
+                            Privacy Protected
                         </span>
                     </div>
 
@@ -892,8 +973,7 @@
                             :class="activeTab === 'ringkasan'
                                 ? 'bg-[#121214] text-white font-medium shadow-sm border border-zinc-700/50'
                                 : 'text-zinc-400 hover:text-zinc-200'"
-                            class="text-[10px] sm:text-xs py-2 rounded-lg flex items-center justify-center gap-2 transition">
-                            <i class="fa-solid fa-file-lines text-[9px] sm:text-[11px]"></i>
+                            class="text-[10px] sm:text-xs py-2 rounded-lg flex items-center justify-center gap-2 transition cursor-pointer">
                             Ringkasan Profil
                         </button>
 
@@ -901,8 +981,7 @@
                             :class="activeTab === 'minta'
                                 ? 'bg-[#121214] text-white font-medium shadow-sm border border-zinc-700/50'
                                 : 'text-zinc-400 hover:text-zinc-200'"
-                            class="text-[10px] sm:text-xs py-2 rounded-lg flex items-center justify-center gap-2 transition">
-                            <i class="fa-solid fa-lock text-[8px] sm:text-[10px] text-amber-400"></i>
+                            class="text-[10px] sm:text-xs py-2 rounded-lg flex items-center justify-center gap-2 transition cursor-pointer">
                             Minta Dokumen Lengkap
                         </button>
                     </div>
@@ -937,7 +1016,6 @@
 
                             <div class="bg-[#18181b] border border-zinc-800/80 rounded-2xl p-5 sm:p-6 space-y-4">
                                 <h4 class="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-zinc-200 flex items-center gap-2">
-                                    <i class="fa-solid fa-graduation-cap text-indigo-400"></i>
                                     Pendidikan
                                 </h4>
 
@@ -950,7 +1028,6 @@
 
                             <div class="bg-[#18181b] border border-zinc-800/80 rounded-2xl p-5 sm:p-6 space-y-4">
                                 <h4 class="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-zinc-200 flex items-center gap-2">
-                                    <i class="fa-solid fa-bolt text-amber-400"></i>
                                     Keahlian Teknis
                                 </h4>
 
@@ -961,114 +1038,47 @@
                                     <span class="text-[9px] sm:text-[11px] bg-zinc-800/70 text-zinc-300 border border-zinc-700/60 px-2 sm:px-3 py-1 rounded-md">PHP</span>
                                     <span class="text-[9px] sm:text-[11px] bg-zinc-800/70 text-zinc-300 border border-zinc-700/60 px-2 sm:px-3 py-1 rounded-md">Tailwind CSS</span>
                                     <span class="text-[9px] sm:text-[11px] bg-zinc-800/70 text-zinc-300 border border-zinc-700/60 px-2 sm:px-3 py-1 rounded-md">MySQL</span>
-                                    <span class="text-[9px] sm:text-[11px] bg-zinc-800/70 text-zinc-300 border border-zinc-700/60 px-2 sm:px-3 py-1 rounded-md">Git & GitHub</span>
                                 </div>
                             </div>
 
-                        </div>
-
-                        <div class="bg-[#18181b] border border-zinc-800/80 rounded-2xl p-5 sm:p-6 space-y-4">
-                            <h4 class="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-zinc-200 flex items-center gap-2">
-                                <i class="fa-solid fa-rocket text-rose-400"></i>
-                                Proyek Pilihan
-                            </h4>
-
-                            <div class="space-y-3 text-[10px] sm:text-xs">
-                                <div class="border-b border-zinc-800/60 pb-3">
-                                    <div class="font-bold text-white">Website Portfolio Pribadi</div>
-                                    <p class="text-zinc-400 mt-1 leading-relaxed">
-                                        Membangun portfolio interaktif menggunakan Tailwind CSS untuk menampilkan profil, keahlian, dan riwayat proyek.
-                                    </p>
-                                </div>
-
-                                <div>
-                                    <div class="font-bold text-white">Sistem Informasi Akademik / Tugas RPL</div>
-                                    <p class="text-zinc-400 mt-1 leading-relaxed">
-                                        Pengembangan aplikasi berbasis web fungsional menggunakan PHP dan database MySQL.
-                                    </p>
-                                </div>
-                            </div>
                         </div>
 
                     </div>
 
                     <!-- Minta Dokumen -->
                     <div x-show="activeTab === 'minta'" class="space-y-5" x-cloak>
-
                         <div class="bg-[#18181b] border border-zinc-800/80 rounded-2xl p-5 sm:p-6 text-center space-y-3">
-                            <div class="w-10 h-10 bg-amber-500/10 text-amber-400 rounded-full flex items-center justify-center mx-auto border border-amber-500/20">
-                                <i class="fa-solid fa-lock text-sm"></i>
-                            </div>
-
-                            <h3 class="text-sm sm:text-base font-bold text-white">
-                                Minta File CV Resmi (Full PDF / HD)
-                            </h3>
-
+                            <h3 class="text-sm sm:text-base font-bold text-white">Minta File CV Resmi (Full PDF / HD)</h3>
                             <p class="text-[10px] sm:text-xs text-zinc-400 max-w-md mx-auto leading-relaxed">
-                                Untuk mencegah penyalahgunaan data pribadi (nomor telepon & alamat), file CV lengkap akan dikirimkan langsung ke email resmi instansi/perusahaan Anda.
+                                Untuk mencegah penyalahgunaan data pribadi, file CV lengkap akan dikirimkan langsung ke email resmi perusahaan Anda.
                             </p>
                         </div>
-
                         <div class="bg-[#18181b] border border-zinc-800/80 rounded-2xl p-5 sm:p-6 space-y-4">
                             <div>
-                                <label class="block text-[10px] sm:text-[11px] font-semibold text-zinc-400 uppercase tracking-wider mb-2">
-                                    Nama Anda / Recruiter
-                                </label>
-                                <input type="text"
-                                    placeholder="cth. Nama Anda (HRD PT ABC)"
-                                    class="w-full bg-[#121214] border border-zinc-800 rounded-xl px-4 py-3 text-[10px] sm:text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-zinc-600 transition">
+                                <label class="block text-[10px] sm:text-[11px] font-semibold text-zinc-400 uppercase tracking-wider mb-2">Nama Anda / Recruiter</label>
+                                <input type="text" placeholder="cth. Nama Anda (HRD PT ABC)" class="w-full bg-[#121214] border border-zinc-800 rounded-xl px-4 py-3 text-[10px] sm:text-xs text-white placeholder-zinc-600 focus:outline-none">
                             </div>
-
                             <div>
-                                <label class="block text-[10px] sm:text-[11px] font-semibold text-zinc-400 uppercase tracking-wider mb-2">
-                                    Email Perusahaan / Penerima
-                                </label>
-                                <input type="email"
-                                    placeholder="cth. hrd@perusahaan.com"
-                                    class="w-full bg-[#121214] border border-zinc-800 rounded-xl px-4 py-3 text-[10px] sm:text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-zinc-600 transition">
+                                <label class="block text-[10px] sm:text-[11px] font-semibold text-zinc-400 uppercase tracking-wider mb-2">Email Perusahaan</label>
+                                <input type="email" placeholder="cth. hrd@perusahaan.com" class="w-full bg-[#121214] border border-zinc-800 rounded-xl px-4 py-3 text-[10px] sm:text-xs text-white placeholder-zinc-600 focus:outline-none">
                             </div>
-
-                            <div>
-                                <label class="block text-[10px] sm:text-[11px] font-semibold text-zinc-400 uppercase tracking-wider mb-2">
-                                    Tujuan / Posisi
-                                </label>
-                                <input type="text"
-                                    placeholder="cth. Rekrutmen Junior Web Developer"
-                                    class="w-full bg-[#121214] border border-zinc-800 rounded-xl px-4 py-3 text-[10px] sm:text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-zinc-600 transition">
-                            </div>
-
-                            <button type="button"
-                                class="w-full bg-white hover:bg-zinc-200 text-black text-[10px] sm:text-xs px-5 py-3 rounded-xl font-semibold transition flex items-center justify-center gap-2">
-                                <i class="fa-regular fa-envelope"></i>
+                            <button type="button" class="w-full bg-white hover:bg-zinc-200 text-black text-[10px] sm:text-xs px-5 py-3 rounded-xl font-semibold transition cursor-pointer">
                                 Buat Permintaan Email
                             </button>
                         </div>
-
                     </div>
                 </div>
 
                 <!-- Footer -->
                 <div class="px-5 sm:px-8 py-3.5 sm:py-4 bg-[#121214] border-t border-zinc-800/60 flex flex-wrap justify-between items-center gap-3 shrink-0">
-
                     <button @click="activeTab = activeTab === 'ringkasan' ? 'minta' : 'ringkasan'"
-                        class="bg-[#18181b] hover:bg-zinc-800 border border-zinc-700/80 text-white text-[10px] sm:text-xs px-4 sm:px-5 py-2.5 rounded-xl font-medium transition flex items-center gap-2">
-                        <span x-text="activeTab === 'ringkasan' ? 'Minta File CV Lengkap' : 'Kembali ke Ringkasan'"></span>
-                        <i :class="activeTab === 'ringkasan' ? 'fa-solid fa-arrow-right text-[9px]' : 'fa-solid fa-arrow-left text-[9px]'"></i>
+                        class="bg-[#18181b] hover:bg-zinc-800 border border-zinc-700/80 text-white text-[10px] sm:text-xs px-4 sm:px-5 py-2.5 rounded-xl font-medium transition cursor-pointer"
+                        x-text="activeTab === 'ringkasan' ? 'Minta File CV Lengkap' : 'Kembali ke Ringkasan'">
                     </button>
-
-                    <a :href="`mailto:${data.email}?subject=Ketertarikan%20terhadap%20CV`"
-                        class="bg-white hover:bg-zinc-200 text-black text-[10px] sm:text-xs px-4 sm:px-5 py-2.5 rounded-xl font-medium transition flex items-center gap-2 shadow-lg">
-                        Kirim Email Langsung
-                        <i class="fa-regular fa-envelope"></i>
-                    </a>
+                    <button @click="cvModalOpen = false" class="bg-white hover:bg-zinc-200 text-black text-[10px] sm:text-xs px-4 sm:px-5 py-2.5 rounded-xl font-medium transition cursor-pointer">
+                        Tutup
+                    </button>
                 </div>
-
-                <!-- Close -->
-                <button @click="cvModalOpen = false"
-                    class="absolute top-3 right-3 sm:top-4 sm:right-4 text-zinc-400 hover:text-white transition p-2 z-10"
-                    aria-label="Tutup CV">
-                    <i class="fa-solid fa-xmark text-base sm:text-lg"></i>
-                </button>
 
             </div>
         </div>
@@ -1090,8 +1100,6 @@
     <script>
         function portfolioApp() {
             return {
-                isLoading: true,
-                progress: 0,
                 mobileMenuOpen: false,
                 projectFilter: 'all',
                 modalOpen: false,
@@ -1099,7 +1107,6 @@
 
                 // State Modal CV
                 cvModalOpen: false,
-                cvTab: 'ringkasan',
 
                 // State Dev CLI Terminal
                 cliOpen: false,
@@ -1161,26 +1168,12 @@
                         { year: "2025", title: "Masuk SMK Jurusan RPL", desc: "Memulai perjalanan di dunia IT, mempelajari dasar-dasar algoritma, logika pemrograman, dan struktur komputer." },
                         { year: "2025", title: "Mulai Belajar Web Development", desc: "Menguasai dasar HTML, CSS, dan JavaScript secara otodidak maupun dari materi sekolah, serta membuat website statis pertama." },
                         { year: "2026", title: "Membuat Project Pertama", desc: "Berhasil merancang Sistem Informasi Sekolah sederhana menggunakan PHP native dan database MySQL." },
-                        { year: "2027", title: "Harapan Mengikuti PKL Nanti / Kegiatan IT", desc: "Terlibat langsung dalam lingkungan kerja profesional, memperdalam framework Laravel dan kolaborasi tim via Git." },
-                        { year: "2027", title: "Ingin Mengembangkan Portfolio Professional", desc: "Terus mengeksplorasi teknologi modern untuk membangun portofolio digital yang siap menghadapi industri." }
+                        { year: "2027", title: "Harapan Mengikuti PKL Nanti / Kegiatan IT", desc: "Terlibat langsung dalam lingkungan kerja profesional, memperdalam framework Laravel dan kolaborasi tim via Git." }
                     ],
 
                     certificates: [
                         { title: "Sertifikat Kompetensi Keahlian RPL", issuer: "LSP SMK Negeri 3 Sekayu", date: "2025", image: "foto2.jpeg" },
                     ]
-                },
-
-                init() {
-                    let interval = setInterval(() => {
-                        if (this.progress < 100) {
-                            this.progress += 2;
-                        } else {
-                            clearInterval(interval);
-                            setTimeout(() => {
-                                this.isLoading = false;
-                            }, 300);
-                        }
-                    }, 30);
                 },
 
                 // Fungsi Logika Perintah Dev CLI
@@ -1229,7 +1222,6 @@
                     this.cliHistory.push({ command: this.cliInputText, output: output });
                     this.cliInputText = '';
 
-                    // Auto scroll ke bawah terminal
                     setTimeout(() => {
                         const screen = document.getElementById('cli-screen');
                         if (screen) screen.scrollTop = screen.scrollHeight;
@@ -1292,293 +1284,297 @@
             AOS.init({ duration: 1000, once: true });
             lucide.createIcons();
 
+            // Intro Animation Logic
+            const overlay = document.getElementById("intro-overlay");
+            const progressBar = document.getElementById("intro-progress");
+            const percentageText = document.getElementById("intro-percentage");
+
+            let progress = 0;
+            const introInterval = setInterval(() => {
+                progress += Math.floor(Math.random() * 8) + 3;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(introInterval);
+                    setTimeout(() => {
+                        overlay.classList.add("intro-hidden");
+                    }, 400);
+                }
+                progressBar.style.width = progress + "%";
+                percentageText.textContent = progress + "%";
+            }, 40);
+
+            // Daily Rotation Play/Pause and Selection Interactivity
+            const playPauseBtn = document.getElementById("play-pause-btn");
+            let isPlaying = false;
+
+            if (playPauseBtn) {
+                playPauseBtn.addEventListener("click", () => {
+                    isPlaying = !isPlaying;
+                    if (isPlaying) {
+                        playPauseBtn.innerHTML = '<i data-lucide="pause" class="w-5 h-5 fill-black"></i>';
+                    } else {
+                        playPauseBtn.innerHTML = '<i data-lucide="play" class="w-5 h-5 fill-black ml-0.5"></i>';
+                    }
+                    lucide.createIcons();
+                });
+            }
+
+            const playlistItems = document.querySelectorAll(".playlist-item");
+            const currentTitle = document.getElementById("current-song-title");
+            const currentArtist = document.getElementById("current-song-artist");
+
+            playlistItems.forEach(item => {
+                item.addEventListener("click", () => {
+                    const title = item.getAttribute("data-title");
+                    const artist = item.getAttribute("data-artist");
+                    if (currentTitle) currentTitle.textContent = title;
+                    if (currentArtist) currentArtist.textContent = artist;
+                    isPlaying = true;
+                    if (playPauseBtn) playPauseBtn.innerHTML = '<i data-lucide="pause" class="w-5 h-5 fill-black"></i>';
+                    lucide.createIcons();
+                });
+            });
+
+            // Custom Cursor Movement
             const cursorDot = document.querySelector('.cursor-dot');
             const cursorOutline = document.querySelector('.cursor-outline');
             
             window.addEventListener('mousemove', (e) => {
                 const posX = e.clientX;
                 const posY = e.clientY;
-                cursorDot.style.transform = `translate(${posX}px, ${posY}px)`;
-                cursorOutline.style.transform = `translate(${posX}px, ${posY}px)`;
+                if(cursorDot) cursorDot.style.transform = `translate(${posX}px, ${posY}px)`;
+                if(cursorOutline) cursorOutline.style.transform = `translate(${posX}px, ${posY}px)`;
             });
 
             document.querySelectorAll('a, button, input, textarea').forEach(el => {
                 el.addEventListener('mouseenter', () => {
-                    cursorOutline.style.transform += ' scale(1.5)';
-                    cursorOutline.style.backgroundColor = 'rgba(0, 240, 255, 0.1)';
+                    if(cursorOutline) {
+                        cursorOutline.style.transform += ' scale(1.5)';
+                        cursorOutline.style.backgroundColor = 'rgba(0, 240, 255, 0.1)';
+                    }
                 });
                 el.addEventListener('mouseleave', () => {
-                    cursorOutline.style.transform = cursorOutline.style.transform.replace(' scale(1.5)', '');
-                    cursorOutline.style.backgroundColor = 'transparent';
+                    if(cursorOutline) {
+                        cursorOutline.style.transform = cursorOutline.style.transform.replace(' scale(1.5)', '');
+                        cursorOutline.style.backgroundColor = 'transparent';
+                    }
                 });
             });
         });
     </script>
 
-<script>
-/*
- * PUBLIC COMMENTS
- * - Set SUPABASE_URL and SUPABASE_ANON_KEY below to make comments public/realtime.
- * - Until configured, the component safely falls back to this browser's localStorage.
- */
-const PUBLIC_COMMENTS_CONFIG = {
-    SUPABASE_URL: "https://uttfikbminsfhtcybdky.supabase.co",
-    SUPABASE_ANON_KEY: "sb_publishable__bAqBLmknggI0RQDow0org_Z1A6rMx2",
-    TABLE: "public_comments"
-};
-
-let publicComments = [];
-let commentsSupabase = null;
-
-function commentInitials(name) {
-    return (name || "?").trim().split(/\s+/).slice(0,2).map(x => x[0]).join("").toUpperCase();
-}
-
-function commentTime(value) {
-    const d = new Date(value);
-    if (Number.isNaN(d.getTime())) return "";
-    return d.toLocaleDateString("id-ID", {
-        day: "2-digit", month: "short", year: "2-digit"
-    }) + " " + d.toLocaleTimeString("id-ID", {
-        hour: "2-digit", minute: "2-digit"
-    });
-}
-
-function commentEscape(value) {
-    return String(value ?? "").replace(/[&<>"']/g, c => ({
-        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-    }[c]));
-}
-
-function showCommentNotice(message, ok=false) {
-    const box=document.getElementById("publicCommentNotice");
-    if (!box) return;
-    box.textContent=message;
-    box.className = "rounded-lg px-4 py-2.5 text-xs " +
-        (ok ? "bg-emerald-500/10 border border-emerald-500/20 text-emerald-300"
-            : "bg-rose-500/10 border border-rose-500/20 text-rose-300");
-    box.classList.remove("hidden");
-}
-
-function setCloudStatus(connected) {
-    const el=document.getElementById("commentsCloudStatus");
-    if (!el) return;
-    el.innerHTML = connected
-        ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-lime-300 mr-1.5 animate-pulse"></span>CLOUD REALTIME'
-        : '<span class="inline-block w-1.5 h-1.5 rounded-full bg-zinc-500 mr-1.5"></span>LOCAL PREVIEW';
-    el.className = connected
-        ? "text-[9px] uppercase tracking-wider font-bold text-lime-300"
-        : "text-[9px] uppercase tracking-wider font-bold text-zinc-500";
-}
-
-function renderPublicComments() {
-    const list=document.getElementById("publicCommentsList");
-    if (!list) return;
-
-    if (!publicComments.length) {
-        list.innerHTML='<div class="text-center text-xs text-zinc-500 py-10">Belum ada komentar. Jadilah yang pertama.</div>';
-        return;
-    }
-
-    list.innerHTML = publicComments.map(c => `
-        <article class="comment-card ${c.pinned ? "pinned" : ""}">
-            <div class="flex items-start gap-3.5">
-                <div class="comment-avatar">${commentEscape(commentInitials(c.name))}</div>
-                <div class="min-w-0 flex-1">
-                    <div class="flex flex-wrap items-center gap-2">
-                        <span class="text-sm font-bold text-zinc-100">${commentEscape(c.name)}</span>
-                        ${c.owner ? '<span class="comment-badge">OWNER</span>' : ""}
-                        ${c.pinned ? '<span class="comment-pin">PINNED 📌</span>' : ""}
-                    </div>
-                    <p class="text-xs text-zinc-400 mt-2 leading-relaxed whitespace-pre-wrap">${commentEscape(c.message)}</p>
-                </div>
-                <div class="text-[8px] text-zinc-600 shrink-0 text-right">
-                    ${c.pinned ? 'Pinned 📌' : commentTime(c.created_at)}
-                </div>
-            </div>
-        </article>
-    `).join("");
-}
-
-function loadLocalComments() {
-    try {
-        publicComments=JSON.parse(localStorage.getItem("publicComments") || "[]");
-        if (!Array.isArray(publicComments)) publicComments=[];
-    } catch { publicComments=[]; }
-    publicComments.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
-    renderPublicComments();
-    setCloudStatus(false);
-}
-
-function saveLocalComments() {
-    localStorage.setItem("publicComments", JSON.stringify(publicComments));
-}
-
-function basicModeration(name, message) {
-    const banned = ["pornografi", "judi online", "penipuan"];
-    const value=(name+" "+message).toLowerCase();
-    return !banned.some(word=>value.includes(word));
-}
-
-async function initPublicComments() {
-    const hasCloud = PUBLIC_COMMENTS_CONFIG.SUPABASE_URL &&
-                     PUBLIC_COMMENTS_CONFIG.SUPABASE_ANON_KEY;
-
-    if (!hasCloud) {
-        loadLocalComments();
-        return;
-    }
-
-    try {
-        if (!window.supabase) throw new Error("Supabase belum termuat");
-        commentsSupabase=window.supabase.createClient(
-            PUBLIC_COMMENTS_CONFIG.SUPABASE_URL,
-            PUBLIC_COMMENTS_CONFIG.SUPABASE_ANON_KEY
-        );
-
-        const {data,error}=await commentsSupabase
-            .from(PUBLIC_COMMENTS_CONFIG.TABLE)
-            .select("*")
-            .eq("approved", true)
-            .order("pinned",{ascending:false})
-            .order("created_at",{ascending:false});
-
-        if (error) throw error;
-
-        publicComments=data || [];
-        renderPublicComments();
-        setCloudStatus(true);
-
-        commentsSupabase
-            .channel("public-comments-realtime")
-            .on(
-                "postgres_changes",
-                {
-                    event: "*",
-                    schema: "public",
-                    table: PUBLIC_COMMENTS_CONFIG.TABLE
-                },
-                async (payload) => {
-                    // INSERT/UPDATE/DELETE dikirim realtime oleh Supabase.
-                    if (payload.eventType === "INSERT" && payload.new?.approved) {
-                        publicComments = [payload.new, ...publicComments.filter(c => c.id !== payload.new.id)];
-                    } else if (payload.eventType === "UPDATE") {
-                        if (payload.new?.approved) {
-                            publicComments = [
-                                payload.new,
-                                ...publicComments.filter(c => c.id !== payload.new.id)
-                            ];
-                        } else {
-                            publicComments = publicComments.filter(c => c.id !== payload.new?.id);
-                        }
-                    } else if (payload.eventType === "DELETE") {
-                        publicComments = publicComments.filter(c => c.id !== payload.old?.id);
-                    }
-
-                    publicComments.sort((a, b) => {
-                        if (Boolean(b.pinned) !== Boolean(a.pinned)) {
-                            return Number(Boolean(b.pinned)) - Number(Boolean(a.pinned));
-                        }
-                        return new Date(b.created_at) - new Date(a.created_at);
-                    });
-                    renderPublicComments();
-                }
-            )
-            .subscribe((status) => {
-                if (status === "SUBSCRIBED") setCloudStatus(true);
-            });
-    } catch (err) {
-        console.warn("Public comments cloud error:", err);
-        loadLocalComments();
-        showCommentNotice("Supabase belum tersambung. Periksa URL dan Publishable/anon key.", false);
-    }
-}
-
-async function postPublicComment() {
-    const nameEl=document.getElementById("publicCommentName");
-    const textEl=document.getElementById("publicCommentText");
-    const btn=document.getElementById("publicCommentSubmit");
-
-    const name=nameEl.value.trim();
-    const message=textEl.value.trim();
-
-    if (name.length < 2) {
-        showCommentNotice("Nama minimal 2 karakter.");
-        return;
-    }
-    if (message.length < 3) {
-        showCommentNotice("Komentar terlalu pendek.");
-        return;
-    }
-    if (!basicModeration(name,message)) {
-        showCommentNotice("Komentar ditolak oleh filter moderasi otomatis.");
-        return;
-    }
-
-    btn.disabled=true;
-    btn.textContent="Posting...";
-
-    const item={
-        name,
-        message,
-        created_at:new Date().toISOString(),
-        approved:true,
-        owner:false,
-        pinned:false
+    <!-- Public Comments Script -->
+    <script>
+    const PUBLIC_COMMENTS_CONFIG = {
+        SUPABASE_URL: "https://uttfikbminsfhtcybdky.supabase.co",
+        SUPABASE_ANON_KEY: "sb_publishable__bAqBLmknggI0RQDow0org_Z1A6rMx2",
+        TABLE: "public_comments"
     };
 
-    try {
-        if (commentsSupabase) {
-            const {data,error}=await commentsSupabase
-                .from(PUBLIC_COMMENTS_CONFIG.TABLE)
-                .insert([{
-                    name:item.name,
-                    message:item.message,
-                    approved:true,
-                    owner:false,
-                    pinned:false
-                }])
-                .select()
-                .single();
+    let publicComments = [];
+    let commentsSupabase = null;
 
-            if (error) throw error;
-            publicComments.unshift(data);
-            renderPublicComments();
-        } else {
-            publicComments.unshift(item);
-            publicComments.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
-            saveLocalComments();
-            renderPublicComments();
+    function commentInitials(name) {
+        return (name || "?").trim().split(/\s+/).slice(0,2).map(x => x[0]).join("").toUpperCase();
+    }
+
+    function commentTime(value) {
+        const d = new Date(value);
+        if (Number.isNaN(d.getTime())) return "";
+        return d.toLocaleDateString("id-ID", {
+            day: "2-digit", month: "short", year: "2-digit"
+        }) + " " + d.toLocaleTimeString("id-ID", {
+            hour: "2-digit", minute: "2-digit"
+        });
+    }
+
+    function commentEscape(value) {
+        return String(value ?? "").replace(/[&<>"']/g, c => ({
+            "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+        }[c]));
+    }
+
+    function showCommentNotice(message, ok=false) {
+        const box=document.getElementById("publicCommentNotice");
+        if (!box) return;
+        box.textContent=message;
+        box.className = "rounded-lg px-4 py-2.5 text-xs " +
+            (ok ? "bg-emerald-500/10 border border-emerald-500/20 text-emerald-300"
+                : "bg-rose-500/10 border border-rose-500/20 text-rose-300");
+        box.classList.remove("hidden");
+    }
+
+    function setCloudStatus(connected) {
+        const el=document.getElementById("commentsCloudStatus");
+        if (!el) return;
+        el.innerHTML = connected
+            ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-lime-300 mr-1.5 animate-pulse"></span>CLOUD REALTIME'
+            : '<span class="inline-block w-1.5 h-1.5 rounded-full bg-zinc-500 mr-1.5"></span>LOCAL PREVIEW';
+    }
+
+    function renderPublicComments() {
+        const list=document.getElementById("publicCommentsList");
+        if (!list) return;
+
+        if (!publicComments.length) {
+            list.innerHTML='<div class="text-center text-xs text-zinc-500 py-10">Belum ada komentar. Jadilah yang pertama.</div>';
+            return;
         }
 
-        nameEl.value="";
-        textEl.value="";
-        showCommentNotice(
-            commentsSupabase
-                ? "Komentar berhasil diposting ke Cloud Database."
-                : "Komentar berhasil ditambahkan di preview lokal. Hubungkan Supabase agar terlihat publik.",
-            true
-        );
-    } catch (err) {
-        console.error(err);
-        showCommentNotice("Komentar gagal diposting. Periksa URL/key Supabase dan aturan RLS tabel public_comments.");
-    } finally {
-        btn.disabled=false;
-        btn.textContent="Post Comment ↗";
+        list.innerHTML = publicComments.map(c => `
+            <article class="comment-card ${c.pinned ? "pinned" : ""}">
+                <div class="flex items-start gap-3.5">
+                    <div class="comment-avatar">${commentEscape(commentInitials(c.name))}</div>
+                    <div class="min-w-0 flex-1">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="text-sm font-bold text-zinc-100">${commentEscape(c.name)}</span>
+                            ${c.owner ? '<span class="comment-badge">OWNER</span>' : ""}
+                            ${c.pinned ? '<span class="comment-pin">PINNED 📌</span>' : ""}
+                        </div>
+                        <p class="text-xs text-zinc-400 mt-2 leading-relaxed whitespace-pre-wrap">${commentEscape(c.message)}</p>
+                    </div>
+                    <div class="text-[8px] text-zinc-600 shrink-0 text-right">
+                        ${c.pinned ? 'Pinned 📌' : commentTime(c.created_at)}
+                    </div>
+                </div>
+            </article>
+        `).join("");
     }
-}
 
-document.addEventListener("DOMContentLoaded", () => {
-    const btn=document.getElementById("publicCommentSubmit");
-    if (btn) btn.addEventListener("click", postPublicComment);
+    function loadLocalComments() {
+        try {
+            publicComments=JSON.parse(localStorage.getItem("publicComments") || "[]");
+            if (!Array.isArray(publicComments)) publicComments=[];
+        } catch { publicComments=[]; }
+        publicComments.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+        renderPublicComments();
+        setCloudStatus(false);
+    }
 
-    const script=document.createElement("script");
-    script.src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
-    script.onload=initPublicComments;
-    script.onerror=()=>loadLocalComments();
-    document.head.appendChild(script);
-});
-</script>
+    function saveLocalComments() {
+        localStorage.setItem("publicComments", JSON.stringify(publicComments));
+    }
+
+    function basicModeration(name, message) {
+        const banned = ["pornografi", "judi online", "penipuan"];
+        const value=(name+" "+message).toLowerCase();
+        return !banned.some(word=>value.includes(word));
+    }
+
+    async function initPublicComments() {
+        const hasCloud = PUBLIC_COMMENTS_CONFIG.SUPABASE_URL &&
+                         PUBLIC_COMMENTS_CONFIG.SUPABASE_ANON_KEY;
+
+        if (!hasCloud) {
+            loadLocalComments();
+            return;
+        }
+
+        try {
+            if (!window.supabase) throw new Error("Supabase belum termuat");
+            commentsSupabase=window.supabase.createClient(
+                PUBLIC_COMMENTS_CONFIG.SUPABASE_URL,
+                PUBLIC_COMMENTS_CONFIG.SUPABASE_ANON_KEY
+            );
+
+            const {data,error}=await commentsSupabase
+                .from(PUBLIC_COMMENTS_CONFIG.TABLE)
+                .select("*")
+                .eq("approved", true)
+                .order("pinned",{ascending:false})
+                .order("created_at",{ascending:false});
+
+            if (error) throw error;
+
+            publicComments=data || [];
+            renderPublicComments();
+            setCloudStatus(true);
+        } catch (err) {
+            console.warn("Public comments cloud error:", err);
+            loadLocalComments();
+        }
+    }
+
+    async function postPublicComment() {
+        const nameEl=document.getElementById("publicCommentName");
+        const textEl=document.getElementById("publicCommentText");
+        const btn=document.getElementById("publicCommentSubmit");
+
+        const name=nameEl.value.trim();
+        const message=textEl.value.trim();
+
+        if (name.length < 2) {
+            showCommentNotice("Nama minimal 2 karakter.");
+            return;
+        }
+        if (message.length < 3) {
+            showCommentNotice("Komentar terlalu pendek.");
+            return;
+        }
+        if (!basicModeration(name,message)) {
+            showCommentNotice("Komentar ditolak oleh filter moderasi otomatis.");
+            return;
+        }
+
+        btn.disabled=true;
+        btn.textContent="Posting...";
+
+        const item={
+            name,
+            message,
+            created_at:new Date().toISOString(),
+            approved:true,
+            owner:false,
+            pinned:false
+        };
+
+        try {
+            if (commentsSupabase) {
+                const {data,error}=await commentsSupabase
+                    .from(PUBLIC_COMMENTS_CONFIG.TABLE)
+                    .insert([{
+                        name:item.name,
+                        message:item.message,
+                        approved:true,
+                        owner:false,
+                        pinned:false
+                    }])
+                    .select()
+                    .single();
+
+                if (error) throw error;
+                publicComments.unshift(data);
+                renderPublicComments();
+            } else {
+                publicComments.unshift(item);
+                publicComments.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+                saveLocalComments();
+                renderPublicComments();
+            }
+
+            nameEl.value="";
+            textEl.value="";
+            showCommentNotice("Komentar berhasil diposting.", true);
+        } catch (err) {
+            console.error(err);
+            showCommentNotice("Komentar gagal diposting.");
+        } finally {
+            btn.disabled=false;
+            btn.textContent="Post Comment ↗";
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const btn=document.getElementById("publicCommentSubmit");
+        if (btn) btn.addEventListener("click", postPublicComment);
+
+        const script=document.createElement("script");
+        script.src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+        script.onload=initPublicComments;
+        script.onerror=()=>loadLocalComments();
+        document.head.appendChild(script);
+    });
+    </script>
 
 </body>
 </html>
