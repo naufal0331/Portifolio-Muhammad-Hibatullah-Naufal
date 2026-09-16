@@ -345,17 +345,56 @@
         .lightning-effect {
             animation: lightningFlash 3s ease-in-out infinite;
         }
+
+        <style>
+        /* Efek Kilatan Petir Menyambar */
+        @keyframes lightningFlash {
+            0%, 100% { opacity: 0.1; filter: brightness(1); }
+            10% { opacity: 0.9; filter: brightness(2); }
+            12% { opacity: 0.2; filter: brightness(1); }
+            30% { opacity: 0.8; filter: brightness(1.8); }
+            33% { opacity: 0.1; filter: brightness(1); }
+            80% { opacity: 0.6; filter: brightness(1.5); }
+            82% { opacity: 0.2; }
+        }
+        .lightning-flash-bg {
+            animation: lightningFlash 2.5s infinite ease-in-out;
+        }
+
+        #intro-overlay {
+            position: fixed;
+            inset: 0;
+            background: #05050A;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        .intro-hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+    </style>
     </style>
 </head>
 <body class="bg-darkBg text-gray-100 relative selection:bg-neonBlue selection:text-darkBg" x-data="portfolioApp()">
 
-   <!-- INTRO ANIMATION SCREEN (DENGAN VIDEO ANIMASI PETIR ASLI) -->
+   <!-- INTRO ANIMATION SCREEN (DENGAN ANIMASI PETIR & GALAKSI CSS) -->
     <div id="intro-overlay">
-        <!-- Video Latar Belakang Petir & Galaksi -->
-        <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-60 pointer-events-none">
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-starry-night-sky-with-a-shooting-star-42643-large.mp4" type="video/mp4">
-        </video>
-        <div class="absolute inset-0 bg-darkBg/50 pointer-events-none"></div>
+        <!-- Efek Background Galaksi & Petir Animasi CSS -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none bg-darkBg">
+            <!-- Partikel Bintang -->
+            <div class="absolute inset-0 bg-grid opacity-40"></div>
+            <!-- Kilatan Petir Utama -->
+            <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-[500px] h-[500px] sm:w-[700px] sm:h-[700px] bg-gradient-to-tr from-blue-600/30 via-cyan-400/40 to-purple-600/20 rounded-full blur-[100px] animate-pulse"></div>
+            </div>
+            <!-- Garis Petir Kilat -->
+            <div class="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cyan-300 via-transparent to-transparent lightning-flash-bg"></div>
+        </div>
 
         <div class="relative z-10 text-center px-6 max-w-xl space-y-6">
             <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight">
