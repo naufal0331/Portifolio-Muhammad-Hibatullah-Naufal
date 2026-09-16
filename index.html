@@ -379,7 +379,11 @@
                 <a href="#comments" class="hover:text-neonBlue transition-colors">Comments</a>
             </nav>
 
-           <div class="hidden lg:flex items-center gap-4">
+           <div class="hidden lg:flex items-center gap-3">
+                <!-- Tombol Trigger Dev CLI di Navbar -->
+                <button @click="cliOpen = !cliOpen" class="px-3 py-2 text-xs font-semibold uppercase tracking-wider rounded-lg glass-card border border-neonCyan/40 text-neonCyan hover:bg-neonCyan/10 transition-all flex items-center gap-1.5 cursor-pointer font-code">
+                    <span>>_</span> Dev CLI
+                </button>
                 <!-- Tombol Download CV Diubah Membuka Modal Pop-up -->
                 <button @click="cvModalOpen = true" class="px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-lg glass-card border border-neonBlue/30 text-neonBlue hover:bg-neonBlue/10 transition-all flex items-center gap-2 cursor-pointer">
                     <i data-lucide="file-text" class="w-4 h-4"></i> Download CV
@@ -403,6 +407,9 @@
             <a href="#certificates" @click="mobileMenuOpen = false" class="block hover:text-neonBlue transition-colors">Certificates</a>
             <a href="#contact" @click="mobileMenuOpen = false" class="block hover:text-neonBlue transition-colors">Contact</a>
             <a href="#comments" @click="mobileMenuOpen = false" class="block hover:text-neonBlue transition-colors">Comments</a>
+            <button @click="cliOpen = true; mobileMenuOpen = false" class="w-full py-2 text-center text-xs font-semibold uppercase tracking-wider rounded-lg glass-card border border-neonCyan/40 text-neonCyan font-code">
+                >_ Buka Dev CLI
+            </button>
             <button @click="cvModalOpen = true; mobileMenuOpen = false" class="w-full py-2 text-center text-xs font-semibold uppercase tracking-wider rounded-lg glass-card border border-neonBlue/30 text-neonBlue">
                 Download CV
             </button>
@@ -432,9 +439,10 @@
                         <a href="#projects" class="px-6 py-3 rounded-xl bg-neonBlue text-darkBg font-bold text-sm tracking-wide hover:bg-neonCyan transition-all shadow-lg shadow-neonBlue/25 flex items-center gap-2">
                             View My Projects <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </a>
-                        <a href="#contact" class="px-6 py-3 rounded-xl glass-card border border-white/10 text-white font-semibold text-sm tracking-wide hover:border-neonBlue transition-all">
-                            Let's Talk
-                        </a>
+                        <!-- Tombol Pintasan ke CLI -->
+                        <button @click="cliOpen = true" class="px-6 py-3 rounded-xl glass-card border border-neonCyan/40 text-neonCyan font-semibold text-sm tracking-wide hover:border-neonCyan transition-all font-code flex items-center gap-2">
+                            <span>>_</span> Open CLI
+                        </button>
                     </div>
                 </div>
 
@@ -795,6 +803,57 @@
         </div>
     </footer>
 
+    <!-- ========================================== -->
+    <!-- FITUR DEV CLI (DEVELOPER TERMINAL MODAL)    -->
+    <!-- ========================================== -->
+    <div x-show="cliOpen" x-cloak class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div @click.outside="cliOpen = false" class="w-full max-w-2xl bg-[#080810] border border-neonCyan/50 rounded-2xl shadow-2xl overflow-hidden flex flex-col font-code" style="box-shadow: 0 0 35px rgba(0,255,204,0.15);">
+            <!-- CLI Titlebar -->
+            <div class="bg-[#12121c] px-4 py-3 border-b border-white/10 flex items-center justify-between select-none">
+                <div class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-red-500 inline-block cursor-pointer" @click="cliOpen = false"></span>
+                    <span class="w-3 h-3 rounded-full bg-yellow-500 inline-block"></span>
+                    <span class="w-3 h-3 rounded-full bg-green-500 inline-block"></span>
+                    <span class="text-xs text-neonCyan ml-2 font-bold tracking-wider">muhammad-naufal@dev-terminal:~#</span>
+                </div>
+                <button @click="cliOpen = false" class="text-gray-400 hover:text-white text-xs px-2 py-0.5 rounded bg-white/5 border border-white/10">ESC</button>
+            </div>
+
+            <!-- CLI Body / Output Screen -->
+            <div id="cli-screen" class="p-4 sm:p-5 h-80 sm:h-96 overflow-y-auto text-xs sm:text-sm text-gray-200 space-y-3 bg-[#05050a]/90">
+                <div class="text-neonCyan space-y-1">
+                    <p>✨ Selamat datang di Dev CLI Portfolio Muhammad Hibatullah Naufal.</p>
+                    <p>Ketik <span class="text-white font-bold bg-white/10 px-1.5 py-0.5 rounded">help</span> untuk melihat daftar perintah yang tersedia.</p>
+                    <p class="text-gray-500">-----------------------------------------------------------</p>
+                </div>
+
+                <template x-for="item in cliHistory">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2 text-neonBlue">
+                            <span>guest@muhammad-naufal:~$</span>
+                            <span class="text-white font-semibold" x-text="item.command"></span>
+                        </div>
+                        <div class="text-gray-300 whitespace-pre-wrap pl-4 border-l border-neonCyan/30" x-html="item.output"></div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- CLI Input Bar -->
+            <form @submit.prevent="runCliCommand" class="bg-[#0e0e18] px-4 py-3 border-t border-white/10 flex items-center gap-3">
+                <span class="text-neonCyan font-bold text-xs sm:text-sm shrink-0">guest:~$</span>
+                <input id="cli-input" type="text" x-model="cliInputText" placeholder="Ketik perintah (cth: help, skills, contact)..." 
+                       class="w-full bg-transparent text-white focus:outline-none text-xs sm:text-sm font-code placeholder-gray-600" autocomplete="off">
+                <button type="submit" class="px-3 py-1.5 bg-neonCyan text-darkBg text-xs font-bold rounded hover:opacity-90 shrink-0">Kirim</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Floating Toggle Button untuk Dev CLI di Pojok Kanan Bawah -->
+    <button @click="cliOpen = true" class="fixed bottom-6 right-6 z-30 px-4 py-3 rounded-full glass-card border border-neonCyan text-neonCyan font-code text-xs font-bold shadow-[0_0_20px_rgba(0,255,204,0.3)] hover:scale-105 transition-all flex items-center gap-2 cursor-pointer">
+        <span class="w-2.5 h-2.5 rounded-full bg-neonCyan animate-ping"></span>
+        <span>>_ Dev CLI</span>
+    </button>
+
     <!-- MODAL / POP-UP CV : hanya bagian ini yang diubah -->
     <div class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm p-3 sm:p-4 overflow-y-auto"
          x-show="cvModalOpen"
@@ -1042,6 +1101,11 @@
                 cvModalOpen: false,
                 cvTab: 'ringkasan',
 
+                // State Dev CLI Terminal
+                cliOpen: false,
+                cliInputText: '',
+                cliHistory: [],
+
                 // State untuk Formulir Kontak
                 formData: {
                     name: '',
@@ -1117,6 +1181,59 @@
                             }, 300);
                         }
                     }, 30);
+                },
+
+                // Fungsi Logika Perintah Dev CLI
+                runCliCommand() {
+                    const cmd = this.cliInputText.trim().toLowerCase();
+                    if (!cmd) return;
+
+                    let output = '';
+                    switch (cmd) {
+                        case 'help':
+                            output = `Perintah yang tersedia:\n` +
+                                     `- <span class="text-neonCyan">about</span>    : Menampilkan informasi singkat profil\n` +
+                                     `- <span class="text-neonCyan">skills</span>   : Daftar keahlian pemrograman\n` +
+                                     `- <span class="text-neonCyan">projects</span> : Daftar proyek portfolio\n` +
+                                     `- <span class="text-neonCyan">contact</span>  : Informasi kontak & email\n` +
+                                     `- <span class="text-neonCyan">whoami</span>   : Mengetahui status sesi Anda\n` +
+                                     `- <span class="text-neonCyan">date</span>     : Menampilkan tanggal sistem\n` +
+                                     `- <span class="text-neonCyan">clear</span>    : Membersihkan layar terminal`;
+                            break;
+                        case 'about':
+                            output = `Nama: ${this.data.name}\nSekolah: ${this.data.school}\nJurusan: ${this.data.major} (${this.data.class})\nLokasi: ${this.data.city}, ${this.data.province}`;
+                            break;
+                        case 'skills':
+                            output = this.data.skills.map(s => `• ${s.name} (${s.level}%)`).join('\n');
+                            break;
+                        case 'projects':
+                            output = this.data.projects.map(p => `• [${p.category}] ${p.title}: ${p.desc}`).join('\n');
+                            break;
+                        case 'contact':
+                            output = `Email: ${this.data.email}\nWhatsApp: ${this.data.whatsapp}\nInstagram: ${this.data.instagram}`;
+                            break;
+                        case 'whoami':
+                            output = `guest-visitor@muhammad-naufal-portfolio (Akses Publik Terverifikasi)`;
+                            break;
+                        case 'date':
+                            output = new Date().toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'medium' });
+                            break;
+                        case 'clear':
+                            this.cliHistory = [];
+                            this.cliInputText = '';
+                            return;
+                        default:
+                            output = `Perintah tidak dikenal: "${cmd}". Ketik <span class="text-yellow-400">help</span> untuk daftar perintah.`;
+                    }
+
+                    this.cliHistory.push({ command: this.cliInputText, output: output });
+                    this.cliInputText = '';
+
+                    // Auto scroll ke bawah terminal
+                    setTimeout(() => {
+                        const screen = document.getElementById('cli-screen');
+                        if (screen) screen.scrollTop = screen.scrollHeight;
+                    }, 50);
                 },
 
                 get filteredProjects() {
