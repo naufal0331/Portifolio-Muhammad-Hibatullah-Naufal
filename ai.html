@@ -1,1 +1,702 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#07080d">
+<meta name="description" content="Naufal.Dev AI — Your Personal AI Assistant">
+<title>Naufal.Dev AI — Your Personal AI Assistant</title>
+<style>
+:root{
+  --bg:#07080d;--bg-soft:#0b0d14;--panel:#0e111a;--panel-2:#111521;--panel-3:#151a27;
+  --border:rgba(255,255,255,.08);--border-strong:rgba(255,255,255,.14);
+  --text:#f7f8fc;--muted:#9299aa;--muted-2:#687083;
+  --blue:#3b82f6;--cyan:#22d3ee;--purple:#8b5cf6;--danger:#f87171;--success:#34d399;
+  --shadow:0 18px 60px rgba(0,0,0,.35);--radius:18px;--sidebar:280px;
+  --transition:220ms cubic-bezier(.2,.8,.2,1);
+}
+[data-theme="light"]{
+  --bg:#f5f7fb;--bg-soft:#eef1f7;--panel:#fff;--panel-2:#f8f9fc;--panel-3:#eef2f8;
+  --border:rgba(15,23,42,.09);--border-strong:rgba(15,23,42,.15);
+  --text:#101522;--muted:#647087;--muted-2:#8993a5;--shadow:0 18px 60px rgba(15,23,42,.1);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:var(--bg);color:var(--text);overflow:hidden;
+}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer;color:inherit}
+a{color:inherit}
+::selection{background:rgba(59,130,246,.28)}
+.app{display:flex;height:100dvh;position:relative;overflow:hidden}
+.ambient{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.ambient:before,.ambient:after{content:"";position:absolute;width:520px;height:520px;border-radius:50%;filter:blur(100px);opacity:.11}
+.ambient:before{background:var(--blue);top:-260px;left:24%}
+.ambient:after{background:var(--purple);bottom:-320px;right:4%}
+.sidebar{
+  width:var(--sidebar);flex:0 0 var(--sidebar);height:100%;background:rgba(9,11,17,.9);
+  border-right:1px solid var(--border);backdrop-filter:blur(20px);display:flex;flex-direction:column;
+  position:relative;z-index:20;transition:width var(--transition),transform var(--transition);
+}
+[data-theme="light"] .sidebar{background:rgba(255,255,255,.9)}
+.sidebar.collapsed{width:76px;flex-basis:76px}
+.brand{display:flex;align-items:center;gap:11px;padding:20px 18px 15px}
+.brand-mark,.ai-avatar{
+  display:grid;place-items:center;border-radius:12px;background:linear-gradient(135deg,var(--blue),var(--purple));
+  box-shadow:0 0 28px rgba(59,130,246,.24);font-weight:900;color:#fff;flex:none
+}
+.brand-mark{width:38px;height:38px;font-size:14px}
+.brand-copy{min-width:0}
+.brand-copy strong{display:block;font-size:15px;letter-spacing:-.02em}
+.brand-copy span{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+.sidebar.collapsed .brand-copy,.sidebar.collapsed .nav-label,.sidebar.collapsed .search-wrap,
+.sidebar.collapsed .history,.sidebar.collapsed .status-copy,.sidebar.collapsed .back-copy{display:none}
+.sidebar.collapsed .brand{justify-content:center;padding-left:10px;padding-right:10px}
+.new-chat{
+  margin:8px 14px 12px;padding:11px 13px;border:1px solid rgba(59,130,246,.25);border-radius:13px;
+  background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(139,92,246,.12));display:flex;align-items:center;gap:9px;
+  font-weight:700;transition:var(--transition)
+}
+.new-chat:hover{transform:translateY(-1px);border-color:rgba(59,130,246,.45);box-shadow:0 8px 25px rgba(59,130,246,.12)}
+.sidebar.collapsed .new-chat{margin:8px 10px 12px;justify-content:center;padding:12px}
+.search-wrap{padding:0 14px 12px;position:relative}
+.search-wrap svg{position:absolute;left:26px;top:11px;color:var(--muted-2)}
+.search-wrap input{
+  width:100%;height:38px;background:var(--panel);border:1px solid var(--border);border-radius:11px;
+  color:var(--text);outline:0;padding:0 12px 0 34px;font-size:12px;transition:var(--transition)
+}
+.search-wrap input:focus{border-color:rgba(59,130,246,.5);box-shadow:0 0 0 3px rgba(59,130,246,.08)}
+.history{padding:0 9px;overflow:auto;flex:1}
+.section-label{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted-2);padding:8px 8px}
+.chat-item{
+  display:flex;align-items:center;gap:8px;width:100%;border:0;background:transparent;border-radius:10px;
+  padding:9px 9px;color:var(--muted);text-align:left;font-size:12px;transition:var(--transition);position:relative
+}
+.chat-item:hover{background:var(--panel-2);color:var(--text)}
+.chat-item.active{background:rgba(59,130,246,.1);color:var(--text)}
+.chat-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.chat-more{opacity:0;border:0;background:transparent;color:var(--muted);padding:2px 3px}
+.chat-item:hover .chat-more{opacity:1}
+.empty-history{color:var(--muted-2);font-size:11px;padding:14px 9px;line-height:1.5}
+.sidebar-nav{padding:10px 9px;border-top:1px solid var(--border)}
+.nav-btn{
+  width:100%;display:flex;align-items:center;gap:11px;border:0;background:transparent;border-radius:10px;
+  padding:10px 10px;color:var(--muted);font-size:12px;text-align:left;transition:var(--transition)
+}
+.nav-btn:hover,.nav-btn.active{background:var(--panel-2);color:var(--text)}
+.sidebar.collapsed .nav-btn{justify-content:center}
+.sidebar-bottom{padding:10px 12px 14px;border-top:1px solid var(--border)}
+.status{display:flex;align-items:center;gap:9px;padding:9px 7px}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--success);box-shadow:0 0 12px var(--success)}
+.status-copy strong{font-size:11px;display:block}.status-copy span{font-size:10px;color:var(--muted)}
+.collapse-btn,.back-btn{
+  width:100%;border:1px solid var(--border);background:var(--panel);border-radius:10px;padding:8px 10px;
+  display:flex;align-items:center;gap:8px;color:var(--muted);font-size:11px;transition:var(--transition)
+}
+.collapse-btn:hover,.back-btn:hover{color:var(--text);border-color:var(--border-strong)}
+.sidebar.collapsed .collapse-btn,.sidebar.collapsed .back-btn{justify-content:center}
+.back-btn{margin-bottom:7px}
 
+.main{flex:1;min-width:0;display:flex;flex-direction:column;position:relative;z-index:1}
+.topbar{
+  height:62px;flex:none;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;
+  padding:0 22px;background:rgba(7,8,13,.55);backdrop-filter:blur(18px)
+}
+[data-theme="light"] .topbar{background:rgba(245,247,251,.7)}
+.top-left{display:flex;align-items:center;gap:10px}
+.mobile-menu{display:none}
+.model-pill{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700}
+.model-dot{width:7px;height:7px;background:var(--success);border-radius:50%;box-shadow:0 0 10px var(--success)}
+.top-actions{display:flex;align-items:center;gap:7px}
+.icon-btn{
+  width:36px;height:36px;border:1px solid var(--border);background:var(--panel);border-radius:10px;
+  display:grid;place-items:center;color:var(--muted);transition:var(--transition)
+}
+.icon-btn:hover{color:var(--text);border-color:var(--border-strong);transform:translateY(-1px)}
+.chat-scroll{flex:1;overflow:auto;scroll-behavior:smooth}
+.chat-shell{max-width:920px;margin:0 auto;padding:52px 24px 170px;min-height:100%}
+.welcome{text-align:center;padding:28px 0 24px}
+.hero-logo{
+  width:64px;height:64px;margin:0 auto 17px;border-radius:20px;display:grid;place-items:center;
+  background:linear-gradient(135deg,#2563eb,#7c3aed 70%,#22d3ee);font-weight:900;font-size:21px;
+  box-shadow:0 0 45px rgba(59,130,246,.25)
+}
+.welcome h1{margin:0;font-size:clamp(29px,5vw,43px);letter-spacing:-.05em}
+.gradient{background:linear-gradient(90deg,var(--text),#a5c8ff 45%,#bda7ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.welcome .tagline{margin:8px 0 0;color:var(--muted);font-size:14px}
+.welcome .desc{max-width:600px;margin:14px auto 0;color:var(--muted);font-size:13px;line-height:1.65}
+.quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:26px auto 10px;max-width:760px}
+.quick{
+  border:1px solid var(--border);background:rgba(14,17,26,.72);border-radius:14px;padding:14px;text-align:left;
+  transition:var(--transition);min-height:76px
+}
+[data-theme="light"] .quick{background:rgba(255,255,255,.75)}
+.quick:hover{transform:translateY(-2px);border-color:rgba(59,130,246,.35);box-shadow:0 12px 28px rgba(0,0,0,.16)}
+.quick b{display:block;font-size:12px;margin-top:9px}.quick span{font-size:10px;color:var(--muted)}
+.quick .emoji{font-size:18px}
+
+.messages{display:flex;flex-direction:column;gap:18px;margin-top:25px}
+.message{display:flex;gap:11px;animation:slideUp .28s ease both}
+.message.user{justify-content:flex-end}
+.message.user .msg-avatar{order:2;background:linear-gradient(135deg,#1e293b,#334155)}
+.msg-avatar{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;flex:none;font-size:11px;font-weight:800}
+.ai-msg .msg-avatar{background:linear-gradient(135deg,var(--blue),var(--purple));box-shadow:0 0 18px rgba(59,130,246,.18)}
+.msg-content{max-width:min(760px,82%);min-width:0}
+.user .msg-content{display:flex;flex-direction:column;align-items:flex-end}
+.bubble{padding:11px 14px;border-radius:16px;background:var(--panel);border:1px solid var(--border);line-height:1.65;font-size:13px}
+.user .bubble{background:linear-gradient(135deg,rgba(37,99,235,.92),rgba(79,70,229,.92));border-color:transparent;color:#fff;border-bottom-right-radius:5px}
+.ai-msg .bubble{border-top-left-radius:5px}
+.timestamp{font-size:9px;color:var(--muted-2);margin-top:5px;padding:0 3px}
+.typing-bubble{display:flex;align-items:center;gap:5px;color:var(--muted);font-size:11px}
+.typing-dots{display:flex;gap:3px}.typing-dots i{width:5px;height:5px;border-radius:50%;background:var(--muted);animation:bounce 1.1s infinite}.typing-dots i:nth-child(2){animation-delay:.15s}.typing-dots i:nth-child(3){animation-delay:.3s}
+
+.markdown h1,.markdown h2,.markdown h3{margin:17px 0 8px;line-height:1.25;letter-spacing:-.02em}.markdown h1{font-size:21px}.markdown h2{font-size:17px}.markdown h3{font-size:15px}
+.markdown p{margin:0 0 10px}.markdown p:last-child{margin-bottom:0}.markdown strong{font-weight:750}.markdown em{font-style:italic}
+.markdown ul,.markdown ol{margin:8px 0 12px;padding-left:21px}.markdown li{margin:4px 0}
+.markdown blockquote{border-left:3px solid var(--blue);margin:11px 0;padding:5px 12px;color:var(--muted);background:rgba(59,130,246,.05)}
+.inline-code{background:rgba(127,127,127,.13);border:1px solid var(--border);border-radius:5px;padding:1px 5px;font:11px ui-monospace,SFMono-Regular,Menlo,monospace}
+.code-wrap{position:relative;margin:12px 0;border:1px solid var(--border);border-radius:11px;overflow:hidden;background:#080a10}
+.code-head{height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 9px;border-bottom:1px solid rgba(255,255,255,.06);font-size:9px;color:#7d8598}
+.copy-code{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#aeb6c8;border-radius:6px;padding:4px 7px;font-size:9px}
+.copy-code:hover{color:#fff;background:rgba(255,255,255,.08)}
+.code-wrap pre{margin:0;padding:13px;overflow:auto;font:11px/1.65 ui-monospace,SFMono-Regular,Menlo,monospace;color:#dce5f7}
+.markdown a{color:#72b4ff;text-decoration:none}.markdown a:hover{text-decoration:underline}
+.msg-actions{display:flex;gap:5px;margin-top:6px}.msg-action{border:0;background:transparent;color:var(--muted-2);font-size:9px;padding:2px 4px}.msg-action:hover{color:var(--text)}
+
+.composer-area{
+  position:absolute;left:0;right:0;bottom:0;padding:16px 22px 18px;display:flex;justify-content:center;
+  background:linear-gradient(transparent,rgba(7,8,13,.92) 28%)
+}
+[data-theme="light"] .composer-area{background:linear-gradient(transparent,rgba(245,247,251,.94) 28%)}
+.composer{width:min(920px,100%);position:relative}
+.composer-box{
+  background:rgba(14,17,26,.94);border:1px solid var(--border-strong);border-radius:17px;
+  box-shadow:var(--shadow);backdrop-filter:blur(18px);padding:10px 11px 9px
+}
+[data-theme="light"] .composer-box{background:rgba(255,255,255,.94)}
+.composer textarea{
+  width:100%;min-height:48px;max-height:150px;resize:none;border:0;outline:0;background:transparent;color:var(--text);
+  padding:4px 7px;font-size:13px;line-height:1.5
+}
+.composer textarea::placeholder{color:var(--muted-2)}
+.composer-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.tools-left,.tools-right{display:flex;align-items:center;gap:5px}
+.tool-btn{
+  width:31px;height:31px;border:1px solid transparent;background:transparent;border-radius:9px;color:var(--muted);
+  display:grid;place-items:center;transition:var(--transition)
+}
+.tool-btn:hover{background:var(--panel-3);color:var(--text);border-color:var(--border)}
+.send-btn{
+  width:34px;height:34px;border:0;border-radius:10px;background:linear-gradient(135deg,var(--blue),var(--purple));
+  display:grid;place-items:center;color:#fff;box-shadow:0 0 20px rgba(59,130,246,.22);transition:var(--transition)
+}
+.send-btn:hover{transform:translateY(-1px) scale(1.03);box-shadow:0 0 28px rgba(59,130,246,.4)}
+.send-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+.disclaimer{text-align:center;font-size:9px;color:var(--muted-2);margin-top:7px}
+
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:15}
+.panel{
+  position:absolute;inset:62px 0 0;background:var(--bg);z-index:8;display:none;overflow:auto;padding:35px 24px
+}
+.panel.active{display:block;animation:fadeIn .2s ease}
+.panel-inner{max-width:920px;margin:auto}.panel h2{margin:0 0 5px;font-size:25px;letter-spacing:-.03em}.panel-sub{color:var(--muted);font-size:12px;margin:0 0 22px}
+.tools-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.tool-card{
+  border:1px solid var(--border);background:var(--panel);border-radius:15px;padding:18px;transition:var(--transition)
+}
+.tool-card:hover{transform:translateY(-2px);border-color:rgba(59,130,246,.32);box-shadow:0 12px 30px rgba(0,0,0,.12)}
+.tool-icon{font-size:21px;margin-bottom:12px}.tool-card h3{font-size:13px;margin:0 0 6px}.tool-card p{font-size:11px;line-height:1.55;color:var(--muted);margin:0}
+.about-card,.settings-card{border:1px solid var(--border);background:var(--panel);border-radius:15px;padding:20px;margin-bottom:12px}
+.about-card p{color:var(--muted);font-size:12px;line-height:1.7}.stack{display:flex;gap:7px;flex-wrap:wrap}.stack span{font-size:10px;padding:6px 9px;border-radius:8px;background:var(--panel-3);color:var(--muted)}
+.setting-row{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:13px 0;border-bottom:1px solid var(--border)}.setting-row:last-child{border-bottom:0}
+.setting-row strong{font-size:12px}.setting-row small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+.theme-select{background:var(--panel-3);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:7px 10px;font-size:11px;outline:0}
+
+.toast{
+  position:fixed;right:20px;bottom:90px;z-index:50;background:var(--panel-3);border:1px solid var(--border-strong);
+  border-radius:11px;padding:10px 13px;box-shadow:var(--shadow);font-size:11px;opacity:0;transform:translateY(10px);
+  pointer-events:none;transition:var(--transition)
+}
+.toast.show{opacity:1;transform:none}
+.hidden-file{display:none}
+.modal{
+  position:fixed;inset:0;z-index:60;display:none;place-items:center;background:rgba(0,0,0,.58);padding:18px
+}
+.modal.open{display:grid}.modal-card{width:min(390px,100%);background:var(--panel);border:1px solid var(--border-strong);border-radius:16px;padding:20px;box-shadow:var(--shadow)}
+.modal-card h3{margin:0 0 7px;font-size:15px}.modal-card p{font-size:11px;color:var(--muted);line-height:1.6;margin:0 0 15px}
+.modal-actions{display:flex;justify-content:flex-end;gap:7px}.modal-actions button{border:1px solid var(--border);background:var(--panel-3);border-radius:8px;padding:8px 12px;font-size:11px}.modal-actions .danger{background:rgba(248,113,113,.12);border-color:rgba(248,113,113,.3);color:#ff9a9a}
+
+@keyframes slideUp{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes bounce{0%,60%,100%{transform:translateY(0);opacity:.45}30%{transform:translateY(-4px);opacity:1}}
+
+@media(max-width:900px){
+  .quick-grid{grid-template-columns:repeat(2,1fr)}
+  .tools-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:700px){
+  body{overflow:hidden}
+  .sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-102%);width:min(290px,88vw);z-index:30;box-shadow:25px 0 70px rgba(0,0,0,.35)}
+  .sidebar.mobile-open{transform:translateX(0)}
+  .sidebar.collapsed{width:min(290px,88vw);flex-basis:auto}.sidebar.collapsed .brand-copy,.sidebar.collapsed .nav-label,.sidebar.collapsed .search-wrap,
+  .sidebar.collapsed .history,.sidebar.collapsed .status-copy,.sidebar.collapsed .back-copy{display:block}
+  .sidebar.collapsed .brand{justify-content:flex-start;padding-left:18px;padding-right:18px}
+  .sidebar.collapsed .new-chat{margin:8px 14px 12px;justify-content:flex-start;padding:11px 13px}
+  .sidebar.collapsed .nav-btn{justify-content:flex-start}
+  .overlay.open{display:block}
+  .mobile-menu{display:grid}
+  .topbar{padding:0 12px}.chat-shell{padding:35px 14px 170px}.composer-area{padding:12px 10px 14px}
+  .welcome{padding-top:10px}.welcome h1{font-size:30px}.welcome .desc{font-size:12px}
+  .quick-grid{display:flex;overflow:auto;gap:8px;margin-left:-3px;margin-right:-3px;padding:3px;scrollbar-width:none}
+  .quick-grid::-webkit-scrollbar{display:none}.quick{min-width:170px;flex:none}
+  .tools-grid{grid-template-columns:1fr}.panel{padding:25px 15px}
+  .msg-content{max-width:86%}.bubble{font-size:12px}
+}
+@media(max-width:420px){
+  .top-actions .theme-top{display:none}.welcome .tagline{font-size:12px}.quick{min-width:155px}
+}
+</style>
+</head>
+<body>
+<div class="ambient"></div>
+<div class="app">
+  <div class="overlay" id="overlay"></div>
+
+  <aside class="sidebar" id="sidebar" aria-label="Sidebar navigasi">
+    <div class="brand">
+      <div class="brand-mark">N</div>
+      <div class="brand-copy"><strong>Naufal.Dev</strong><span>AI Workspace</span></div>
+    </div>
+
+    <button class="new-chat" id="newChatBtn" title="New Chat">
+      <span>＋</span><span class="nav-label">New Chat</span>
+    </button>
+
+    <div class="search-wrap">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+      <input id="searchChat" type="search" placeholder="Search chat..." aria-label="Search chat">
+    </div>
+
+    <div class="history" id="history"></div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-btn active" data-panel="chat"><span>◈</span><span class="nav-label">Chat</span></button>
+      <button class="nav-btn" data-panel="tools"><span>✦</span><span class="nav-label">AI Tools</span></button>
+      <button class="nav-btn" data-panel="history"><span>◷</span><span class="nav-label">History</span></button>
+      <button class="nav-btn" data-panel="settings"><span>⚙</span><span class="nav-label">Settings</span></button>
+      <button class="nav-btn" data-panel="about"><span>ⓘ</span><span class="nav-label">About Naufal.Dev</span></button>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <button class="back-btn" id="backBtn"><span>←</span><span class="back-copy">Back to Naufal.Dev</span></button>
+      <div class="status">
+        <span class="status-dot"></span>
+        <div class="status-copy"><strong>AI Online</strong><span>Naufal.Dev AI · Demo</span></div>
+      </div>
+      <button class="collapse-btn" id="collapseBtn"><span>‹</span><span class="nav-label">Collapse sidebar</span></button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="top-left">
+        <button class="icon-btn mobile-menu" id="mobileMenu" aria-label="Open menu">☰</button>
+        <div class="model-pill"><span class="model-dot"></span>Naufal.Dev AI <span style="color:var(--muted-2);font-weight:500">· Demo</span></div>
+      </div>
+      <div class="top-actions">
+        <button class="icon-btn theme-top" id="themeCycle" title="Ganti tema" aria-label="Ganti tema">☾</button>
+        <button class="icon-btn" id="clearCurrent" title="Clear current chat" aria-label="Clear current chat">⌫</button>
+      </div>
+    </header>
+
+    <section class="chat-scroll" id="chatScroll">
+      <div class="chat-shell">
+        <div id="welcome" class="welcome">
+          <div class="hero-logo">N</div>
+          <h1><span class="gradient">Naufal.Dev AI</span></h1>
+          <p class="tagline">Your Personal AI Assistant</p>
+          <p class="desc">Ask anything. Learn, create, code, and explore with Naufal.Dev AI.</p>
+          <div class="quick-grid" id="quickGrid">
+            <button class="quick" data-prompt="Help me write code"><span class="emoji">💻</span><b>Help me write code</b><span>Build and debug ideas</span></button>
+            <button class="quick" data-prompt="Explain this topic"><span class="emoji">📚</span><b>Explain this topic</b><span>Learn it step by step</span></button>
+            <button class="quick" data-prompt="Write something for me"><span class="emoji">✍️</span><b>Write something for me</b><span>Draft polished text</span></button>
+            <button class="quick" data-prompt="Give me ideas"><span class="emoji">💡</span><b>Give me ideas</b><span>Brainstorm possibilities</span></button>
+            <button class="quick" data-prompt="Analyze this text"><span class="emoji">🔍</span><b>Analyze this text</b><span>Find key points</span></button>
+            <button class="quick" data-prompt="Help me solve a problem"><span class="emoji">🧠</span><b>Help me solve a problem</b><span>Think through a challenge</span></button>
+          </div>
+        </div>
+        <div class="messages" id="messages"></div>
+      </div>
+    </section>
+
+    <div class="panel" id="toolsPanel">
+      <div class="panel-inner">
+        <h2>AI Tools</h2><p class="panel-sub">A focused toolkit for building, writing, learning, and exploring.</p>
+        <div class="tools-grid">
+          <button class="tool-card" data-tool-prompt="Let's use AI Chat to work on a task." style="text-align:left"><div class="tool-icon">◈</div><h3>AI Chat</h3><p>Chat dengan Naufal.Dev AI untuk pertanyaan dan percakapan umum.</p></button>
+          <button class="tool-card" data-tool-prompt="Saya ingin menggunakan Code Assistant. Bantu saya membuat kode yang saya butuhkan."><div class="tool-icon">⌘</div><h3>Code Assistant</h3><p>HTML, CSS, JavaScript, Python, PHP, SQL, dan bahasa lainnya.</p></button>
+          <button class="tool-card" data-tool-prompt="Saya ingin membuat tulisan. Bantu saya membuat artikel, caption, deskripsi, email, atau ide konten."><div class="tool-icon">✎</div><h3>Text Generator</h3><p>Buat artikel, caption, deskripsi, email, dan ide konten.</p></button>
+          <button class="tool-card" data-tool-prompt="Saya ingin meringkas sebuah teks. Tolong bantu saya membuat ringkasan yang jelas dan padat."><div class="tool-icon">≡</div><h3>Summarizer</h3><p>Ringkas teks panjang menjadi poin-poin yang mudah dipahami.</p></button>
+          <button class="tool-card" data-tool-prompt="Saya ingin menerjemahkan teks. Tolong bantu saya menerjemahkannya secara natural."><div class="tool-icon">文</div><h3>Translator</h3><p>Menerjemahkan bahasa dengan gaya yang natural dan kontekstual.</p></button>
+          <button class="tool-card" data-tool-prompt="Saya ingin belajar suatu materi. Jadilah Study Assistant dan jelaskan secara bertahap."><div class="tool-icon">◎</div><h3>Study Assistant</h3><p>Membantu memahami materi pelajaran secara bertahap.</p></button>
+          <button class="tool-card" data-tool-prompt="Beri saya ide website, project, desain, dan konten yang menarik."><div class="tool-icon">✦</div><h3>Idea Generator</h3><p>Hasilkan ide website, project, desain, dan konten.</p></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="settingsPanel">
+      <div class="panel-inner"><h2>Settings</h2><p class="panel-sub">Customize your Naufal.Dev AI workspace.</p>
+        <div class="settings-card">
+          <div class="setting-row"><div><strong>Theme</strong><small>Dark, light, atau mengikuti sistem.</small></div><select class="theme-select" id="themeSelect"><option value="dark">Dark</option><option value="light">Light</option><option value="system">System</option></select></div>
+          <div class="setting-row"><div><strong>Demo mode</strong><small>Respons lokal tanpa API eksternal.</small></div><span style="font-size:10px;color:var(--success)">● Active</span></div>
+          <div class="setting-row"><div><strong>Local history</strong><small>Chat disimpan di browser ini.</small></div><button class="theme-select" id="clearAllHistory">Clear all</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="aboutPanel">
+      <div class="panel-inner"><h2>About Naufal.Dev AI</h2><p class="panel-sub">Your Personal AI Assistant</p>
+        <div class="about-card">
+          <h3 style="margin:0 0 8px">Naufal.Dev AI</h3>
+          <p>An experimental AI assistant project built by Muhammad Hibatullah Naufal.</p>
+          <p>This browser-only demo simulates AI responses locally. It does not claim to connect to an external AI API.</p>
+          <h4 style="font-size:11px;margin:20px 0 9px">Built with</h4>
+          <div class="stack"><span>HTML</span><span>CSS</span><span>JavaScript</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="historyPanel">
+      <div class="panel-inner"><h2>Chat History</h2><p class="panel-sub">Percakapan yang tersimpan di browser.</p>
+        <div class="settings-card" id="historyPanelContent"></div>
+      </div>
+    </div>
+
+    <div class="composer-area">
+      <div class="composer">
+        <div class="composer-box">
+          <textarea id="chatInput" rows="1" placeholder="Message Naufal.Dev AI..." aria-label="Message Naufal.Dev AI"></textarea>
+          <div class="composer-bottom">
+            <div class="tools-left">
+              <button class="tool-btn" id="attachBtn" title="Attach file">＋</button>
+              <button class="tool-btn" id="imageBtn" title="Upload image">▧</button>
+              <button class="tool-btn" id="voiceBtn" title="Voice demo">♩</button>
+              <button class="tool-btn" id="emojiBtn" title="Emoji">☺</button>
+              <input class="hidden-file" id="fileInput" type="file">
+              <input class="hidden-file" id="imageInput" type="file" accept="image/*">
+            </div>
+            <div class="tools-right">
+              <span style="font-size:9px;color:var(--muted-2);display:none" id="shortcutHint">Enter to send</span>
+              <button class="send-btn" id="sendBtn" aria-label="Send message" title="Send">↑</button>
+            </div>
+          </div>
+        </div>
+        <div class="disclaimer">Naufal.Dev AI is a frontend demo. Responses are simulated locally and may not represent real-time AI.</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="modal" id="confirmModal">
+  <div class="modal-card"><h3 id="modalTitle">Delete chat?</h3><p id="modalText">Percakapan ini akan dihapus dari browser.</p>
+    <div class="modal-actions"><button id="modalCancel">Cancel</button><button class="danger" id="modalConfirm">Delete</button></div>
+  </div>
+</div>
+
+<script>
+(() => {
+  "use strict";
+
+  const STORAGE = {
+    chats: "naufaldev_ai_chats_v1",
+    theme: "naufaldev_ai_theme_v1",
+    sidebar: "naufaldev_ai_sidebar_v1"
+  };
+
+  const $ = (s, root=document) => root.querySelector(s);
+  const $$ = (s, root=document) => [...root.querySelectorAll(s)];
+  const uid = () => (crypto && crypto.randomUUID) ? crypto.randomUUID() : Date.now().toString(36)+Math.random().toString(36).slice(2);
+  const escapeHTML = (s="") => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+  const nowTime = () => new Intl.DateTimeFormat("id-ID",{hour:"2-digit",minute:"2-digit"}).format(new Date());
+
+  let chats = load(STORAGE.chats, []);
+  let currentChatId = chats[0]?.id || null;
+  let pendingDelete = null;
+  let isThinking = false;
+
+  function load(key, fallback) {
+    try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
+  }
+  function save() { localStorage.setItem(STORAGE.chats, JSON.stringify(chats)); }
+  function currentChat() { return chats.find(c => c.id === currentChatId); }
+
+  function createChat() {
+    const chat = {id:uid(), title:"New Chat", createdAt:Date.now(), updatedAt:Date.now(), messages:[]};
+    chats.unshift(chat); currentChatId = chat.id; save(); renderHistory(); renderMessages(); closePanels(); return chat;
+  }
+
+  function ensureChat() { return currentChat() || createChat(); }
+
+  function titleFrom(text) {
+    const clean = text.replace(/\s+/g," ").trim();
+    return clean.length > 36 ? clean.slice(0,36).trim()+"…" : (clean || "New Chat");
+  }
+
+  function renderHistory(filter="") {
+    const root = $("#history");
+    const q = filter.trim().toLowerCase();
+    const list = chats.filter(c => !q || c.title.toLowerCase().includes(q) || c.messages.some(m => m.content.toLowerCase().includes(q)));
+    if (!list.length) { root.innerHTML = `<div class="empty-history">${q ? "No matching chats." : "No conversations yet.<br>Start a new chat."}</div>`; return; }
+    root.innerHTML = `<div class="section-label">Recent chats</div>` + list.slice(0,30).map(c => `
+      <div class="chat-item ${c.id===currentChatId?"active":""}" data-chat-id="${c.id}">
+        <span style="font-size:11px">◌</span><span class="chat-title">${escapeHTML(c.title)}</span>
+        <button class="chat-more" data-menu-id="${c.id}" title="Chat actions">•••</button>
+      </div>`).join("");
+    $$(".chat-item",root).forEach(el => el.addEventListener("click", e => {
+      if (e.target.closest(".chat-more")) return;
+      openChat(el.dataset.chatId);
+    }));
+    $$(".chat-more",root).forEach(btn => btn.addEventListener("click", e => {
+      e.stopPropagation();
+      const id = btn.dataset.menuId;
+      const c = chats.find(x=>x.id===id);
+      if (!c) return;
+      const action = promptAction();
+      if (action === "rename") renameChat(c);
+      if (action === "delete") askDelete(id);
+    }));
+  }
+
+  function promptAction() {
+    const result = window.prompt("Ketik: rename untuk mengganti nama, atau delete untuk menghapus.", "rename");
+    return (result||"").toLowerCase().trim();
+  }
+
+  function renameChat(c) {
+    const next = window.prompt("Nama chat:", c.title);
+    if (next && next.trim()) { c.title = next.trim().slice(0,60); c.updatedAt=Date.now(); save(); renderHistory(); renderHistoryPanel(); toast("Chat renamed"); }
+  }
+
+  function openChat(id) {
+    if (!chats.some(c=>c.id===id)) return;
+    currentChatId=id; renderHistory(); renderMessages(); closePanels(); closeMobile();
+  }
+
+  function askDelete(id) {
+    pendingDelete=id;
+    $("#modalTitle").textContent="Delete chat?";
+    $("#modalText").textContent="Percakapan ini akan dihapus dari browser dan tidak dapat dikembalikan.";
+    $("#confirmModal").classList.add("open");
+  }
+
+  function deleteChat(id) {
+    chats=chats.filter(c=>c.id!==id);
+    if (currentChatId===id) currentChatId=chats[0]?.id||null;
+    save(); renderHistory(); renderMessages(); renderHistoryPanel(); toast("Chat deleted");
+  }
+
+  function renderMessages() {
+    const chat=currentChat();
+    const root=$("#messages");
+    $("#welcome").style.display = chat?.messages?.length ? "none" : "";
+    root.innerHTML="";
+    if (!chat) return;
+    chat.messages.forEach((m,i)=>appendMessage(m,false,i));
+    scrollBottom();
+  }
+
+  function appendMessage(m, animate=true, index=0) {
+    const root=$("#messages");
+    const el=document.createElement("article");
+    el.className=`message ${m.role==="user"?"user":"ai-msg"}`;
+    el.dataset.index=index;
+    const avatar=m.role==="user"?"U":"N";
+    const body=m.role==="user" ? escapeHTML(m.content).replace(/\n/g,"<br>") : renderMarkdown(m.content);
+    el.innerHTML=`
+      <div class="msg-avatar">${avatar}</div>
+      <div class="msg-content">
+        <div class="bubble ${m.role==="assistant"?"markdown":""}">${body}</div>
+        <div class="timestamp">${m.time || ""}</div>
+        ${m.role==="assistant"?`<div class="msg-actions"><button class="msg-action" data-copy-msg>Copy</button></div>`:""}
+      </div>`;
+    root.appendChild(el);
+    if (animate) el.style.animation="slideUp .28s ease both";
+    el.querySelectorAll("[data-copy-msg]").forEach(b=>b.addEventListener("click",()=>copyText(m.content)));
+    el.querySelectorAll(".copy-code").forEach(b=>b.addEventListener("click",()=>{
+      copyText(decodeURIComponent(b.dataset.code||""));
+      b.textContent="Copied!";
+      setTimeout(()=>b.textContent="Copy Code",1600);
+    }));
+  }
+
+  function renderMarkdown(src) {
+    let text=escapeHTML(src);
+    const codeBlocks=[];
+    text=text.replace(/```(\w*)\n?([\s\S]*?)```/g,(_,lang,code)=>{
+      const token=`@@CODE${codeBlocks.length}@@`;
+      codeBlocks.push(`<div class="code-wrap"><div class="code-head"><span>${escapeHTML(lang||"code")}</span><button class="copy-code" data-code="${encodeURIComponent(code)}">Copy Code</button></div><pre>${code.replace(/\n$/,"")}</pre></div>`);
+      return token;
+    });
+    text=text.replace(/^### (.*)$/gm,"<h3>$1</h3>").replace(/^## (.*)$/gm,"<h2>$1</h2>").replace(/^# (.*)$/gm,"<h1>$1</h1>");
+    text=text.replace(/^> (.*)$/gm,"<blockquote>$1</blockquote>");
+    text=text.replace(/^\s*[-*] (.*)$/gm,"<li>$1</li>");
+    text=text.replace(/^\s*\d+\.\s(.*)$/gm,"<li>$1</li>");
+    text=text.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\*(.+?)\*/g,"<em>$1</em>");
+    text=text.replace(/`([^`\n]+)`/g,'<code class="inline-code">$1</code>');
+    text=text.replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
+    text=text.replace(/(^|[\s>])(https?:\/\/[^\s<]+)/g,'$1<a href="$2" target="_blank" rel="noopener">$2</a>');
+    text=text.split(/\n{2,}/).map(block=>{
+      if (/^<h[1-3]|^<blockquote|^<li>|@@CODE/.test(block)) return block;
+      if (/^(?:<li>.*<\/li>\s*)+$/.test(block)) return `<ul>${block}</ul>`;
+      const lines=block.split("\n").filter(Boolean);
+      if(lines.every(x=>/^<li>/.test(x))) return `<ul>${lines.join("")}</ul>`;
+      return `<p>${lines.join("<br>")}</p>`;
+    }).join("");
+    codeBlocks.forEach((block,i)=>text=text.replace(`@@CODE${i}@@`,block));
+    return text;
+  }
+
+  function addMessage(role, content) {
+    const chat=ensureChat();
+    const m={id:uid(),role,content,time:nowTime()};
+    chat.messages.push(m); chat.updatedAt=Date.now();
+    if (role==="user" && chat.title==="New Chat") chat.title=titleFrom(content);
+    save(); renderHistory(); appendMessage(m,true,chat.messages.length-1); scrollBottom();
+    return m;
+  }
+
+  function showThinking() {
+    const root=$("#messages"), el=document.createElement("article");
+    el.className="message ai-msg"; el.id="thinking";
+    el.innerHTML=`<div class="msg-avatar">N</div><div class="msg-content"><div class="bubble typing-bubble">Naufal.Dev AI is thinking... <span class="typing-dots"><i></i><i></i><i></i></span></div></div>`;
+    root.appendChild(el); scrollBottom();
+  }
+  function removeThinking(){ $("#thinking")?.remove(); }
+
+  function getResponse(input) {
+    const q=input.trim().toLowerCase();
+    if (q==="/help") return `### Secret Commands\n- \`/help\` — tampilkan command rahasia\n- \`/about\` — tentang Naufal.Dev AI\n- \`/clear\` — bersihkan chat saat ini\n- \`/theme\` — lihat tema aktif\n- \`/whoami\` — identitas demo\n- \`/status\` — status sistem demo`;
+    if (q==="/about") return `## Naufal.Dev AI\nAn experimental AI assistant project built by **Muhammad Hibatullah Naufal**.\n\nBuilt with **HTML, CSS, and Vanilla JavaScript**. Ini adalah frontend demo yang berjalan lokal di browser.`;
+    if (q==="/whoami") return `\`\`\`text\nguest:~$ whoami\n\nMuhammad Hibatullah Naufal\n\nJunior RPL Developer\n\`\`\``;
+    if (q==="/status") return `**Naufal.Dev AI**\n\n- Status: **Online**\n- Mode: **Demo AI**\n- System: **Operational**`;
+    if (q==="/theme") return `Tema aktif: **${getThemeLabel()}**.\n\nGunakan menu Settings untuk mengganti tema.`;
+    if (q==="/clear") { setTimeout(clearCurrent,false); return "Chat saat ini akan dibersihkan."; }
+    if (/^(halo|hai|hello|hi|hey)\b/.test(q)) return "Halo! 👋 Saya **Naufal.Dev AI**. Ada yang bisa saya bantu hari ini?";
+    if (q.includes("siapa kamu") || q.includes("kamu siapa")) return "Saya **Naufal.Dev AI**, personal AI assistant yang dibuat sebagai bagian dari **Naufal.Dev**.";
+    if (q.includes("buatkan kode") || q.includes("buat kode") || q.includes("coding") || q.includes("program")) return `Tentu! Jelaskan kode atau fitur yang ingin kamu buat, dan saya akan membantu menyusunnya.\n\nContoh sederhana:\n\n\`\`\`html\n<div class="hello">\n    Hello Naufal.Dev\n</div>\n\`\`\`\n\nKamu bisa menyebutkan bahasa pemrograman, tujuan fitur, dan input/output yang diharapkan.`;
+    if (q.includes("html") || q.includes("css") || q.includes("javascript")) return `Saya bisa membantu menyusun **HTML, CSS, atau JavaScript**. Berikan tujuan atau potongan kode yang sedang kamu kerjakan.\n\n> Tips: sertakan error atau hasil yang kamu inginkan agar solusi demo ini lebih terarah.`;
+    if (q.includes("ringkas") || q.includes("summary") || q.includes("summar")) return "Silakan tempelkan teks yang ingin diringkas. Saya bisa mengubahnya menjadi **ringkasan singkat**, poin utama, atau versi yang lebih mudah dipahami.";
+    if (q.includes("ide") || q.includes("ideas") || q.includes("inspirasi")) return `Berikut beberapa arah ide yang bisa dikembangkan:\n\n- **Developer portfolio** dengan case study interaktif\n- **AI dashboard** dengan command palette\n- **Study planner** dengan progress visual\n- **Project showcase** berbasis timeline\n- **Content toolkit** untuk membuat draft secara lokal`;
+    if (q.includes("terjemah") || q.includes("translate")) return "Kirim teks dan sebutkan bahasa tujuan, misalnya **Indonesia → English**. Saya akan membantu menyiapkan terjemahan dalam gaya formal, casual, atau natural.";
+    if (q.includes("jelaskan") || q.includes("explain") || q.includes("belajar")) return "Tentu. Sebutkan topiknya, lalu saya bisa memecahnya menjadi **konsep inti → contoh → analogi → latihan singkat**.";
+    return `Saya menerima pesanmu: **“${escapeHTML(input.slice(0,180))}”**.\n\nIni adalah **demo AI lokal**, jadi responsnya berbasis keyword dan tidak terhubung ke API eksternal. Coba tanyakan tentang coding, ide, belajar, tulisan, atau gunakan \`/help\` untuk melihat command rahasia.`;
+  }
+
+  async function sendMessage() {
+    if (isThinking) return;
+    const input=$("#chatInput"), text=input.value.trim();
+    if (!text) return;
+    ensureChat(); input.value=""; autoResize();
+    if (text.toLowerCase()==="/clear") { addMessage("user",text); setTimeout(clearCurrent,250); return; }
+    addMessage("user",text);
+    isThinking=true; $("#sendBtn").disabled=true; showThinking();
+    const delay=650+Math.min(950,text.length*10);
+    await new Promise(r=>setTimeout(r,delay));
+    removeThinking();
+    addMessage("assistant",getResponse(text));
+    isThinking=false; $("#sendBtn").disabled=false; input.focus();
+  }
+
+  function clearCurrent() {
+    const c=currentChat(); if(!c) return;
+    c.messages=[]; c.title="New Chat"; c.updatedAt=Date.now(); save(); renderHistory(); renderMessages(); toast("Current chat cleared");
+  }
+
+  function renderHistoryPanel() {
+    const root=$("#historyPanelContent");
+    if(!chats.length){root.innerHTML=`<div style="color:var(--muted);font-size:11px">Belum ada chat tersimpan.</div>`;return;}
+    root.innerHTML=chats.map(c=>`<div class="setting-row"><div><strong>${escapeHTML(c.title)}</strong><small>${c.messages.length} message${c.messages.length!==1?"s":""} · ${new Date(c.updatedAt).toLocaleDateString("id-ID")}</small></div><button class="theme-select" data-open-history="${c.id}">Open</button></div>`).join("");
+    $$("[data-open-history]",root).forEach(b=>b.addEventListener("click",()=>openChat(b.dataset.openHistory)));
+  }
+
+  function showPanel(name) {
+    $$(".panel").forEach(p=>p.classList.remove("active"));
+    if(name!=="chat") $(`#${name}Panel`)?.classList.add("active");
+    $$(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.panel===name));
+    if(name==="history") renderHistoryPanel();
+    closeMobile();
+  }
+  function closePanels(){showPanel("chat")}
+
+  function autoResize(){const el=$("#chatInput");el.style.height="auto";el.style.height=Math.min(el.scrollHeight,150)+"px"}
+  function scrollBottom(){requestAnimationFrame(()=>{const s=$("#chatScroll");s.scrollTop=s.scrollHeight})}
+
+  async function copyText(text){
+    try{await navigator.clipboard.writeText(text);toast("Copied to clipboard");}
+    catch{toast("Clipboard tidak tersedia di browser ini");}
+  }
+  let toastTimer;
+  function toast(message){const t=$("#toast");t.textContent=message;t.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove("show"),2200)}
+
+  function getTheme(){
+    const saved=localStorage.getItem(STORAGE.theme)||"dark";
+    if(saved==="system") return matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";
+    return saved;
+  }
+  function getThemeLabel(){return localStorage.getItem(STORAGE.theme)||"dark"}
+  function applyTheme(value){
+    localStorage.setItem(STORAGE.theme,value);
+    document.documentElement.dataset.theme=value==="system"?(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"):value;
+    $("#themeSelect").value=value; $("#themeCycle").textContent=document.documentElement.dataset.theme==="light"?"☀":"☾";
+  }
+
+  function closeMobile(){$("#sidebar").classList.remove("mobile-open");$("#overlay").classList.remove("open")}
+
+  $("#newChatBtn").addEventListener("click",()=>{createChat();toast("New chat created")});
+  $("#searchChat").addEventListener("input",e=>renderHistory(e.target.value));
+  $("#sendBtn").addEventListener("click",sendMessage);
+  $("#chatInput").addEventListener("input",autoResize);
+  $("#chatInput").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMessage()}});
+  $("#chatInput").addEventListener("paste",()=>setTimeout(autoResize,0));
+
+  $$(".quick").forEach(b=>b.addEventListener("click",()=>{$("#chatInput").value=b.dataset.prompt;autoResize();$("#chatInput").focus()}));
+  $$(".tool-card").forEach(b=>b.addEventListener("click",()=>{$("#chatInput").value=b.dataset.toolPrompt;autoResize();showPanel("chat");$("#chatInput").focus()}));
+  $$(".nav-btn").forEach(b=>b.addEventListener("click",()=>showPanel(b.dataset.panel)));
+
+  $("#collapseBtn").addEventListener("click",()=>{$("#sidebar").classList.toggle("collapsed");localStorage.setItem(STORAGE.sidebar,$("#sidebar").classList.contains("collapsed")?"1":"0")});
+  $("#mobileMenu").addEventListener("click",()=>{$("#sidebar").classList.add("mobile-open");$("#overlay").classList.add("open")});
+  $("#overlay").addEventListener("click",closeMobile);
+
+  $("#backBtn").addEventListener("click",()=>{window.location.href="index.html"});
+  $("#clearCurrent").addEventListener("click",()=>{if(currentChat()?.messages.length){askDelete(currentChatId)}else toast("Current chat is already empty")});
+  $("#modalCancel").addEventListener("click",()=>{$("#confirmModal").classList.remove("open");pendingDelete=null});
+  $("#modalConfirm").addEventListener("click",()=>{if(pendingDelete){deleteChat(pendingDelete)}else if(currentChatId){clearCurrent()}$("#confirmModal").classList.remove("open");pendingDelete=null});
+  $("#confirmModal").addEventListener("click",e=>{if(e.target.id==="confirmModal"){$("#confirmModal").classList.remove("open");pendingDelete=null}});
+
+  $("#themeSelect").addEventListener("change",e=>{applyTheme(e.target.value);toast(`Theme: ${e.target.value}`)});
+  $("#themeCycle").addEventListener("click",()=>{const current=localStorage.getItem(STORAGE.theme)||"dark";applyTheme(current==="dark"?"light":current==="light"?"system":"dark");toast(`Theme: ${getThemeLabel()}`)});
+  $("#clearAllHistory").addEventListener("click",()=>{pendingDelete="__all__";$("#modalTitle").textContent="Clear all history?";$("#modalText").textContent="Semua percakapan tersimpan di browser akan dihapus.";$("#confirmModal").classList.add("open")});
+  $("#modalConfirm").addEventListener("click",()=>{if(pendingDelete==="__all__"){chats=[];currentChatId=null;save();renderHistory();renderMessages();renderHistoryPanel();toast("All history cleared");$("#confirmModal").classList.remove("open");pendingDelete=null}});
+
+  $("#attachBtn").addEventListener("click",()=>$("#fileInput").click());
+  $("#imageBtn").addEventListener("click",()=>$("#imageInput").click());
+  $("#fileInput").addEventListener("change",e=>{const f=e.target.files[0];if(f){toast(`Attached: ${f.name}`);$("#chatInput").value+=`[Attached file: ${f.name}]`;autoResize()}e.target.value=""});
+  $("#imageInput").addEventListener("change",e=>{const f=e.target.files[0];if(f){toast(`Image selected: ${f.name}`);$("#chatInput").value+=`[Image: ${f.name}]`;autoResize()}e.target.value=""});
+  $("#voiceBtn").addEventListener("click",()=>toast("Voice demo: browser voice integration belum diaktifkan."));
+  $("#emojiBtn").addEventListener("click",()=>{$("#chatInput").value+=($("#chatInput").value?" ":"")+"👋";autoResize();$("#chatInput").focus()});
+
+  window.addEventListener("storage",()=>{chats=load(STORAGE.chats,[]);currentChatId=chats.some(c=>c.id===currentChatId)?currentChatId:(chats[0]?.id||null);renderHistory();renderMessages()});
+  window.matchMedia("(prefers-color-scheme: light)").addEventListener?.("change",()=>{if(getThemeLabel()==="system")applyTheme("system")});
+
+  // Initialize
+  applyTheme(localStorage.getItem(STORAGE.theme)||"dark");
+  if(localStorage.getItem(STORAGE.sidebar)==="1" && innerWidth>700) $("#sidebar").classList.add("collapsed");
+  if(!chats.length) createChat(); else {renderHistory();renderMessages()}
+  autoResize();
+})();
+</script>
+</body>
+</html>
