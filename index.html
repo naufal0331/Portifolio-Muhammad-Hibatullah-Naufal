@@ -247,6 +247,15 @@
             background: #00F0FF;
         }
     
+        /* Background Music */
+        @keyframes musicPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.08); opacity: 0.8; }
+        }
+        .music-playing {
+            animation: musicPulse 1.4s ease-in-out infinite;
+        }
+
         /* Public Comments — isolated styles so the rest of the website is unchanged */
         .public-comments-shell {
             background:
@@ -425,6 +434,9 @@
         <div class="absolute inset-0 bg-grid pointer-events-none"></div>
     </div>
 
+    <!-- Background Music -->
+    <audio id="backgroundMusic" src="assets/music/background.mp3" loop preload="metadata"></audio>
+
     <!-- NAVBAR -->
     <header class="fixed top-0 left-0 right-0 z-40 glass-card border-b border-white/5 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
@@ -445,6 +457,18 @@
             </nav>
 
            <div class="hidden lg:flex items-center gap-3">
+                <!-- Kontrol Background Music -->
+                <button
+                    type="button"
+                    id="musicToggle"
+                    class="px-3 py-2 text-xs font-semibold uppercase tracking-wider rounded-lg glass-card border border-neonBlue/30 text-neonBlue hover:bg-neonBlue/10 transition-all flex items-center gap-1.5 cursor-pointer"
+                    aria-label="Nyalakan musik"
+                    aria-pressed="false"
+                    title="Nyalakan musik">
+                    <i data-lucide="volume-x" class="w-4 h-4"></i>
+                    <span id="musicToggleText">Music Off</span>
+                </button>
+
                 <!-- Tombol Trigger Dev CLI di Navbar -->
                 <button @click="cliOpen = !cliOpen" class="px-3 py-2 text-xs font-semibold uppercase tracking-wider rounded-lg glass-card border border-neonCyan/40 text-neonCyan hover:bg-neonCyan/10 transition-all flex items-center gap-1.5 cursor-pointer font-code">
                     <span>>_</span> Dev CLI
@@ -472,6 +496,20 @@
             <a href="#certificates" @click="mobileMenuOpen = false" class="block hover:text-neonBlue transition-colors">Certificates</a>
             <a href="#contact" @click="mobileMenuOpen = false" class="block hover:text-neonBlue transition-colors">Contact</a>
             <a href="#comments" @click="mobileMenuOpen = false" class="block hover:text-neonBlue transition-colors">Comments</a>
+            <!-- Kontrol Background Music Mobile -->
+            <button
+                type="button"
+                id="musicToggleMobile"
+                class="w-full flex items-center justify-between px-4 py-3 rounded-xl glass-card border border-neonBlue/30 text-neonBlue hover:bg-neonBlue/10 transition-all"
+                aria-label="Nyalakan musik"
+                aria-pressed="false">
+                <span class="flex items-center gap-2">
+                    <i data-lucide="volume-x" class="w-4 h-4"></i>
+                    <span id="musicToggleTextMobile">Music Off</span>
+                </span>
+                <span class="text-[10px] uppercase tracking-wider opacity-60">Background Music</span>
+            </button>
+
             <button @click="cliOpen = true; mobileMenuOpen = false" class="w-full py-2 text-center text-xs font-semibold uppercase tracking-wider rounded-lg glass-card border border-neonCyan/40 text-neonCyan font-code">
                 >_ Buka Dev CLI
             </button>
@@ -1156,6 +1194,7 @@
         function portfolioApp() {
             return {
                 mobileMenuOpen: false,
+                musicEnabled: false,
                 projectFilter: 'all',
                 modalOpen: false,
                 activeCert: {},
@@ -1338,9 +1377,89 @@
             }
         }
 
+        function initBackgroundMusic() {
+            const audio = document.getElementById('backgroundMusic');
+            const desktopButton = document.getElementById('musicToggle');
+            const mobileButton = document.getElementById('musicToggleMobile');
+            const desktopText = document.getElementById('musicToggleText');
+            const mobileText = document.getElementById('musicToggleTextMobile');
+
+            if (!audio || !desktopButton) return;
+
+            const storageKey = 'portfolioMusicEnabled';
+            audio.loop = true;
+            audio.volume = 0.35;
+
+            function updateMusicUI(enabled) {
+                [desktopButton, mobileButton].filter(Boolean).forEach(button => {
+                    button.setAttribute('aria-pressed', String(enabled));
+                    button.setAttribute('aria-label', enabled ? 'Matikan musik' : 'Nyalakan musik');
+                    button.setAttribute('title', enabled ? 'Matikan musik' : 'Nyalakan musik');
+
+                    const icon = button.querySelector('[data-lucide]');
+                    if (icon) {
+                        icon.setAttribute('data-lucide', enabled ? 'volume-2' : 'volume-x');
+                        icon.classList.toggle('music-playing', enabled);
+                    }
+
+                    button.classList.toggle('border-neonCyan/60', enabled);
+                    button.classList.toggle('text-neonCyan', enabled);
+                    button.classList.toggle('border-neonBlue/30', !enabled);
+                    button.classList.toggle('text-neonBlue', !enabled);
+                });
+
+                if (desktopText) desktopText.textContent = enabled ? 'Music On' : 'Music Off';
+                if (mobileText) mobileText.textContent = enabled ? 'Music On' : 'Music Off';
+
+                if (window.lucide) lucide.createIcons();
+            }
+
+            async function setMusic(enabled) {
+                if (enabled) {
+                    try {
+                        await audio.play();
+                        localStorage.setItem(storageKey, 'true');
+                        updateMusicUI(true);
+                    } catch (error) {
+                        localStorage.setItem(storageKey, 'false');
+                        updateMusicUI(false);
+                        console.info('Pemutaran musik menunggu interaksi pengguna.');
+                    }
+                } else {
+                    audio.pause();
+                    localStorage.setItem(storageKey, 'false');
+                    updateMusicUI(false);
+                }
+            }
+
+            desktopButton.addEventListener('click', () => setMusic(audio.paused));
+            if (mobileButton) {
+                mobileButton.addEventListener('click', () => setMusic(audio.paused));
+            }
+
+            updateMusicUI(false);
+
+            // Browser biasanya memblokir autoplay. Jika sebelumnya ON,
+            // musik akan mencoba mulai setelah interaksi pertama pengguna.
+            const wasEnabled = localStorage.getItem(storageKey) === 'true';
+            if (wasEnabled) {
+                const startAfterInteraction = () => {
+                    setMusic(true);
+                    window.removeEventListener('pointerdown', startAfterInteraction);
+                    window.removeEventListener('keydown', startAfterInteraction);
+                    window.removeEventListener('touchstart', startAfterInteraction);
+                };
+
+                window.addEventListener('pointerdown', startAfterInteraction, { once: true });
+                window.addEventListener('keydown', startAfterInteraction, { once: true });
+                window.addEventListener('touchstart', startAfterInteraction, { once: true });
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             AOS.init({ duration: 1000, once: true });
             lucide.createIcons();
+            initBackgroundMusic();
 
             // SCRIPT INTRO ANIMATION (PETIR & LOADING PERSIS SEPERTI DI VIDEO)
             const overlay = document.getElementById("intro-overlay");
