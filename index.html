@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Junior RPL Developer</title>
+    <title>Naufal.Dev — Portfolio Junior RPL Developer</title>
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -691,44 +691,52 @@
                     <p class="text-gray-300 text-sm sm:text-base">Beberapa hasil karya terbaik yang telah saya kembangkan.</p>
                 </div>
 
-                <div class="flex flex-wrap items-center justify-center gap-3 mb-12" data-aos="fade-up">
+                <div class="flex flex-wrap items-center justify-center gap-3 mb-4" data-aos="fade-up">
                     <template x-for="cat in ['all', 'Web', 'App', 'UI/UX']">
-                        <button @click="projectFilter = cat" 
+                        <button @click="projectFilter = cat"
                             class="px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all"
                             :class="projectFilter === cat ? 'bg-neonBlue text-darkBg shadow-lg shadow-neonBlue/30 font-bold' : 'glass-card text-gray-300 hover:text-neonBlue'"
                             x-text="cat.toUpperCase()">
                         </button>
                     </template>
                 </div>
+                <p class="text-center text-xs text-gray-500 mb-10" data-aos="fade-up">
+                    Klik <span class="text-neonCyan font-semibold">Live Demo</span> untuk membuka file project secara langsung dari repository.
+                </p>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" data-aos="fade-up">
                     <template x-for="proj in filteredProjects">
-                        <div class="glass-card rounded-2xl overflow-hidden group transition-all duration-300 hover:-translate-y-2 hover:border-neonBlue flex flex-col justify-between">
+                        <article class="glass-card rounded-2xl overflow-hidden group transition-all duration-300 hover:-translate-y-2 hover:border-neonBlue flex flex-col justify-between">
                             <div>
                                 <div class="relative h-48 overflow-hidden">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-transparent to-transparent z-10 opacity-60"></div>
-                                    <img :src="proj.image" :alt="proj.title" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-transparent to-transparent z-10 opacity-70"></div>
+                                    <img :src="proj.image" :alt="proj.title" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                    <div class="absolute top-4 left-4 z-20 px-3 py-1 rounded-full bg-emerald-400/10 backdrop-blur-md text-emerald-300 text-[10px] font-bold uppercase tracking-wider border border-emerald-400/25">
+                                        LIVE FILE
+                                    </div>
                                     <span class="absolute top-4 right-4 z-20 px-3 py-1 rounded-full bg-darkBg/80 backdrop-blur-md text-neonBlue text-xs font-semibold uppercase tracking-wider border border-neonBlue/30" x-text="proj.category"></span>
                                 </div>
                                 <div class="p-6">
-                                    <h4 class="text-lg font-bold mb-2 text-white group-hover:text-neonBlue transition-colors" x-text="proj.title"></h4>
+                                    <div class="flex items-center justify-between gap-3 mb-2">
+                                        <h4 class="text-lg font-bold text-white group-hover:text-neonBlue transition-colors" x-text="proj.title"></h4>
+                                        <span class="text-[9px] font-code text-gray-500 truncate max-w-[120px]" x-text="proj.liveUrl"></span>
+                                    </div>
                                     <p class="text-gray-300 text-sm mb-4 leading-relaxed" x-text="proj.desc"></p>
-                                    <div class="flex flex-wrap gap-2 mb-4">
+                                    <div class="flex flex-wrap gap-2">
                                         <template x-for="t in proj.tech">
                                             <span class="px-2.5 py-1 rounded-md bg-neonBlue/10 text-neonBlue text-xs font-code" x-text="t"></span>
                                         </template>
                                     </div>
                                 </div>
                             </div>
-                            <div class="px-6 pb-6 pt-0 flex items-center gap-4">
-                                <a :href="proj.liveUrl" target="_blank" class="flex-1 py-2.5 rounded-xl bg-neonBlue text-darkBg font-bold text-xs uppercase tracking-wider text-center hover:bg-neonCyan transition-all flex items-center justify-center gap-2">
-                                    <i data-lucide="external-link" class="w-4 h-4"></i> Live Demo
-                                </a>
-                                <a :href="proj.githubUrl" target="_blank" class="flex-1 py-2.5 rounded-xl glass-card border border-white/10 text-white font-semibold text-xs uppercase tracking-wider text-center hover:border-neonBlue transition-all flex items-center justify-center gap-2">
-                                    <i data-lucide="github" class="w-4 h-4"></i> GitHub
+                            <div class="px-6 pb-6 pt-0">
+                                <a :href="proj.liveUrl"
+                                   class="w-full py-3 rounded-xl bg-neonBlue text-darkBg font-bold text-xs uppercase tracking-wider text-center hover:bg-neonCyan transition-all flex items-center justify-center gap-2">
+                                    <i data-lucide="external-link" class="w-4 h-4"></i>
+                                    Buka Live Demo
                                 </a>
                             </div>
-                        </div>
+                        </article>
                     </template>
                 </div>
             </div>
@@ -1303,6 +1311,8 @@
                         { name: "Python", level: 80, icon: "terminal" }
                     ],
 
+                    // Setiap liveUrl di bawah menunjuk langsung ke file HTML di repository yang sama.
+                    // Contoh: kelas.html -> saat tombol Live Demo diklik, halaman kelas.html dibuka.
                     projects: [
                         {
                             title: "XI RPL 2",
@@ -1310,15 +1320,21 @@
                             desc: "Website resmi kelas XI RPL 2 SMK Negeri 3 Sekayu yang informatif, modern, dan interaktif.",
                             image: "foto3.jpeg",
                             tech: ["HTML", "Tailwind", "JavaScript", "Alpine.js"],
-                            liveUrl: "kelas.html",
-                            githubUrl: "#"
+                            liveUrl: "kelas.html"
+                        },
+                        {
+                            title: "Naufal.Dev AI",
+                            category: "Web",
+                            desc: "Konsep halaman AI pribadi Naufal.Dev dengan tampilan terminal modern dan nuansa developer.",
+                            image: "foto4.jpeg",
+                            tech: ["HTML", "CSS", "JavaScript", "AI UI"],
+                            liveUrl: "ai.html"
                         },
                     ],
 
                     experiences: [
                         { year: "2025", title: "Masuk SMK Jurusan RPL", desc: "Memulai perjalanan di dunia IT, mempelajari dasar-dasar algoritma, logika pemrograman, dan struktur komputer." },
                         { year: "2025", title: "Mulai Belajar Web Development", desc: "Menguasai dasar HTML, CSS, dan JavaScript secara otodidak maupun dari materi sekolah, serta membuat website statis pertama." },
-                        { year: "2026", title: "Membuat Project Pertama", desc: "Berhasil merancang Sistem Informasi Sekolah sederhana menggunakan PHP native dan database MySQL." },
                         { year: "2027", title: "Harapan Mengikuti PKL Nanti / Kegiatan IT", desc: "Terlibat langsung dalam lingkungan kerja profesional, memperdalam framework Laravel dan kolaborasi tim via Git." },
                         { year: "2027", title: "Ingin Mengembangkan Portfolio Professional", desc: "Terus mengeksplorasi teknologi modern untuk membangun portofolio digital yang siap menghadapi industri." }
                     ],
@@ -1352,7 +1368,7 @@
                             output = this.data.skills.map(s => `• ${s.name} (${s.level}%)`).join('\n');
                             break;
                         case 'projects':
-                            output = this.data.projects.map(p => `• [${p.category}] ${p.title}: ${p.desc}`).join('\n');
+                            output = this.data.projects.map(p => `• [${p.category}] ${p.title} → ${p.liveUrl}`).join('\n');
                             break;
                         case 'contact':
                             output = `Email: ${this.data.email}\nWhatsApp: ${this.data.whatsapp}\nInstagram: ${this.data.instagram}`;
